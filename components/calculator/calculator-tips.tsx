@@ -2,7 +2,7 @@ import { Clock, DollarSign, FileText } from "lucide-react";
 
 export function CalculatorTips() {
     return (
-        <div className="mt-12 grid md:grid-cols-3 gap-6">
+        <div className="mt-12 grid md:grid-cols-3 gap-3">
             <div className="bg-blue-50 p-6 rounded-lg border border-blue-200">
                 <div className="flex items-center gap-3 mb-3">
                     <div className="bg-blue-600 rounded-full p-2">
@@ -12,6 +12,7 @@ export function CalculatorTips() {
                         Contract Types
                     </h4>
                 </div>
+
                 <p className="text-sm text-blue-800">
                     Limited contracts have specific end dates, while unlimited
                     contracts are open-ended. This affects your gratuity
