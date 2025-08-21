@@ -4,11 +4,12 @@ import { image, blockContent, seo, hero, commonFields } from './schemas/componen
 import config, { footer, header, siteSeo, logo, link } from "./schemas/config";
 import home from './schemas/home'
 import blog from './schemas/blog'
+import page from './schemas/page'
 
 const components = [image, blockContent, seo, hero]
 const configSchemas = [footer, header, siteSeo, logo, link];
 const singletons = [config, home]; // Config and Home are singletons
-const documents = [blog]; // Regular document types
+const documents = [blog, page]; // Regular document types
 
 export const schema: { types: SchemaTypeDefinition[] } = {
     types: [...components, ...configSchemas, ...singletons, ...documents],

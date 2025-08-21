@@ -55,6 +55,7 @@ This document outlines the optimizations made to the Sanity schema following the
 ### 7. **Content Types**
 
 -   ✅ **Blog schema added** with all requested fields and best practices
+-   ✅ **Page schema added** for single pages like contact, privacy policy, etc.
 
 ## Files Optimized
 
@@ -79,6 +80,7 @@ This document outlines the optimizations made to the Sanity schema following the
 
 -   ✅ `home.ts` - Homepage document as singleton entity (UPDATED)
 -   ✅ `blog.ts` - Blog post document with comprehensive fields (NEW)
+-   ✅ `page.ts` - Single page document for contact, privacy policy, etc. (NEW)
 
 ### Configuration Files
 
@@ -135,6 +137,7 @@ This document outlines the optimizations made to the Sanity schema following the
     - **Single entities prevent duplicate content**
     - **All singletons visible in studio sidebar**
     - **Blog content management** with rich features
+    - **Page content management** for static pages
 
 3. **Maintainability**
 
@@ -181,6 +184,20 @@ This document outlines the optimizations made to the Sanity schema following the
     -   Multiple ordering options (by date, title)
     -   Validation rules for required fields and character limits
     -   SEO integration using existing SEO component
+    -   **Slug validation** (required field)
+
+### ✅ **Page Schema**
+
+-   **Fields**: Title, description, content, SEO (as requested)
+-   **Additional Features**:
+    -   Auto-generated slug from title
+    -   Page type categorization (contact, privacy, terms, about, FAQ, other)
+    -   Publication status control
+    -   Rich preview showing page type and status
+    -   Multiple ordering options (by page type, title, published status)
+    -   Validation rules for required fields and character limits
+    -   SEO integration using existing SEO component
+    -   **Slug validation** (required field)
 
 ## Next Steps
 
@@ -214,5 +231,6 @@ This document outlines the optimizations made to the Sanity schema following the
 -   **Singleton Entities**: Config and Home are now properly configured as single entities
 -   **Studio Configuration**: Dynamic singleton handling in sidebar
 -   **Blog Schema**: Complete blog content type with all requested fields and best practices
+-   **Page Schema**: Complete page content type for static pages with categorization
 
 The schema is now optimized according to Sanity best practices and the provided development guidelines.
