@@ -64,9 +64,9 @@ export interface HeroSection {
 // Home page types
 export interface HomeData {
     _id: string
-    title?: string
-    hero?: HeroSection
-    seo?: SanitySEO
+    title?: string // Optional (has initialValue)
+    hero?: HeroSection // Optional
+    seo?: SanitySEO // Optional
 }
 
 // Config types
@@ -102,38 +102,38 @@ export interface ConfigFooter {
 
 export interface ConfigData {
     _id: string
-    site_name?: string
-    seo?: ConfigSEO
-    header?: ConfigHeader
-    footer?: ConfigFooter
+    site_name?: string // Optional
+    seo?: ConfigSEO // Optional
+    header?: ConfigHeader // Optional
+    footer?: ConfigFooter // Optional
 }
 
 // Blog types
 export interface BlogData {
     _id: string
-    title: string
-    description?: string
+    title: string // Required
+    description?: string // Optional
     slug: {
         current: string
-    }
-    featureImage?: SanityImage
-    category?: CategoryData
-    content?: any // PortableText content
-    publishedAt?: string
-    isPublished?: boolean
-    seo?: SanitySEO
+    } // Required
+    featureImage?: SanityImage // Optional
+    category: CategoryData // Required
+    content?: any // PortableText content - Optional
+    publishedAt?: string // Optional (has initialValue)
+    isPublished?: boolean // Optional (has initialValue)
+    seo?: SanitySEO // Optional
 }
 
 export interface BlogPreview {
     _id: string
-    title: string
-    description?: string
+    title: string // Required
+    description?: string // Optional
     slug: {
         current: string
-    }
-    featureImage?: SanityImage
-    category?: CategoryPreview
-    publishedAt?: string
+    } // Required
+    featureImage?: SanityImage // Optional
+    category: CategoryPreview // Required
+    publishedAt?: string // Optional
 }
 
 export interface BlogSlug {
@@ -145,21 +145,21 @@ export interface BlogSlug {
 // Category types
 export interface CategoryData {
     _id: string
-    name: string
-    description?: string
+    name: string // Required
+    description?: string // Optional
     slug: {
         current: string
-    }
-    seo?: SanitySEO
+    } // Required
+    seo?: SanitySEO // Optional
 }
 
 export interface CategoryPreview {
     _id: string
-    name: string
-    description?: string
+    name: string // Required
+    description?: string // Optional
     slug: {
         current: string
-    }
+    } // Required
 }
 
 export interface CategorySlug {
@@ -171,26 +171,26 @@ export interface CategorySlug {
 // Page types
 export interface PageData {
     _id: string
-    title: string
-    description?: string
+    title: string // Required
+    description?: string // Optional
     slug: {
         current: string
-    }
-    content?: any // PortableText content
-    pageType: 'contact' | 'privacy' | 'terms' | 'about' | 'faq' | 'other'
-    isPublished?: boolean
-    seo?: SanitySEO
+    } // Required
+    content?: any // PortableText content - Optional
+    pageType: 'contact' | 'privacy' | 'terms' | 'about' | 'faq' | 'other' // Required
+    isPublished?: boolean // Optional (has initialValue)
+    seo?: SanitySEO // Optional
 }
 
 export interface PagePreview {
     _id: string
-    title: string
-    description?: string
+    title: string // Required
+    description?: string // Optional
     slug: {
         current: string
-    }
-    pageType: 'contact' | 'privacy' | 'terms' | 'about' | 'faq' | 'other'
-    seo?: SanitySEO
+    } // Required
+    pageType: 'contact' | 'privacy' | 'terms' | 'about' | 'faq' | 'other' // Required
+    seo?: SanitySEO // Optional
 }
 
 export interface PageSlug {
