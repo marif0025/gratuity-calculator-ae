@@ -5,7 +5,7 @@ import { ArticleSection } from "@/components/article-section";
 import { FAQ } from "@/components/faq";
 import Footer from "@/components/footer";
 
-export default function Home() {
+export default async function Home() {
     return (
         <div className="min-h-screen">
             <Header />
