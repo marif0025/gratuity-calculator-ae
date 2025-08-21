@@ -3,6 +3,8 @@ import { getAllBlogs } from "@/sanity/requests";
 import { BlogListingScreen } from "@/screens/blog/screen";
 import { buildPageMeta } from "@/lib/seo/meta";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = buildPageMeta({
     title: "Blog",
     description:

@@ -5,18 +5,20 @@ import { BlogPostScreen } from "@/screens/blog/post/screen";
 import { buildPageMeta } from "@/lib/seo/meta";
 import { renderJsonLd } from "@/lib/seo/jsonld";
 
+export const dynamic = "force-dynamic";
+
 interface BlogPostPageProps {
     params: Promise<{
         slug: string;
     }>;
 }
 
-export async function generateStaticParams() {
-    const slugs = await getAllBlogSlugs();
-    return slugs.map((slug) => ({
-        slug: slug.slug.current,
-    }));
-}
+// export async function generateStaticParams() {
+//     const slugs = await getAllBlogSlugs();
+//     return slugs.map((slug) => ({
+//         slug: slug.slug.current,
+//     }));
+// }
 
 export async function generateMetadata({
     params,
