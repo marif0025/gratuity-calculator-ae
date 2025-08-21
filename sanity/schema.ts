@@ -3,13 +3,15 @@ import { type SchemaTypeDefinition } from "sanity";
 import { image, blockContent, seo, hero, commonFields } from './schemas/components'
 import config, { footer, header, siteSeo, logo, link } from "./schemas/config";
 import home from './schemas/home'
+import blog from './schemas/blog'
 
 const components = [image, blockContent, seo, hero]
 const configSchemas = [footer, header, siteSeo, logo, link];
 const singletons = [config, home]; // Config and Home are singletons
+const documents = [blog]; // Regular document types
 
 export const schema: { types: SchemaTypeDefinition[] } = {
-    types: [...components, ...configSchemas, ...singletons],
+    types: [...components, ...configSchemas, ...singletons, ...documents],
 };
 
 export { commonFields }
