@@ -7,17 +7,10 @@ export const getAllBlogsQuery = groq`
     description,
     slug,
     featureImage {
-      asset-> {
-        _id,
-        url,
-        metadata {
-          dimensions {
-            width,
-            height
-          }
-        }
-      },
-      alt
+      "url": asset->url,
+      "width": asset->metadata.dimensions.width,
+      "height": asset->metadata.dimensions.height,
+      "alt": alt
     },
     category->{
       _id,
@@ -54,17 +47,10 @@ export const getBlogBySlugQuery = groq`
     description,
     slug,
     featureImage {
-      asset-> {
-        _id,
-        url,
-        metadata {
-          dimensions {
-            width,
-            height
-          }
-        }
-      },
-      alt
+      "url": asset->url,
+      "width": asset->metadata.dimensions.width,
+      "height": asset->metadata.dimensions.height,
+      "alt": alt
     },
     category->{
       _id,

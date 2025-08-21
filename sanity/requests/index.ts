@@ -52,3 +52,13 @@ export type {
 
 // Re-export portable text utilities
 export { renderPortableText, getPlainText } from '../lib/portable-text'
+
+// Re-export SEO helper functions
+export {
+    transformSEOToMetadata,
+    generateBlogMetadata,
+    generateCategoryMetadata,
+    generatePageMetadata,
+    generateHomeMetadata,
+    generateConfigMetadata,
+} from '../lib/seo-helper'

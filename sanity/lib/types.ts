@@ -13,6 +13,14 @@ export interface SanityImage {
     alt?: string
 }
 
+// Transformed image type for queries that flatten the asset structure
+export interface TransformedSanityImage {
+    url: string
+    width: number
+    height: number
+    alt?: string
+}
+
 export interface SanityLink {
     text: string
     url: string
@@ -116,7 +124,7 @@ export interface BlogData {
     slug: {
         current: string
     } // Required
-    featureImage?: SanityImage // Optional
+    featureImage?: TransformedSanityImage // Optional
     category: CategoryData // Required
     content?: any // PortableText content - Optional
     publishedAt?: string // Optional (has initialValue)
@@ -131,7 +139,7 @@ export interface BlogPreview {
     slug: {
         current: string
     } // Required
-    featureImage?: SanityImage // Optional
+    featureImage?: TransformedSanityImage // Optional
     category: CategoryPreview // Required
     publishedAt?: string // Optional
 }
