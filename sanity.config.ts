@@ -7,7 +7,7 @@ import { apiVersion, dataset, projectId } from './sanity/env'
 import { schema } from './sanity/schema'
 
 const singletonActions = new Set(["publish", "discardChanges", "restore"])
-const singletonTypes = new Set(["config"])
+const singletonTypes = new Set(["config", "home"])
 
 export default defineConfig({
   basePath: '/admin',
@@ -23,19 +23,24 @@ export default defineConfig({
           (type) => !singletonTypes.has(type.name)
         );
 
+        const singletonItems = Array.from(singletonTypes).map((singletonType) => {
+          const schemaType = schemaTypes.find(t => t.name === singletonType);
+          return S.listItem()
+            .title(schemaType?.title || singletonType)
+            .id(singletonType)
+            .child(
+              S.document()
+                .schemaType(singletonType)
+                .documentId(singletonType)
+            );
+        });
+
         return S.list()
           .title('Content')
           .items([
-            S.listItem()
-              .title('Config')
-              .id('config')
-              .child(
-                S.document()
-                  .schemaType('config')
-                  .documentId('config')
-              ),
+            ...singletonItems,
 
-            S.divider(),
+            ...(nonSingletonTypes.length > 0 ? [S.divider()] : []),
 
             ...nonSingletonTypes.map((type) =>
               S.listItem()

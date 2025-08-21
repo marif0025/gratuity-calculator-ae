@@ -1,20 +1,10 @@
-import { defineType, defineArrayMember } from 'sanity'
-
-/**
- * This is the schema type for block content used in the post document type
- * Importing this type into the studio configuration's `schema` property
- * lets you reuse it in other document types with:
- *  {
- *    name: 'someName',
- *    title: 'Some title',
- *    type: 'blockContent'
- *  }
- */
+import { defineType, defineArrayMember, defineField } from 'sanity'
 
 export default defineType({
   title: 'Block Content',
   name: 'blockContent',
   type: 'array',
+  description: 'Rich text content with formatting, links, and embedded images',
   of: [
     defineArrayMember({
       title: 'Block',
@@ -47,11 +37,12 @@ export default defineType({
             name: 'link',
             type: 'object',
             fields: [
-              {
+              defineField({
                 title: 'URL',
                 name: 'href',
                 type: 'url',
-              },
+                description: 'The URL this text should link to',
+              }),
             ],
           },
         ],
@@ -62,6 +53,7 @@ export default defineType({
     // as a block type.
     defineArrayMember({
       type: 'iimage',
+      description: 'Embed an image within the text content',
     }),
   ],
 })
