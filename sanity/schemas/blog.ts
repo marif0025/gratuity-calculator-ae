@@ -39,6 +39,14 @@ export default defineType({
             description: 'Main image for the blog post (displayed in listings and social media)',
         }),
         defineField({
+            name: 'category',
+            title: 'Category',
+            type: 'reference',
+            to: [{ type: 'category' }],
+            description: 'The category this blog post belongs to',
+            validation: (Rule) => Rule.required(),
+        }),
+        defineField({
             name: 'content',
             title: 'Content',
             type: 'blockContent',
