@@ -9,7 +9,7 @@ interface CategoryScreenProps {
 
 export function CategoryScreen({ category, blogs }: CategoryScreenProps) {
     return (
-        <div className="min-h-screen bg-gray-50">
+        <div className="min-h-screen bg-gray-50 pt-24">
             <div className="container mx-auto px-4 py-8">
                 <Breadcrumbs
                     items={[

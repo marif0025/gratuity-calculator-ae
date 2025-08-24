@@ -12,9 +12,16 @@ import {
     DrawerTrigger,
 } from "@/components/ui/drawer";
 import { Button } from "@/components/ui/button";
-import { navLinks } from "@/components/header/header";
 
-export function MobileMenu() {
+type TProps = {
+    navLinks?: {
+        href: string;
+        label: string;
+        isExternal?: boolean;
+    }[];
+};
+
+export function MobileMenu({ navLinks }: TProps) {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     return (
@@ -31,7 +38,7 @@ export function MobileMenu() {
                 </DrawerHeader>
 
                 <div className="border-t border-gray-200 py-4 space-y-4">
-                    {navLinks.map((link) => (
+                    {navLinks?.map((link) => (
                         <Link
                             key={link.href}
                             href={link.href}

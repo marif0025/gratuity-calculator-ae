@@ -109,11 +109,11 @@ export interface ConfigFooter {
 }
 
 export interface ConfigData {
-    _id: string
-    site_name?: string // Optional
-    seo?: ConfigSEO // Optional
-    header?: ConfigHeader // Optional
-    footer?: ConfigFooter // Optional
+    _id: string;
+    site_name?: string;
+    seo?: ConfigSEO;
+    header?: ConfigHeader;
+    footer?: ConfigFooter;
 }
 
 // Blog types
