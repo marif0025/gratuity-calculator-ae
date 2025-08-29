@@ -1,8 +1,18 @@
-"use client";
+import { Suspense } from "react";
+import StudioPage from "./studio";
 
-import { NextStudio } from "next-sanity/studio";
-import config from "@/sanity.config";
+import { Metadata } from "next";
 
-export default function StudioPage() {
-    return <NextStudio config={config} />;
+export const metadata: Metadata = {
+    title: "Admin - Gratuity Calculator",
+    description: "Calculate your gratuity in UAE",
+    robots: "noindex, nofollow",
+};
+
+export default function Page() {
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <StudioPage />
+        </Suspense>
+    );
 }

@@ -1,6 +1,6 @@
 export const seoDefaults = {
     siteName: 'Gratuity Calculator',
-    baseUrl: process.env.SITE_URL || 'https://yourdomain.com', // Replace with your actual domain
+    baseUrl: process.env.SITE_URL || 'http://localhost:3000',
     defaultImages: {
         og: '/og-default.jpg',
         twitter: '/twitter-default.jpg'

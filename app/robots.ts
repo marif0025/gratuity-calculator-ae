@@ -7,11 +7,7 @@ export default function robots(): MetadataRoute.Robots {
                 userAgent: '*',
                 disallow: '/',
             },
-            // {
-            //     userAgent: '*',
-            //     allow: ['/blog', '/blog/*'],
-            // }
         ],
-        // sitemap: (process.env.SITE_URL || 'https://yourdomain.com') + '/sitemap.xml',
+        sitemap: (process.env.SITE_URL || 'http://localhost:3000') + '/sitemap.xml',
     };
 }
