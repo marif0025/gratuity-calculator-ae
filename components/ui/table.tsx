@@ -1,0 +1,144 @@
+import * as React from "react";
+import { cn } from "@/lib/utils";
+
+// Types for Sanity table data
+interface TableCell {
+    _key: string;
+    _type: "tableCell";
+    text: string;
+}
+
+interface TableRow {
+    _key: string;
+    _type: "tableRow";
+    cells: TableCell[];
+}
+
+interface TableData {
+    _type: "table";
+    rows: TableRow[];
+}
+
+// Types for our table block component
+interface TableBlockData {
+    _type: "tableBlock";
+    table: TableData;
+    title?: string;
+    caption?: string;
+}
+
+interface TableProps {
+    data: TableData;
+    title?: string;
+    caption?: string;
+    className?: string;
+}
+
+const Table = React.forwardRef<HTMLTableElement, TableProps>(
+    ({ data, title, caption, className, ...props }, ref) => {
+        // Default styling values
+        const striped = true;
+        const bordered = true;
+        const compact = false;
+        const responsive = true;
+
+        if (!data?.rows || data.rows.length === 0) {
+            return (
+                <div className="text-center py-8 text-muted-foreground">
+                    <p>No table data available</p>
+                </div>
+            );
+        }
+
+        const tableElement = (
+            <table
+                ref={ref}
+                className={cn(
+                    "w-full border-collapse",
+                    bordered && "border border-border",
+                    compact ? "text-sm" : "text-base",
+                    className
+                )}
+                {...props}
+            >
+                {caption && (
+                    <caption className="text-sm text-muted-foreground text-center py-2">
+                        {caption}
+                    </caption>
+                )}
+                <thead>
+                    <tr
+                        className={cn(
+                            "bg-muted/50",
+                            bordered && "border-b border-border"
+                        )}
+                    >
+                        {data.rows[0]?.cells?.map((cell, index) => (
+                            <th
+                                key={cell._key || index}
+                                className={cn(
+                                    "font-semibold text-left",
+                                    compact ? "p-2" : "p-3",
+                                    bordered &&
+                                        "border-r border-border last:border-r-0"
+                                )}
+                            >
+                                {cell.text}
+                            </th>
+                        ))}
+                    </tr>
+                </thead>
+                <tbody>
+                    {data.rows.slice(1).map((row, rowIndex) => (
+                        <tr
+                            key={row._key || rowIndex}
+                            className={cn(
+                                striped && rowIndex % 2 === 0 && "bg-muted/30",
+                                bordered &&
+                                    "border-b border-border last:border-b-0"
+                            )}
+                        >
+                            {row.cells?.map((cell, cellIndex) => (
+                                <td
+                                    key={cell._key || cellIndex}
+                                    className={cn(
+                                        compact ? "p-2" : "p-3",
+                                        bordered &&
+                                            "border-r border-border last:border-r-0"
+                                    )}
+                                >
+                                    {cell.text}
+                                </td>
+                            ))}
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        );
+
+        if (responsive) {
+            return (
+                <div className="w-full overflow-x-auto">
+                    {title && (
+                        <h3 className="text-lg font-semibold mb-3">{title}</h3>
+                    )}
+                    {tableElement}
+                </div>
+            );
+        }
+
+        return (
+            <>
+                {title && (
+                    <h3 className="text-lg font-semibold mb-3">{title}</h3>
+                )}
+                {tableElement}
+            </>
+        );
+    }
+);
+
+Table.displayName = "Table";
+
+export { Table };
+export type { TableProps, TableData, TableRow, TableCell, TableBlockData };

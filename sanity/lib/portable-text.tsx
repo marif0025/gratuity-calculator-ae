@@ -2,6 +2,7 @@ import { PortableText } from "@portabletext/react";
 import type { PortableTextComponents } from "@portabletext/react";
 import Image from "next/image";
 import { urlForImage } from "./image";
+import { Table } from "@/components/ui/table";
 
 // Custom components for PortableText rendering
 const components: PortableTextComponents = {
@@ -30,6 +31,19 @@ const components: PortableTextComponents = {
                         </figcaption>
                     )}
                 </figure>
+            );
+        },
+        tableBlock: ({ value }) => {
+            if (!value?.table) return null;
+
+            return (
+                <div className="my-6">
+                    <Table
+                        data={value.table}
+                        title={value.title}
+                        caption={value.caption}
+                    />
+                </div>
             );
         },
     },

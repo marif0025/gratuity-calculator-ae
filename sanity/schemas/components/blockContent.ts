@@ -55,5 +55,9 @@ export default defineType({
       type: 'iimage',
       description: 'Embed an image within the text content',
     }),
+    defineArrayMember({
+      type: 'tableBlock',
+      description: 'Embed a structured table within the text content',
+    }),
   ],
 })
