@@ -11,7 +11,7 @@ interface TableCell {
 interface TableRow {
     _key: string;
     _type: "tableRow";
-    cells: TableCell[];
+    cells: (TableCell | string)[]; // Support both TableCell objects and strings
 }
 
 interface TableData {
@@ -34,13 +34,20 @@ interface TableProps {
     className?: string;
 }
 
+// Helper function to extract text from cell (handles both string and TableCell)
+const getCellText = (cell: TableCell | string): string => {
+    if (typeof cell === "string") {
+        return cell;
+    }
+    return cell.text || "";
+};
+
 const Table = React.forwardRef<HTMLTableElement, TableProps>(
     ({ data, title, caption, className, ...props }, ref) => {
         // Default styling values
         const striped = true;
         const bordered = true;
         const compact = false;
-        const responsive = true;
 
         if (!data?.rows || data.rows.length === 0) {
             return (
@@ -49,6 +56,9 @@ const Table = React.forwardRef<HTMLTableElement, TableProps>(
                 </div>
             );
         }
+
+        const head = data.rows[0]?.cells;
+        const body = data.rows.slice(1);
 
         const tableElement = (
             <table
@@ -66,30 +76,42 @@ const Table = React.forwardRef<HTMLTableElement, TableProps>(
                         {caption}
                     </caption>
                 )}
-                <thead>
-                    <tr
-                        className={cn(
-                            "bg-muted/50",
-                            bordered && "border-b border-border"
-                        )}
-                    >
-                        {data.rows[0]?.cells?.map((cell, index) => (
-                            <th
-                                key={cell._key || index}
-                                className={cn(
-                                    "font-semibold text-left",
-                                    compact ? "p-2" : "p-3",
-                                    bordered &&
-                                        "border-r border-border last:border-r-0"
-                                )}
-                            >
-                                {cell.text}
-                            </th>
-                        ))}
-                    </tr>
-                </thead>
+
+                {head && (
+                    <thead>
+                        <tr
+                            className={cn(
+                                "bg-muted/50",
+                                bordered && "border-b border-border"
+                            )}
+                        >
+                            {head.map((cell, index) => {
+                                const cellText = getCellText(cell);
+
+                                return (
+                                    <th
+                                        key={
+                                            typeof cell === "string"
+                                                ? index
+                                                : cell._key || index
+                                        }
+                                        className={cn(
+                                            "font-semibold text-left",
+                                            compact ? "p-2" : "p-3",
+                                            bordered &&
+                                                "border-r border-border last:border-r-0"
+                                        )}
+                                    >
+                                        {cellText}
+                                    </th>
+                                );
+                            })}
+                        </tr>
+                    </thead>
+                )}
+
                 <tbody>
-                    {data.rows.slice(1).map((row, rowIndex) => (
+                    {body.map((row, rowIndex) => (
                         <tr
                             key={row._key || rowIndex}
                             className={cn(
@@ -98,42 +120,39 @@ const Table = React.forwardRef<HTMLTableElement, TableProps>(
                                     "border-b border-border last:border-b-0"
                             )}
                         >
-                            {row.cells?.map((cell, cellIndex) => (
-                                <td
-                                    key={cell._key || cellIndex}
-                                    className={cn(
-                                        compact ? "p-2" : "p-3",
-                                        bordered &&
-                                            "border-r border-border last:border-r-0"
-                                    )}
-                                >
-                                    {cell.text}
-                                </td>
-                            ))}
+                            {row.cells?.map((cell, cellIndex) => {
+                                const cellText = getCellText(cell);
+
+                                return (
+                                    <td
+                                        key={
+                                            typeof cell === "string"
+                                                ? cellIndex
+                                                : cell._key || cellIndex
+                                        }
+                                        className={cn(
+                                            compact ? "p-2" : "p-3",
+                                            bordered &&
+                                                "border-r border-border last:border-r-0"
+                                        )}
+                                    >
+                                        {cellText}
+                                    </td>
+                                );
+                            })}
                         </tr>
                     ))}
                 </tbody>
             </table>
         );
 
-        if (responsive) {
-            return (
-                <div className="w-full overflow-x-auto">
-                    {title && (
-                        <h3 className="text-lg font-semibold mb-3">{title}</h3>
-                    )}
-                    {tableElement}
-                </div>
-            );
-        }
-
         return (
-            <>
+            <div className="w-full overflow-x-auto">
                 {title && (
                     <h3 className="text-lg font-semibold mb-3">{title}</h3>
                 )}
                 {tableElement}
-            </>
+            </div>
         );
     }
 );

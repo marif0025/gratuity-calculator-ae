@@ -1,3 +1,5 @@
+import { TypedObject } from "sanity"
+
 // Common types used across multiple schemas
 export interface SanityImage {
     asset: {
@@ -126,7 +128,7 @@ export interface BlogData {
     } // Required
     featureImage?: TransformedSanityImage // Optional
     category: CategoryData // Required
-    content?: any // PortableText content - Optional
+    content?: TypedObject | TypedObject[] // PortableText content - Optional
     publishedAt?: string // Optional (has initialValue)
     isPublished?: boolean // Optional (has initialValue)
     seo?: SanitySEO // Optional

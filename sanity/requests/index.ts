@@ -50,9 +50,6 @@ export type {
     SanitySEO
 } from '../lib/types'
 
-// Re-export portable text utilities
-export { renderPortableText, getPlainText } from '../lib/portable-text'
-
 // Re-export SEO helper functions
 export {
     transformSEOToMetadata,
