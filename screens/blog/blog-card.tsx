@@ -2,6 +2,15 @@ import Link from "next/link";
 import Image from "next/image";
 import { format } from "date-fns";
 import { BlogPreview } from "@/sanity/lib/types";
+import {
+    Card,
+    CardDescription,
+    CardContent,
+    CardTitle,
+    CardHeader,
+    CardFooter,
+} from "@/components/ui/card";
+import { Clock, Clock1 } from "lucide-react";
 
 interface BlogCardProps {
     blog: BlogPreview;
@@ -12,61 +21,72 @@ export function BlogCard({ blog }: BlogCardProps) {
         ? format(new Date(blog.publishedAt), "MMM dd, yyyy")
         : null;
 
+    const data: FeaturedCardProps = {
+        title: blog.title,
+        description: blog.description || "",
+        image: blog.featureImage?.url || "",
+        date: formattedDate || "",
+        category: blog.category.name,
+        icon: <Clock1 />,
+        slug: blog.slug.current,
+    };
+
+    return <FeaturedCard {...data} />;
+}
+
+interface FeaturedCardProps {
+    title: string;
+    description: string;
+    image: string;
+    date: string;
+    category: string;
+    icon: React.ReactNode;
+    slug: string;
+}
+
+function FeaturedCard({
+    title,
+    description,
+    image,
+    date,
+    category,
+    icon,
+    slug = "",
+}: FeaturedCardProps) {
     return (
-        <article className="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden">
-            <Link href={`/blog/${blog.slug.current}/`} className="block">
-                {blog.featureImage && (
-                    <div className="relative h-48 overflow-hidden">
-                        <Image
-                            src={blog.featureImage.url}
-                            alt={blog.featureImage.alt || blog.title}
-                            fill
-                            className="object-cover hover:scale-105 transition-transform duration-300"
-                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                        />
-                    </div>
-                )}
-
-                <div className="p-6">
-                    <div className="flex items-center gap-2 mb-3">
-                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                            {blog.category.name}
-                        </span>
-                        {formattedDate && (
-                            <span className="text-sm text-gray-500">
-                                {formattedDate}
-                            </span>
-                        )}
-                    </div>
-
-                    <h3 className="text-xl font-semibold text-gray-900 mb-2 line-clamp-2 hover:text-blue-600 transition-colors">
-                        {blog.title}
-                    </h3>
-
-                    {blog.description && (
-                        <p className="text-gray-600 line-clamp-3 mb-4">
-                            {blog.description}
-                        </p>
-                    )}
-
-                    <div className="flex items-center text-sm text-blue-600 font-medium">
-                        Read more
-                        <svg
-                            className="w-4 h-4 ml-1"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                        >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M9 5l7 7-7 7"
-                            />
-                        </svg>
-                    </div>
+        <Card className="bg-gray-50 border-gray-100 overflow-hidden hover:border-purple-500/50 transition-colors pt-0">
+            <div className="relative h-64">
+                <Image
+                    src={image || "/images/blog-hero-image-500x500.png"}
+                    alt={title}
+                    fill
+                    className="object-cover"
+                />
+            </div>
+            <CardHeader>
+                <div className="flex items-center gap-2 text-sm text-purple-500 mb-2">
+                    {icon}
+                    <span>{category}</span>
                 </div>
-            </Link>
-        </article>
+                <CardTitle className="text-xl">{title}</CardTitle>
+            </CardHeader>
+            <CardContent>
+                <CardDescription className="text-gray-400">
+                    {description}
+                </CardDescription>
+            </CardContent>
+            <CardFooter className="flex justify-between text-sm text-gray-500">
+                <div className="flex items-center gap-1">
+                    <Clock className="h-4 w-4" />
+                    <span>{date}</span>
+                </div>
+                <Link
+                    href={`/blog/${slug}`}
+                    className="text-purple-500 hover:text-purple-400"
+                >
+                    Read more →
+                </Link>
+            </CardFooter>
+        </Card>
     );
 }
