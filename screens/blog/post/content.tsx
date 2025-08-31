@@ -9,7 +9,7 @@ export function BlogPostContent({ content }: BlogPostContentProps) {
     if (!content) return null;
 
     return (
-        <div className="prose prose-lg max-w-none">
+        <div className="prose prose-md md:prose-lg max-w-none">
             <PortableTextComponent content={content} />
         </div>
     );

@@ -58,6 +58,7 @@ export const getBlogBySlugQuery = groq`
       slug
     },
     content,
+    "headings": content[style in ["h1", "h2", "h3", "h4", "h5", "h6"]],
     publishedAt,
     isPublished,
     seo {

@@ -12,7 +12,7 @@ interface BreadcrumbsProps {
 
 export function Breadcrumbs({ items }: BreadcrumbsProps) {
     return (
-        <nav aria-label="Breadcrumb" className="mb-6">
+        <nav aria-label="Breadcrumb" className="mb-6 hidden lg:block">
             <ol className="flex items-center space-x-2 text-sm text-gray-500">
                 {items.map((item, index) => (
                     <li key={item.href} className="flex items-center">

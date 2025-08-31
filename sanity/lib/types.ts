@@ -118,32 +118,32 @@ export interface ConfigData {
     footer?: ConfigFooter;
 }
 
-// Blog types
 export interface BlogData {
     _id: string
-    title: string // Required
-    description?: string // Optional
+    title: string
+    description?: string
     slug: {
         current: string
-    } // Required
-    featureImage?: TransformedSanityImage // Optional
-    category: CategoryData // Required
-    content?: TypedObject | TypedObject[] // PortableText content - Optional
-    publishedAt?: string // Optional (has initialValue)
-    isPublished?: boolean // Optional (has initialValue)
-    seo?: SanitySEO // Optional
+    }
+    featureImage?: TransformedSanityImage
+    category: CategoryData
+    content?: TypedObject | TypedObject[]
+    headings?: TypedObject[]
+    publishedAt?: string
+    isPublished?: boolean
+    seo?: SanitySEO
 }
 
 export interface BlogPreview {
     _id: string
-    title: string // Required
-    description?: string // Optional
+    title: string
+    description?: string
     slug: {
         current: string
-    } // Required
-    featureImage?: TransformedSanityImage // Optional
+    }
+    featureImage?: TransformedSanityImage
     category: CategoryPreview // Required
-    publishedAt?: string // Optional
+    publishedAt?: string
 }
 
 export interface BlogSlug {
@@ -155,21 +155,21 @@ export interface BlogSlug {
 // Category types
 export interface CategoryData {
     _id: string
-    name: string // Required
-    description?: string // Optional
+    name: string
+    description?: string
     slug: {
         current: string
-    } // Required
-    seo?: SanitySEO // Optional
+    }
+    seo?: SanitySEO
 }
 
 export interface CategoryPreview {
     _id: string
-    name: string // Required
-    description?: string // Optional
+    name: string
+    description?: string
     slug: {
         current: string
-    } // Required
+    }
 }
 
 export interface CategorySlug {
@@ -181,26 +181,26 @@ export interface CategorySlug {
 // Page types
 export interface PageData {
     _id: string
-    title: string // Required
-    description?: string // Optional
+    title: string
+    description?: string
     slug: {
         current: string
-    } // Required
-    content?: any // PortableText content - Optional
-    pageType: 'contact' | 'privacy' | 'terms' | 'about' | 'faq' | 'other' // Required
-    isPublished?: boolean // Optional (has initialValue)
-    seo?: SanitySEO // Optional
+    }
+    content?: any
+    pageType: 'contact' | 'privacy' | 'terms' | 'about' | 'faq' | 'other'
+    isPublished?: boolean
+    seo?: SanitySEO
 }
 
 export interface PagePreview {
     _id: string
-    title: string // Required
-    description?: string // Optional
+    title: string
+    description?: string
     slug: {
         current: string
-    } // Required
-    pageType: 'contact' | 'privacy' | 'terms' | 'about' | 'faq' | 'other' // Required
-    seo?: SanitySEO // Optional
+    }
+    pageType: 'contact' | 'privacy' | 'terms' | 'about' | 'faq' | 'other'
+    seo?: SanitySEO
 }
 
 export interface PageSlug {

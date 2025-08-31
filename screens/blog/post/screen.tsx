@@ -1,10 +1,9 @@
 import { format } from "date-fns";
 import Image from "next/image";
-import { PortableText } from "@portabletext/react";
 import { BlogData } from "@/sanity/lib/types";
 import { Breadcrumbs } from "@/components/ui/breadcrumbs";
 import { BlogPostContent } from "./content";
-import { BlogPostSidebar } from "./sidebar";
+import { TableOfContents } from "./table-of-contents";
 
 interface BlogPostScreenProps {
     blog: BlogData;
@@ -19,7 +18,6 @@ export function BlogPostScreen({ blog }: BlogPostScreenProps) {
         <div className="container mx-auto px-4 py-24">
             <Breadcrumbs
                 items={[
-                    { name: "Home", href: "/" },
                     { name: "Blog", href: "/blog" },
                     {
                         name: blog.category.name,
@@ -33,58 +31,48 @@ export function BlogPostScreen({ blog }: BlogPostScreenProps) {
                 ]}
             />
 
-            <article className="mt-8">
-                {/* Header */}
+            <article>
                 <header className="mb-8">
-                    <div className="mx-auto">
-                        <div className="flex items-center gap-2 mb-4">
-                            <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
-                                {blog.category.name}
-                            </span>
-                            {formattedDate && (
-                                <span className="text-gray-500 text-sm">
-                                    {formattedDate}
-                                </span>
-                            )}
+                    <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight">
+                        {blog.title}
+                    </h1>
+
+                    {blog.description && (
+                        <p className="sm:text-xl text-gray-600 mb-6 leading-relaxed">
+                            {blog.description}
+                        </p>
+                    )}
+
+                    {blog.featureImage && (
+                        <div className="relative h-64 md:h-96 rounded-lg overflow-hidden">
+                            <Image
+                                src={blog.featureImage.url}
+                                alt={blog.featureImage.alt || blog.title}
+                                fill
+                                className="object-cover"
+                                priority
+                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px"
+                            />
                         </div>
-
-                        <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight">
-                            {blog.title}
-                        </h1>
-
-                        {blog.description && (
-                            <p className="text-xl text-gray-600 mb-6 leading-relaxed">
-                                {blog.description}
-                            </p>
-                        )}
-
-                        {blog.featureImage && (
-                            <div className="relative h-64 md:h-96 rounded-lg overflow-hidden">
-                                <Image
-                                    src={blog.featureImage.url}
-                                    alt={blog.featureImage.alt || blog.title}
-                                    fill
-                                    className="object-cover"
-                                    priority
-                                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px"
-                                />
-                            </div>
+                    )}
+                    <div className="flex items-center gap-2 mb-4">
+                        <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
+                            {blog.category.name}
+                        </span>
+                        {formattedDate && (
+                            <span className="text-gray-500 text-sm">
+                                {formattedDate}
+                            </span>
                         )}
                     </div>
                 </header>
 
-                {/* Content */}
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                    <div className="lg:col-span-2">
-                        <BlogPostContent content={blog.content} />
-                    </div>
+                <div className="grid lg:grid-cols-[400px_1fr] gap-6">
+                    <aside className="lg:sticky top-20 h-fit">
+                        <TableOfContents headings={blog.headings} />
+                    </aside>
 
-                    <div className="lg:col-span-1">
-                        <BlogPostSidebar
-                            category={blog.category}
-                            publishedAt={blog.publishedAt}
-                        />
-                    </div>
+                    <BlogPostContent content={blog.content} />
                 </div>
             </article>
         </div>

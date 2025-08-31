@@ -1,9 +1,10 @@
 import Image from "next/image";
-import { PortableText } from "@portabletext/react";
+import { PortableText, toPlainText } from "@portabletext/react";
 import { TypedObject } from "sanity";
 
 import { urlForImage } from "@/sanity/lib/image";
 import { Table } from "./ui/table";
+import { createSlug } from "@/lib/utils/slugify";
 
 export function PortableTextComponent({
     content,
@@ -32,6 +33,92 @@ export function PortableTextComponent({
                         title={value.title}
                         caption={value.caption}
                     />
+                );
+            },
+        },
+        block: {
+            h1: ({
+                children,
+                value,
+            }: {
+                children?: React.ReactNode;
+                value: any;
+            }) => {
+                const slug = createSlug(toPlainText(value));
+                return (
+                    <h1 id={slug} className="scroll-mt-20">
+                        {children}
+                    </h1>
+                );
+            },
+            h2: ({
+                children,
+                value,
+            }: {
+                children?: React.ReactNode;
+                value: any;
+            }) => {
+                const slug = createSlug(toPlainText(value));
+                return (
+                    <h2 id={slug} className="scroll-mt-20">
+                        {children}
+                    </h2>
+                );
+            },
+            h3: ({
+                children,
+                value,
+            }: {
+                children?: React.ReactNode;
+                value: any;
+            }) => {
+                const slug = createSlug(toPlainText(value));
+                return (
+                    <h3 id={slug} className="scroll-mt-20">
+                        {children}
+                    </h3>
+                );
+            },
+            h4: ({
+                children,
+                value,
+            }: {
+                children?: React.ReactNode;
+                value: any;
+            }) => {
+                const slug = createSlug(toPlainText(value));
+                return (
+                    <h4 id={slug} className="scroll-mt-20">
+                        {children}
+                    </h4>
+                );
+            },
+            h5: ({
+                children,
+                value,
+            }: {
+                children?: React.ReactNode;
+                value: any;
+            }) => {
+                const slug = createSlug(toPlainText(value));
+                return (
+                    <h5 id={slug} className="scroll-mt-20">
+                        {children}
+                    </h5>
+                );
+            },
+            h6: ({
+                children,
+                value,
+            }: {
+                children?: React.ReactNode;
+                value: any;
+            }) => {
+                const slug = createSlug(toPlainText(value));
+                return (
+                    <h6 id={slug} className="scroll-mt-20">
+                        {children}
+                    </h6>
                 );
             },
         },
