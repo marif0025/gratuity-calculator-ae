@@ -1,10 +1,17 @@
 import Image from "next/image";
 import { PortableText, toPlainText } from "@portabletext/react";
 import { TypedObject } from "sanity";
+import {
+    Accordion,
+    AccordionContent,
+    AccordionItem,
+    AccordionTrigger,
+} from "@/components/ui/accordion";
 
 import { urlForImage } from "@/sanity/lib/image";
 import { Table } from "./ui/table";
 import { createSlug } from "@/lib/utils/slugify";
+import { FAQData, FAQsBlock } from "@/sanity/lib/types";
 
 export function PortableTextComponent({
     content,
@@ -33,6 +40,31 @@ export function PortableTextComponent({
                         title={value.title}
                         caption={value.caption}
                     />
+                );
+            },
+            faqs: ({ value }: { value: FAQsBlock }) => {
+                if (!value?.faqs || !Array.isArray(value.faqs)) return null;
+
+                return (
+                    <div className="my-8">
+                        <Accordion type="single" collapsible className="w-full">
+                            {value.faqs.map((faq: FAQData, index: number) => (
+                                <AccordionItem
+                                    key={faq._key || index}
+                                    value={`faq-${index}`}
+                                >
+                                    <AccordionTrigger className="text-left">
+                                        {faq.question}
+                                    </AccordionTrigger>
+                                    <AccordionContent className="text-gray-700">
+                                        <PortableTextComponent
+                                            content={faq.answer}
+                                        />
+                                    </AccordionContent>
+                                </AccordionItem>
+                            ))}
+                        </Accordion>
+                    </div>
                 );
             },
         },

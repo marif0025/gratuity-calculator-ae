@@ -209,6 +209,18 @@ export interface PageSlug {
     }
 }
 
+// FAQ types
+export interface FAQData {
+    _key?: string
+    question: string
+    answer: TypedObject | TypedObject[]
+}
+
+export interface FAQsBlock {
+    _type: 'faqs'
+    faqs: FAQData[]
+}
+
 // Query response types
 export type GetHomeResponse = HomeData | null
 export type GetConfigResponse = ConfigData | null
