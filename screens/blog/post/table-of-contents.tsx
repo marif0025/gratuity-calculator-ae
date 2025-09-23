@@ -111,7 +111,7 @@ function TableOfContentsComponent({
             <h3 className="z-0 hidden lg:block mb-4 pb-1.5 font-bold md:sticky md:top-0">
                 {title}
             </h3>
-            <nav className="flex gap-4">
+            <nav className="flex gap-4 max-h-[calc(100vh-20rem)] overflow-y-auto">
                 <RenderToc elements={nestedHeadings} />
             </nav>
         </section>

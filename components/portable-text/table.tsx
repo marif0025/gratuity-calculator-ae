@@ -1,31 +1,6 @@
 import * as React from "react";
 import { cn } from "@/lib/utils";
-
-// Types for Sanity table data
-interface TableCell {
-    _key: string;
-    _type: "tableCell";
-    text: string;
-}
-
-interface TableRow {
-    _key: string;
-    _type: "tableRow";
-    cells: (TableCell | string)[]; // Support both TableCell objects and strings
-}
-
-interface TableData {
-    _type: "table";
-    rows: TableRow[];
-}
-
-// Types for our table block component
-interface TableBlockData {
-    _type: "tableBlock";
-    table: TableData;
-    title?: string;
-    caption?: string;
-}
+import { TableCell, TableRow, TableData } from "@/sanity/lib/types";
 
 interface TableProps {
     data: TableData;
@@ -97,7 +72,7 @@ const Table = React.forwardRef<HTMLTableElement, TableProps>(
                                         }
                                         className={cn(
                                             "font-semibold text-left",
-                                            compact ? "p-2" : "p-3",
+                                            compact ? "p-2!" : "p-3!",
                                             bordered &&
                                                 "border-r border-border last:border-r-0"
                                         )}
@@ -131,7 +106,7 @@ const Table = React.forwardRef<HTMLTableElement, TableProps>(
                                                 : cell._key || cellIndex
                                         }
                                         className={cn(
-                                            compact ? "p-2" : "p-3",
+                                            compact ? "p-2!" : "p-3!",
                                             bordered &&
                                                 "border-r border-border last:border-r-0"
                                         )}
@@ -160,4 +135,4 @@ const Table = React.forwardRef<HTMLTableElement, TableProps>(
 Table.displayName = "Table";
 
 export { Table };
-export type { TableProps, TableData, TableRow, TableCell, TableBlockData };
+export type { TableProps };

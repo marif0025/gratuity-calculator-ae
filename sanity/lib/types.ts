@@ -221,6 +221,31 @@ export interface FAQsBlock {
     faqs: FAQData[]
 }
 
+// Table types
+export interface TableCell {
+    _key: string;
+    _type: "tableCell";
+    text: string;
+}
+
+export interface TableRow {
+    _key: string;
+    _type: "tableRow";
+    cells: (TableCell | string)[]; // Support both TableCell objects and strings
+}
+
+export interface TableData {
+    _type: "table";
+    rows: TableRow[];
+}
+
+export interface TableBlockData {
+    _type: "tableBlock";
+    table: TableData;
+    title?: string;
+    caption?: string;
+}
+
 // Query response types
 export type GetHomeResponse = HomeData | null
 export type GetConfigResponse = ConfigData | null

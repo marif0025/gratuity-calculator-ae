@@ -46,7 +46,7 @@ export function CalculatorBasicSalary() {
                     placeholder="e.g., 5000"
                     value={basicSalary}
                     onChange={handleBasicSalaryChange}
-                    className="text-xl py-4 px-6 border-2 border-gray-200 rounded-2xl focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition-all duration-300 bg-gradient-to-r from-gray-50 to-blue-50/30"
+                    className="border-2 px-6"
                 />
                 <span className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 font-medium">
                     AED

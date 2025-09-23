@@ -30,7 +30,7 @@ export function DatePicker({
                 <Button
                     {...props}
                     variant="outline"
-                    className="data-[empty=true]:text-muted-foreground w-full justify-start text-left font-normal cursor-pointer border-2 rounded-2xl !pl-4.5"
+                    className="data-[empty=true]:text-muted-foreground w-full justify-start text-left font-normal cursor-pointer border-2 min-h-12 !pl-4.5"
                 >
                     <CalendarIcon />
                     <span>{label}</span>
