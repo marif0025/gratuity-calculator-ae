@@ -47,7 +47,11 @@ export type {
     HeroSection,
     SanityImage,
     SanityLink,
-    SanitySEO
+    SanitySEO,
+    AlertData,
+    FAQData,
+    FAQsBlock,
+    TableBlockData
 } from '../lib/types'
 
 // Re-export SEO helper functions

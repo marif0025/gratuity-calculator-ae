@@ -246,6 +246,15 @@ export interface TableBlockData {
     caption?: string;
 }
 
+// Alert types
+export interface AlertData {
+    _type: "alert";
+    type: 'info' | 'warning' | 'error' | 'tip';
+    title?: string;
+    content: TypedObject | TypedObject[];
+    dismissible?: boolean;
+}
+
 // Query response types
 export type GetHomeResponse = HomeData | null
 export type GetConfigResponse = ConfigData | null

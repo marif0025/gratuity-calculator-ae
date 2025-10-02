@@ -64,5 +64,9 @@ export default defineType({
         }),
       ],
     }),
+    defineArrayMember({
+      type: 'alert',
+      description: 'Add a beautiful alert component to highlight important information with different severity levels',
+    }),
   ],
 })

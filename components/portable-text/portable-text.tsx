@@ -4,10 +4,16 @@ import { TypedObject } from "sanity";
 
 import { urlForImage } from "@/sanity/lib/image";
 import { createSlug } from "@/lib/utils/slugify";
-import { FAQData, FAQsBlock, TableBlockData } from "@/sanity/lib/types";
+import {
+    FAQData,
+    FAQsBlock,
+    TableBlockData,
+    AlertData,
+} from "@/sanity/lib/types";
 
 import { Table } from "./table";
 import { PortableTextFAQs } from "./faqs";
+import { Alert } from "./alert";
 
 export function PortableTextComponent({
     content,
@@ -38,9 +44,10 @@ export function PortableTextComponent({
                     />
                 );
             },
-            faqs: ({ value }: { value: FAQsBlock }) => (
-                <PortableTextFAQs value={value} />
-            ),
+            faqs: ({ value }: { value: FAQsBlock }) => {
+                return <PortableTextFAQs value={value} />;
+            },
+            alert: ({ value }: { value: AlertData }) => <Alert value={value} />,
         },
         block: {
             h1: ({
