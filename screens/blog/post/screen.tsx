@@ -15,7 +15,7 @@ export function BlogPostScreen({ blog }: BlogPostScreenProps) {
         : null;
 
     return (
-        <div className="container mx-auto px-4 py-24">
+        <div className="container !max-w-screen-lg mx-auto px-4 py-24">
             <Breadcrumbs
                 items={[
                     { name: "Blog", href: "/blog" },
@@ -32,16 +32,29 @@ export function BlogPostScreen({ blog }: BlogPostScreenProps) {
             />
 
             <article>
-                <header className="mb-8">
-                    <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight">
-                        {blog.title}
-                    </h1>
+                <header className="grid gap-6 mb-8">
+                    <div className="flex flex-col gap-1">
+                        <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-6 leading-tight">
+                            {blog.title}
+                        </h1>
 
-                    {blog.description && (
-                        <p className="sm:text-xl text-gray-600 mb-6 leading-relaxed">
-                            {blog.description}
-                        </p>
-                    )}
+                        {blog.description && (
+                            <p className="sm:text-xl text-gray-600 mb-6 leading-relaxed">
+                                {blog.description}
+                            </p>
+                        )}
+
+                        <div className="flex items-center gap-2 mb-4">
+                            <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
+                                {blog.category.name}
+                            </span>
+                            {formattedDate && (
+                                <span className="text-gray-500 text-sm">
+                                    {formattedDate}
+                                </span>
+                            )}
+                        </div>
+                    </div>
 
                     {blog.featureImage && (
                         <div className="relative h-64 md:h-96 rounded-lg overflow-hidden">
@@ -55,19 +68,9 @@ export function BlogPostScreen({ blog }: BlogPostScreenProps) {
                             />
                         </div>
                     )}
-                    <div className="flex items-center gap-2 mb-4">
-                        <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
-                            {blog.category.name}
-                        </span>
-                        {formattedDate && (
-                            <span className="text-gray-500 text-sm">
-                                {formattedDate}
-                            </span>
-                        )}
-                    </div>
                 </header>
 
-                <div className="grid lg:grid-cols-[400px_1fr] gap-6">
+                <div className="grid lg:grid-cols-[360px_1fr] gap-6">
                     <aside className="lg:sticky top-20 h-fit">
                         <TableOfContents headings={blog.headings} />
                     </aside>

@@ -1,5 +1,6 @@
 import { AlertData } from "@/sanity/lib/types";
 import { PortableTextComponent } from "./portable-text";
+import { cn } from "@/lib/utils";
 
 const getAlertStyles = (type: string) => {
     switch (type) {
@@ -36,21 +37,22 @@ export function Alert({ value }: { value: AlertData }) {
 
     return (
         <div
-            className={`border-l-4 p-4 rounded-r-lg ${getAlertStyles(
-                value.type
-            )}`}
+            className={cn(
+                "border-l-4 p-4 rounded-r-lg not-prose",
+                getAlertStyles(value.type)
+            )}
         >
             <div className="flex items-start">
-                <div className="flex-shrink-0 mr-3 text-lg">
+                <span className="flex-shrink-0 mr-3 text-lg">
                     {getAlertIcon(value.type)}
-                </div>
+                </span>
                 <div className="flex-1">
                     {value.title && (
                         <h3 className="text-lg font-semibold mb-2">
                             {value.title}
                         </h3>
                     )}
-                    <div className="prose prose-sm max-w-none">
+                    <div className="prose prose-md max-w-none">
                         <PortableTextComponent content={value.content} />
                     </div>
                 </div>

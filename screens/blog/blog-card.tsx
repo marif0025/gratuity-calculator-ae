@@ -54,39 +54,38 @@ function FeaturedCard({
     slug = "",
 }: FeaturedCardProps) {
     return (
-        <Card className="bg-gray-50 border-gray-100 overflow-hidden hover:border-purple-500/50 transition-colors pt-0">
-            <div className="relative h-64">
-                <Image
-                    src={image || "/images/blog-hero-image-500x500.png"}
-                    alt={title}
-                    fill
-                    className="object-cover"
-                />
-            </div>
-            <CardHeader>
-                <div className="flex items-center gap-2 text-sm text-purple-500 mb-2">
-                    {icon}
-                    <span>{category}</span>
+        <Link href={`/blog/${slug}/`}>
+            <Card className="border-gray-100 gap-0 overflow-hidden hover:border-purple-500/50 transition-colors pt-0 relative group">
+                <div className="relative h-64">
+                    <Image
+                        src={image || "/images/blog-hero-image-500x500.png"}
+                        alt={title}
+                        fill
+                        className="object-cover"
+                    />
                 </div>
-                <CardTitle className="text-xl">{title}</CardTitle>
-            </CardHeader>
-            <CardContent>
-                <CardDescription className="text-gray-400">
-                    {description}
-                </CardDescription>
-            </CardContent>
-            <CardFooter className="flex justify-between text-sm text-gray-500">
-                <div className="flex items-center gap-1">
-                    <Clock className="h-4 w-4" />
-                    <span>{date}</span>
-                </div>
-                <Link
-                    href={`/blog/${slug}`}
-                    className="text-purple-500 hover:text-purple-400"
-                >
-                    Read more →
-                </Link>
-            </CardFooter>
-        </Card>
+                <CardHeader className="pt-6">
+                    <CardTitle className="text-xl group-hover:text-primary transition-colors">
+                        {title}
+                    </CardTitle>
+                </CardHeader>
+                <CardContent>
+                    <CardDescription className="text-gray-600 text-base">
+                        {description}
+                    </CardDescription>
+                </CardContent>
+                <CardFooter className="flex justify-between text-sm text-gray-500 pt-5">
+                    <div className="flex items-center gap-2 text-sm text-purple-500 mb-2">
+                        {icon}
+                        <span>{category}</span>
+                    </div>
+
+                    <div className="flex items-center gap-1">
+                        <Clock className="h-4 w-4" />
+                        <span>{date}</span>
+                    </div>
+                </CardFooter>
+            </Card>
+        </Link>
     );
 }
