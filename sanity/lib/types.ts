@@ -37,45 +37,11 @@ export interface SanitySEO {
     indexable?: boolean
 }
 
-// Hero section types
-export interface HeroValueProp {
-    icon: string
-    title: string
-    description: string
-}
-
-export interface HeroButton {
-    label: string
-    link: string
-    variant: string
-}
-
-export interface HeroTrustIndicator {
-    icon: string
-    text: string
-}
-
-export interface HeroStat {
-    value: string
-    label: string
-}
-
-export interface HeroSection {
-    eyebrow?: string
-    headline?: string
-    subheadline?: string
-    valueProps?: HeroValueProp[]
-    buttons?: HeroButton[]
-    trustIndicators?: HeroTrustIndicator[]
-    heroImage?: SanityImage
-    stats?: HeroStat[]
-}
 
 // Home page types
 export interface HomeData {
     _id: string
     title?: string // Optional (has initialValue)
-    hero?: HeroSection // Optional
     seo?: SanitySEO // Optional
 }
 
