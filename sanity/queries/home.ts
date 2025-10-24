@@ -22,6 +22,11 @@ export const getHomeQuery = groq`
         alt
       },
       indexable
+    },
+    contentBlocks[] {
+      title,
+      icon,
+      content
     }
   }
 `

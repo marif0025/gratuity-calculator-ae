@@ -960,7 +960,7 @@ export type GetConfigQueryResult = {
 
 // Source: ./sanity/queries/home.ts
 // Variable: getHomeQuery
-// Query: *[_type == "home"][0] {    _id,    title,    seo {      meta_title,      meta_description,      keywords,      open_graph_image {        asset-> {          _id,          url,          metadata {            dimensions {              width,              height            }          }        },        alt      },      indexable    }  }
+// Query: *[_type == "home"][0] {    _id,    title,    seo {      meta_title,      meta_description,      keywords,      open_graph_image {        asset-> {          _id,          url,          metadata {            dimensions {              width,              height            }          }        },        alt      },      indexable    },    contentBlocks[] {      title,      icon,      content    }  }
 export type GetHomeQueryResult = {
   _id: string;
   title: string | null;
@@ -983,6 +983,51 @@ export type GetHomeQueryResult = {
     } | null;
     indexable: boolean | null;
   } | null;
+  contentBlocks: Array<{
+    title: string | null;
+    icon: string | null;
+    content: Array<{
+      _key: string;
+    } & Alert | {
+      _key: string;
+    } & TableBlock | {
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "normal";
+      listItem?: "bullet";
+      markDefs?: Array<{
+        href?: string;
+        _type: "link";
+        _key: string;
+      }>;
+      level?: number;
+      _type: "block";
+      _key: string;
+    } | {
+      faqs?: Array<{
+        _key: string;
+      } & Faq>;
+      _type: "faqs";
+      _key: string;
+    } | {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt?: string;
+      _type: "iimage";
+      _key: string;
+    }> | null;
+  }> | null;
 } | null;
 
 // Source: ./sanity/queries/page.ts
@@ -1119,22 +1164,22 @@ export type GetAllPageSlugsQueryResult = Array<{
 }>;
 
 // Query TypeMap
-import "@sanity/client";
-declare module "@sanity/client" {
+import "next-sanity";
+declare module "next-sanity" {
   interface SanityQueries {
-    "\n  *[_type == \"blog\" && isPublished == true] | order(publishedAt desc) {\n    _id,\n    title,\n    description,\n    slug,\n    featureImage {\n      \"url\": asset->url,\n      \"width\": asset->metadata.dimensions.width,\n      \"height\": asset->metadata.dimensions.height,\n      \"alt\": alt\n    },\n    category->{\n      _id,\n      name,\n      slug\n    },\n    publishedAt,\n    seo {\n      meta_title,\n      meta_description,\n      keywords,\n      open_graph_image {\n        asset-> {\n          _id,\n          url,\n          metadata {\n            dimensions {\n              width,\n              height\n            }\n          }\n        },\n        alt\n      },\n      indexable\n    }\n  }\n": GetAllBlogsQueryResult;
-    "\n  *[_type == \"blog\" && slug.current == $slug][0] {\n    _id,\n    title,\n    description,\n    slug,\n    featureImage {\n      \"url\": asset->url,\n      \"width\": asset->metadata.dimensions.width,\n      \"height\": asset->metadata.dimensions.height,\n      \"alt\": alt\n    },\n    category->{\n      _id,\n      name,\n      slug\n    },\n    content,\n    \"headings\": content[style in [\"h1\", \"h2\", \"h3\", \"h4\", \"h5\", \"h6\"]],\n    publishedAt,\n    isPublished,\n    seo {\n      meta_title,\n      meta_description,\n      keywords,\n      open_graph_image {\n        asset-> {\n          _id,\n          url,\n          metadata {\n            dimensions {\n              width,\n              height\n            }\n          }\n        },\n        alt\n      },\n      indexable\n    }\n  }\n": GetBlogBySlugQueryResult;
-    "\n  *[_type == \"blog\" && isPublished == true] | order(publishedAt desc)[0...$limit] {\n    _id,\n    title,\n    description,\n    slug,\n    featureImage {\n      asset-> {\n        _id,\n        url,\n        metadata {\n          dimensions {\n            width,\n            height\n          }\n        }\n      },\n      alt\n    },\n    category->{\n      _id,\n      name,\n      slug\n    },\n    publishedAt\n  }\n": GetRecentBlogsQueryResult;
-    "\n  *[_type == \"blog\" && isPublished == true] {\n    slug\n  }\n": GetAllBlogSlugsQueryResult;
-    "\n  *[_type == \"category\"] | order(name asc) {\n    _id,\n    name,\n    description,\n    slug,\n    seo {\n      meta_title,\n      meta_description,\n      keywords,\n      open_graph_image {\n        asset->{\n          _id,\n          url,\n          metadata{dimensions{width,height}}\n        },\n        alt\n      },\n      indexable\n    }\n  }\n": GetAllCategoriesQueryResult;
-    "\n  *[_type == \"category\" && slug.current == $slug][0] {\n    _id,\n    name,\n    description,\n    slug,\n    seo {\n      meta_title,\n      meta_description,\n      keywords,\n      open_graph_image {\n        asset->{\n          _id,\n          url,\n          metadata{dimensions{width,height}}\n        },\n        alt\n      },\n      indexable\n    }\n  }\n": GetCategoryBySlugQueryResult;
-    "\n  *[_type == \"category\"] {\n    slug\n  }\n": GetAllCategorySlugsQueryResult;
-    "\n  *[_type == \"blog\" && category->slug.current == $categorySlug && isPublished == true] | order(publishedAt desc) {\n    _id,\n    title,\n    description,\n    slug,\n    featureImage {\n      \"url\": asset->url,\n      \"width\": asset->metadata.dimensions.width,\n      \"height\": asset->metadata.dimensions.height,\n      \"alt\": alt\n    },\n    category->{\n      _id,\n      name,\n      slug\n    },\n    publishedAt,\n    seo\n  }\n": GetBlogsByCategoryQueryResult;
-    "\n  *[_type == \"config\"][0] {\n    _id,\n    site_name,\n    seo {\n      meta_title,\n      meta_description,\n      favicon {\n        asset-> {\n          _id,\n          url,\n          metadata {\n            dimensions {\n              width,\n              height\n            }\n          }\n        },\n        alt\n      },\n      open_graph_image {\n        asset-> {\n          _id,\n          url,\n          metadata {\n            dimensions {\n              width,\n              height\n            }\n          }\n        },\n        alt\n      },\n      base_path,\n      sitemap_url,\n      indexable,\n      google_tag,\n      scripts\n    },\n    header {\n      logo {\n        image {\n          asset-> {\n            _id,\n            url,\n            metadata {\n              dimensions {\n                width,\n                height\n              }\n            }\n          },\n          alt\n        },\n        url,\n        text\n      },\n      menu[] {\n        text,\n        url,\n        is_external\n      },\n      cta_button {\n        text,\n        url,\n        is_external\n      }\n    },\n    footer {\n      footer_text,\n      menu[] {\n        text,\n        url,\n        is_external\n      },\n      social_links[] {\n        text,\n        url,\n        is_external\n      }\n    }\n  }\n": GetConfigQueryResult;
-    "\n  *[_type == \"home\"][0] {\n    _id,\n    title,\n    seo {\n      meta_title,\n      meta_description,\n      keywords,\n      open_graph_image {\n        asset-> {\n          _id,\n          url,\n          metadata {\n            dimensions {\n              width,\n              height\n            }\n          }\n        },\n        alt\n      },\n      indexable\n    }\n  }\n": GetHomeQueryResult;
-    "\n  *[_type == \"page\" && isPublished == true] | order(pageType asc, title asc) {\n    _id,\n    title,\n    description,\n    slug,\n    pageType,\n    seo {\n      meta_title,\n      meta_description,\n      keywords,\n      open_graph_image {\n        asset-> {\n          _id,\n          url,\n          metadata {\n            dimensions {\n              width,\n              height\n            }\n          }\n        },\n        alt\n      },\n      indexable\n    }\n  }\n": GetAllPagesQueryResult;
-    "\n  *[_type == \"page\" && slug.current == $slug][0] {\n    _id,\n    title,\n    description,\n    slug,\n    content,\n    pageType,\n    isPublished,\n    seo {\n      meta_title,\n      meta_description,\n      keywords,\n      open_graph_image {\n        asset-> {\n          _id,\n          url,\n          metadata {\n            dimensions {\n              width,\n              height\n            }\n          }\n        },\n        alt\n      },\n      indexable\n    }\n  }\n": GetPageBySlugQueryResult;
-    "\n  *[_type == \"page\" && pageType == $pageType && isPublished == true] | order(title asc) {\n    _id,\n    title,\n    description,\n    slug,\n    pageType,\n    seo {\n      meta_title,\n      meta_description,\n      keywords,\n      open_graph_image {\n        asset-> {\n          _id,\n          url,\n          metadata {\n            dimensions {\n              width,\n              height\n            }\n          }\n        },\n        alt\n      },\n      indexable\n    }\n  }\n": GetPagesByTypeQueryResult;
-    "\n  *[_type == \"page\" && isPublished == true] {\n    slug\n  }\n": GetAllPageSlugsQueryResult;
+    "*[_type == \"blog\" && isPublished == true] | order(publishedAt desc) { _id, title, description, slug, featureImage { \"url\": asset->url, \"width\": asset->metadata.dimensions.width, \"height\": asset->metadata.dimensions.height, \"alt\": alt }, category->{ _id, name, slug }, publishedAt, seo { meta_title, meta_description, keywords, open_graph_image { asset-> { _id, url, metadata { dimensions { width, height } } }, alt }, indexable } }": GetAllBlogsQueryResult;
+    "*[_type == \"blog\" && slug.current == $slug][0] { _id, title, description, slug, featureImage { \"url\": asset->url, \"width\": asset->metadata.dimensions.width, \"height\": asset->metadata.dimensions.height, \"alt\": alt }, category->{ _id, name, slug }, content, \"headings\": content[style in [\"h1\", \"h2\", \"h3\", \"h4\", \"h5\", \"h6\"]], publishedAt, isPublished, seo { meta_title, meta_description, keywords, open_graph_image { asset-> { _id, url, metadata { dimensions { width, height } } }, alt }, indexable } }": GetBlogBySlugQueryResult;
+    "*[_type == \"blog\" && isPublished == true] | order(publishedAt desc)[0...$limit] { _id, title, description, slug, featureImage { asset-> { _id, url, metadata { dimensions { width, height } } }, alt }, category->{ _id, name, slug }, publishedAt }": GetRecentBlogsQueryResult;
+    "*[_type == \"blog\" && isPublished == true] { slug }": GetAllBlogSlugsQueryResult;
+    "*[_type == \"category\"] | order(name asc) { _id, name, description, slug, seo { meta_title, meta_description, keywords, open_graph_image { asset->{ _id, url, metadata{dimensions{width,height}} }, alt }, indexable } }": GetAllCategoriesQueryResult;
+    "*[_type == \"category\" && slug.current == $slug][0] { _id, name, description, slug, seo { meta_title, meta_description, keywords, open_graph_image { asset->{ _id, url, metadata{dimensions{width,height}} }, alt }, indexable } }": GetCategoryBySlugQueryResult;
+    "*[_type == \"category\"] { slug }": GetAllCategorySlugsQueryResult;
+    "*[_type == \"blog\" && category->slug.current == $categorySlug && isPublished == true] | order(publishedAt desc) { _id, title, description, slug, featureImage { \"url\": asset->url, \"width\": asset->metadata.dimensions.width, \"height\": asset->metadata.dimensions.height, \"alt\": alt }, category->{ _id, name, slug }, publishedAt, seo }": GetBlogsByCategoryQueryResult;
+    "*[_type == \"config\"][0] { _id, site_name, seo { meta_title, meta_description, favicon { asset-> { _id, url, metadata { dimensions { width, height } } }, alt }, open_graph_image { asset-> { _id, url, metadata { dimensions { width, height } } }, alt }, base_path, sitemap_url, indexable, google_tag, scripts }, header { logo { image { asset-> { _id, url, metadata { dimensions { width, height } } }, alt }, url, text }, menu[] { text, url, is_external }, cta_button { text, url, is_external } }, footer { footer_text, menu[] { text, url, is_external }, social_links[] { text, url, is_external } } }": GetConfigQueryResult;
+    "*[_type == \"home\"][0] { _id, title, seo { meta_title, meta_description, keywords, open_graph_image { asset-> { _id, url, metadata { dimensions { width, height } } }, alt }, indexable }, contentBlocks[] { title, icon, content } }": GetHomeQueryResult;
+    "*[_type == \"page\" && isPublished == true] | order(pageType asc, title asc) { _id, title, description, slug, pageType, seo { meta_title, meta_description, keywords, open_graph_image { asset-> { _id, url, metadata { dimensions { width, height } } }, alt }, indexable } }": GetAllPagesQueryResult;
+    "*[_type == \"page\" && slug.current == $slug][0] { _id, title, description, slug, content, pageType, isPublished, seo { meta_title, meta_description, keywords, open_graph_image { asset-> { _id, url, metadata { dimensions { width, height } } }, alt }, indexable } }": GetPageBySlugQueryResult;
+    "*[_type == \"page\" && pageType == $pageType && isPublished == true] | order(title asc) { _id, title, description, slug, pageType, seo { meta_title, meta_description, keywords, open_graph_image { asset-> { _id, url, metadata { dimensions { width, height } } }, alt }, indexable } }": GetPagesByTypeQueryResult;
+    "*[_type == \"page\" && isPublished == true] { slug }": GetAllPageSlugsQueryResult;
   }
 }

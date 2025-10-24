@@ -44,7 +44,6 @@ export type {
     CategoryPreview,
     PageData,
     PagePreview,
-    HeroSection,
     SanityImage,
     SanityLink,
     SanitySEO,
