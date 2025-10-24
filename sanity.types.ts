@@ -12,3 +12,1129 @@
  * ---------------------------------------------------------------------------------
  */
 
+// Source: schema.json
+export type Page = {
+  _id: string;
+  _type: "page";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  description?: string;
+  slug?: Slug;
+  content?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "blockquote";
+    listItem?: "bullet";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  } | {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "iimage";
+    _key: string;
+  } | {
+    _key: string;
+  } & TableBlock | {
+    faqs?: Array<{
+      _key: string;
+    } & Faq>;
+    _type: "faqs";
+    _key: string;
+  } | {
+    _key: string;
+  } & Alert>;
+  seo?: Seo;
+  isPublished?: boolean;
+  pageType?: "contact" | "privacy" | "terms" | "about" | "faq" | "other";
+};
+
+export type Blog = {
+  _id: string;
+  _type: "blog";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  description?: string;
+  slug?: Slug;
+  featureImage?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "iimage";
+  };
+  category?: {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "category";
+  };
+  content?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "blockquote";
+    listItem?: "bullet";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  } | {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "iimage";
+    _key: string;
+  } | {
+    _key: string;
+  } & TableBlock | {
+    faqs?: Array<{
+      _key: string;
+    } & Faq>;
+    _type: "faqs";
+    _key: string;
+  } | {
+    _key: string;
+  } & Alert>;
+  seo?: Seo;
+  publishedAt?: string;
+  isPublished?: boolean;
+};
+
+export type Category = {
+  _id: string;
+  _type: "category";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name?: string;
+  description?: string;
+  slug?: Slug;
+  seo?: Seo;
+};
+
+export type Home = {
+  _id: string;
+  _type: "home";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  seo?: Seo;
+  contentBlocks?: Array<{
+    _key: string;
+  } & HomeContentBlock>;
+};
+
+export type Config = {
+  _id: string;
+  _type: "config";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  site_name?: string;
+  seo?: Site_seo;
+  header?: Header;
+  footer?: Footer;
+};
+
+export type Site_seo = {
+  _type: "site_seo";
+  meta_title?: string;
+  meta_description?: string;
+  favicon?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "iimage";
+  };
+  open_graph_image?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "iimage";
+  };
+  base_path?: string;
+  sitemap_url?: string;
+  indexable?: boolean;
+  google_tag?: string;
+  scripts?: Array<string>;
+};
+
+export type Header = {
+  _type: "header";
+  logo?: Logo;
+  menu?: Array<{
+    _key: string;
+  } & Link>;
+  cta_button?: Link;
+};
+
+export type Link = {
+  _type: "link";
+  text?: string;
+  url?: string;
+  is_external?: boolean;
+};
+
+export type Logo = {
+  _type: "logo";
+  image?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "iimage";
+  };
+  url?: string;
+  text?: string;
+};
+
+export type Footer = {
+  _type: "footer";
+  footer_text?: string;
+  menu?: Array<{
+    _key: string;
+  } & Link>;
+  social_links?: Array<{
+    _key: string;
+  } & Link>;
+};
+
+export type HomeContentBlock = {
+  _type: "homeContentBlock";
+  title?: string;
+  icon?: string;
+  content?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "blockquote";
+    listItem?: "bullet";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  } | {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "iimage";
+    _key: string;
+  } | {
+    _key: string;
+  } & TableBlock | {
+    faqs?: Array<{
+      _key: string;
+    } & Faq>;
+    _type: "faqs";
+    _key: string;
+  } | {
+    _key: string;
+  } & Alert>;
+};
+
+export type Alert = {
+  _type: "alert";
+  type?: "info" | "warning" | "error" | "tip";
+  title?: string;
+  content?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "blockquote";
+    listItem?: "bullet";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  } | {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "iimage";
+    _key: string;
+  } | {
+    _key: string;
+  } & TableBlock | {
+    faqs?: Array<{
+      _key: string;
+    } & Faq>;
+    _type: "faqs";
+    _key: string;
+  } | {
+    _key: string;
+  } & Alert>;
+  dismissible?: boolean;
+};
+
+export type Faq = {
+  _type: "faq";
+  question?: string;
+  answer?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "blockquote";
+    listItem?: "bullet";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  } | {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "iimage";
+    _key: string;
+  } | {
+    _key: string;
+  } & TableBlock | {
+    faqs?: Array<{
+      _key: string;
+    } & Faq>;
+    _type: "faqs";
+    _key: string;
+  } | {
+    _key: string;
+  } & Alert>;
+};
+
+export type TableBlock = {
+  _type: "tableBlock";
+  title?: string;
+  caption?: string;
+  table?: Table;
+};
+
+export type Seo = {
+  _type: "seo";
+  meta_title?: string;
+  meta_description?: string;
+  keywords?: string;
+  open_graph_image?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "iimage";
+  };
+  indexable?: boolean;
+};
+
+export type BlockContent = Array<{
+  children?: Array<{
+    marks?: Array<string>;
+    text?: string;
+    _type: "span";
+    _key: string;
+  }>;
+  style?: "normal" | "h1" | "h2" | "h3" | "h4" | "blockquote";
+  listItem?: "bullet";
+  markDefs?: Array<{
+    href?: string;
+    _type: "link";
+    _key: string;
+  }>;
+  level?: number;
+  _type: "block";
+  _key: string;
+} | {
+  asset?: {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+  };
+  media?: unknown;
+  hotspot?: SanityImageHotspot;
+  crop?: SanityImageCrop;
+  alt?: string;
+  _type: "iimage";
+  _key: string;
+} | {
+  _key: string;
+} & TableBlock | {
+  faqs?: Array<{
+    _key: string;
+  } & Faq>;
+  _type: "faqs";
+  _key: string;
+} | {
+  _key: string;
+} & Alert>;
+
+export type Iimage = {
+  _type: "iimage";
+  asset?: {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+  };
+  media?: unknown;
+  hotspot?: SanityImageHotspot;
+  crop?: SanityImageCrop;
+  alt?: string;
+};
+
+export type Table = {
+  _type: "table";
+  rows?: Array<{
+    _key: string;
+  } & TableRow>;
+};
+
+export type TableRow = {
+  _type: "tableRow";
+  cells?: Array<string>;
+};
+
+export type SanityImagePaletteSwatch = {
+  _type: "sanity.imagePaletteSwatch";
+  background?: string;
+  foreground?: string;
+  population?: number;
+  title?: string;
+};
+
+export type SanityImagePalette = {
+  _type: "sanity.imagePalette";
+  darkMuted?: SanityImagePaletteSwatch;
+  lightVibrant?: SanityImagePaletteSwatch;
+  darkVibrant?: SanityImagePaletteSwatch;
+  vibrant?: SanityImagePaletteSwatch;
+  dominant?: SanityImagePaletteSwatch;
+  lightMuted?: SanityImagePaletteSwatch;
+  muted?: SanityImagePaletteSwatch;
+};
+
+export type SanityImageDimensions = {
+  _type: "sanity.imageDimensions";
+  height?: number;
+  width?: number;
+  aspectRatio?: number;
+};
+
+export type SanityImageHotspot = {
+  _type: "sanity.imageHotspot";
+  x?: number;
+  y?: number;
+  height?: number;
+  width?: number;
+};
+
+export type SanityImageCrop = {
+  _type: "sanity.imageCrop";
+  top?: number;
+  bottom?: number;
+  left?: number;
+  right?: number;
+};
+
+export type SanityFileAsset = {
+  _id: string;
+  _type: "sanity.fileAsset";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  originalFilename?: string;
+  label?: string;
+  title?: string;
+  description?: string;
+  altText?: string;
+  sha1hash?: string;
+  extension?: string;
+  mimeType?: string;
+  size?: number;
+  assetId?: string;
+  uploadId?: string;
+  path?: string;
+  url?: string;
+  source?: SanityAssetSourceData;
+};
+
+export type SanityImageAsset = {
+  _id: string;
+  _type: "sanity.imageAsset";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  originalFilename?: string;
+  label?: string;
+  title?: string;
+  description?: string;
+  altText?: string;
+  sha1hash?: string;
+  extension?: string;
+  mimeType?: string;
+  size?: number;
+  assetId?: string;
+  uploadId?: string;
+  path?: string;
+  url?: string;
+  metadata?: SanityImageMetadata;
+  source?: SanityAssetSourceData;
+};
+
+export type SanityImageMetadata = {
+  _type: "sanity.imageMetadata";
+  location?: Geopoint;
+  dimensions?: SanityImageDimensions;
+  palette?: SanityImagePalette;
+  lqip?: string;
+  blurHash?: string;
+  hasAlpha?: boolean;
+  isOpaque?: boolean;
+};
+
+export type Geopoint = {
+  _type: "geopoint";
+  lat?: number;
+  lng?: number;
+  alt?: number;
+};
+
+export type Slug = {
+  _type: "slug";
+  current?: string;
+  source?: string;
+};
+
+export type SanityAssetSourceData = {
+  _type: "sanity.assetSourceData";
+  name?: string;
+  id?: string;
+  url?: string;
+};
+
+export type AllSanitySchemaTypes = Page | Blog | Category | Home | Config | Site_seo | Header | Link | Logo | Footer | HomeContentBlock | Alert | Faq | TableBlock | Seo | BlockContent | Iimage | Table | TableRow | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
+export declare const internalGroqTypeReferenceTo: unique symbol;
+// Source: ./sanity/queries/blog.ts
+// Variable: getAllBlogsQuery
+// Query: *[_type == "blog" && isPublished == true] | order(publishedAt desc) {    _id,    title,    description,    slug,    featureImage {      "url": asset->url,      "width": asset->metadata.dimensions.width,      "height": asset->metadata.dimensions.height,      "alt": alt    },    category->{      _id,      name,      slug    },    publishedAt,    seo {      meta_title,      meta_description,      keywords,      open_graph_image {        asset-> {          _id,          url,          metadata {            dimensions {              width,              height            }          }        },        alt      },      indexable    }  }
+export type GetAllBlogsQueryResult = Array<{
+  _id: string;
+  title: string | null;
+  description: string | null;
+  slug: Slug | null;
+  featureImage: {
+    url: string | null;
+    width: number | null;
+    height: number | null;
+    alt: string | null;
+  } | null;
+  category: {
+    _id: string;
+    name: string | null;
+    slug: Slug | null;
+  } | null;
+  publishedAt: string | null;
+  seo: {
+    meta_title: string | null;
+    meta_description: string | null;
+    keywords: string | null;
+    open_graph_image: {
+      asset: {
+        _id: string;
+        url: string | null;
+        metadata: {
+          dimensions: {
+            width: number | null;
+            height: number | null;
+          } | null;
+        } | null;
+      } | null;
+      alt: string | null;
+    } | null;
+    indexable: boolean | null;
+  } | null;
+}>;
+// Variable: getBlogBySlugQuery
+// Query: *[_type == "blog" && slug.current == $slug][0] {    _id,    title,    description,    slug,    featureImage {      "url": asset->url,      "width": asset->metadata.dimensions.width,      "height": asset->metadata.dimensions.height,      "alt": alt    },    category->{      _id,      name,      slug    },    content,    "headings": content[style in ["h1", "h2", "h3", "h4", "h5", "h6"]],    publishedAt,    isPublished,    seo {      meta_title,      meta_description,      keywords,      open_graph_image {        asset-> {          _id,          url,          metadata {            dimensions {              width,              height            }          }        },        alt      },      indexable    }  }
+export type GetBlogBySlugQueryResult = {
+  _id: string;
+  title: string | null;
+  description: string | null;
+  slug: Slug | null;
+  featureImage: {
+    url: string | null;
+    width: number | null;
+    height: number | null;
+    alt: string | null;
+  } | null;
+  category: {
+    _id: string;
+    name: string | null;
+    slug: Slug | null;
+  } | null;
+  content: Array<{
+    _key: string;
+  } & Alert | {
+    _key: string;
+  } & TableBlock | {
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "normal";
+    listItem?: "bullet";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  } | {
+    faqs?: Array<{
+      _key: string;
+    } & Faq>;
+    _type: "faqs";
+    _key: string;
+  } | {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "iimage";
+    _key: string;
+  }> | null;
+  headings: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "normal";
+    listItem?: "bullet";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }> | null;
+  publishedAt: string | null;
+  isPublished: boolean | null;
+  seo: {
+    meta_title: string | null;
+    meta_description: string | null;
+    keywords: string | null;
+    open_graph_image: {
+      asset: {
+        _id: string;
+        url: string | null;
+        metadata: {
+          dimensions: {
+            width: number | null;
+            height: number | null;
+          } | null;
+        } | null;
+      } | null;
+      alt: string | null;
+    } | null;
+    indexable: boolean | null;
+  } | null;
+} | null;
+// Variable: getRecentBlogsQuery
+// Query: *[_type == "blog" && isPublished == true] | order(publishedAt desc)[0...$limit] {    _id,    title,    description,    slug,    featureImage {      asset-> {        _id,        url,        metadata {          dimensions {            width,            height          }        }      },      alt    },    category->{      _id,      name,      slug    },    publishedAt  }
+export type GetRecentBlogsQueryResult = Array<{
+  _id: string;
+  title: string | null;
+  description: string | null;
+  slug: Slug | null;
+  featureImage: {
+    asset: {
+      _id: string;
+      url: string | null;
+      metadata: {
+        dimensions: {
+          width: number | null;
+          height: number | null;
+        } | null;
+      } | null;
+    } | null;
+    alt: string | null;
+  } | null;
+  category: {
+    _id: string;
+    name: string | null;
+    slug: Slug | null;
+  } | null;
+  publishedAt: string | null;
+}>;
+// Variable: getAllBlogSlugsQuery
+// Query: *[_type == "blog" && isPublished == true] {    slug  }
+export type GetAllBlogSlugsQueryResult = Array<{
+  slug: Slug | null;
+}>;
+
+// Source: ./sanity/queries/category.ts
+// Variable: getAllCategoriesQuery
+// Query: *[_type == "category"] | order(name asc) {    _id,    name,    description,    slug,    seo {      meta_title,      meta_description,      keywords,      open_graph_image {        asset->{          _id,          url,          metadata{dimensions{width,height}}        },        alt      },      indexable    }  }
+export type GetAllCategoriesQueryResult = Array<{
+  _id: string;
+  name: string | null;
+  description: string | null;
+  slug: Slug | null;
+  seo: {
+    meta_title: string | null;
+    meta_description: string | null;
+    keywords: string | null;
+    open_graph_image: {
+      asset: {
+        _id: string;
+        url: string | null;
+        metadata: {
+          dimensions: {
+            width: number | null;
+            height: number | null;
+          } | null;
+        } | null;
+      } | null;
+      alt: string | null;
+    } | null;
+    indexable: boolean | null;
+  } | null;
+}>;
+// Variable: getCategoryBySlugQuery
+// Query: *[_type == "category" && slug.current == $slug][0] {    _id,    name,    description,    slug,    seo {      meta_title,      meta_description,      keywords,      open_graph_image {        asset->{          _id,          url,          metadata{dimensions{width,height}}        },        alt      },      indexable    }  }
+export type GetCategoryBySlugQueryResult = {
+  _id: string;
+  name: string | null;
+  description: string | null;
+  slug: Slug | null;
+  seo: {
+    meta_title: string | null;
+    meta_description: string | null;
+    keywords: string | null;
+    open_graph_image: {
+      asset: {
+        _id: string;
+        url: string | null;
+        metadata: {
+          dimensions: {
+            width: number | null;
+            height: number | null;
+          } | null;
+        } | null;
+      } | null;
+      alt: string | null;
+    } | null;
+    indexable: boolean | null;
+  } | null;
+} | null;
+// Variable: getAllCategorySlugsQuery
+// Query: *[_type == "category"] {    slug  }
+export type GetAllCategorySlugsQueryResult = Array<{
+  slug: Slug | null;
+}>;
+// Variable: getBlogsByCategoryQuery
+// Query: *[_type == "blog" && category->slug.current == $categorySlug && isPublished == true] | order(publishedAt desc) {    _id,    title,    description,    slug,    featureImage {      "url": asset->url,      "width": asset->metadata.dimensions.width,      "height": asset->metadata.dimensions.height,      "alt": alt    },    category->{      _id,      name,      slug    },    publishedAt,    seo  }
+export type GetBlogsByCategoryQueryResult = Array<{
+  _id: string;
+  title: string | null;
+  description: string | null;
+  slug: Slug | null;
+  featureImage: {
+    url: string | null;
+    width: number | null;
+    height: number | null;
+    alt: string | null;
+  } | null;
+  category: {
+    _id: string;
+    name: string | null;
+    slug: Slug | null;
+  } | null;
+  publishedAt: string | null;
+  seo: Seo | null;
+}>;
+
+// Source: ./sanity/queries/config.ts
+// Variable: getConfigQuery
+// Query: *[_type == "config"][0] {    _id,    site_name,    seo {      meta_title,      meta_description,      favicon {        asset-> {          _id,          url,          metadata {            dimensions {              width,              height            }          }        },        alt      },      open_graph_image {        asset-> {          _id,          url,          metadata {            dimensions {              width,              height            }          }        },        alt      },      base_path,      sitemap_url,      indexable,      google_tag,      scripts    },    header {      logo {        image {          asset-> {            _id,            url,            metadata {              dimensions {                width,                height              }            }          },          alt        },        url,        text      },      menu[] {        text,        url,        is_external      },      cta_button {        text,        url,        is_external      }    },    footer {      footer_text,      menu[] {        text,        url,        is_external      },      social_links[] {        text,        url,        is_external      }    }  }
+export type GetConfigQueryResult = {
+  _id: string;
+  site_name: string | null;
+  seo: {
+    meta_title: string | null;
+    meta_description: string | null;
+    favicon: {
+      asset: {
+        _id: string;
+        url: string | null;
+        metadata: {
+          dimensions: {
+            width: number | null;
+            height: number | null;
+          } | null;
+        } | null;
+      } | null;
+      alt: string | null;
+    } | null;
+    open_graph_image: {
+      asset: {
+        _id: string;
+        url: string | null;
+        metadata: {
+          dimensions: {
+            width: number | null;
+            height: number | null;
+          } | null;
+        } | null;
+      } | null;
+      alt: string | null;
+    } | null;
+    base_path: string | null;
+    sitemap_url: string | null;
+    indexable: boolean | null;
+    google_tag: string | null;
+    scripts: Array<string> | null;
+  } | null;
+  header: {
+    logo: {
+      image: {
+        asset: {
+          _id: string;
+          url: string | null;
+          metadata: {
+            dimensions: {
+              width: number | null;
+              height: number | null;
+            } | null;
+          } | null;
+        } | null;
+        alt: string | null;
+      } | null;
+      url: string | null;
+      text: string | null;
+    } | null;
+    menu: Array<{
+      text: string | null;
+      url: string | null;
+      is_external: boolean | null;
+    }> | null;
+    cta_button: {
+      text: string | null;
+      url: string | null;
+      is_external: boolean | null;
+    } | null;
+  } | null;
+  footer: {
+    footer_text: string | null;
+    menu: Array<{
+      text: string | null;
+      url: string | null;
+      is_external: boolean | null;
+    }> | null;
+    social_links: Array<{
+      text: string | null;
+      url: string | null;
+      is_external: boolean | null;
+    }> | null;
+  } | null;
+} | null;
+
+// Source: ./sanity/queries/home.ts
+// Variable: getHomeQuery
+// Query: *[_type == "home"][0] {    _id,    title,    seo {      meta_title,      meta_description,      keywords,      open_graph_image {        asset-> {          _id,          url,          metadata {            dimensions {              width,              height            }          }        },        alt      },      indexable    }  }
+export type GetHomeQueryResult = {
+  _id: string;
+  title: string | null;
+  seo: {
+    meta_title: string | null;
+    meta_description: string | null;
+    keywords: string | null;
+    open_graph_image: {
+      asset: {
+        _id: string;
+        url: string | null;
+        metadata: {
+          dimensions: {
+            width: number | null;
+            height: number | null;
+          } | null;
+        } | null;
+      } | null;
+      alt: string | null;
+    } | null;
+    indexable: boolean | null;
+  } | null;
+} | null;
+
+// Source: ./sanity/queries/page.ts
+// Variable: getAllPagesQuery
+// Query: *[_type == "page" && isPublished == true] | order(pageType asc, title asc) {    _id,    title,    description,    slug,    pageType,    seo {      meta_title,      meta_description,      keywords,      open_graph_image {        asset-> {          _id,          url,          metadata {            dimensions {              width,              height            }          }        },        alt      },      indexable    }  }
+export type GetAllPagesQueryResult = Array<{
+  _id: string;
+  title: string | null;
+  description: string | null;
+  slug: Slug | null;
+  pageType: "about" | "contact" | "faq" | "other" | "privacy" | "terms" | null;
+  seo: {
+    meta_title: string | null;
+    meta_description: string | null;
+    keywords: string | null;
+    open_graph_image: {
+      asset: {
+        _id: string;
+        url: string | null;
+        metadata: {
+          dimensions: {
+            width: number | null;
+            height: number | null;
+          } | null;
+        } | null;
+      } | null;
+      alt: string | null;
+    } | null;
+    indexable: boolean | null;
+  } | null;
+}>;
+// Variable: getPageBySlugQuery
+// Query: *[_type == "page" && slug.current == $slug][0] {    _id,    title,    description,    slug,    content,    pageType,    isPublished,    seo {      meta_title,      meta_description,      keywords,      open_graph_image {        asset-> {          _id,          url,          metadata {            dimensions {              width,              height            }          }        },        alt      },      indexable    }  }
+export type GetPageBySlugQueryResult = {
+  _id: string;
+  title: string | null;
+  description: string | null;
+  slug: Slug | null;
+  content: Array<{
+    _key: string;
+  } & Alert | {
+    _key: string;
+  } & TableBlock | {
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "normal";
+    listItem?: "bullet";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  } | {
+    faqs?: Array<{
+      _key: string;
+    } & Faq>;
+    _type: "faqs";
+    _key: string;
+  } | {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "iimage";
+    _key: string;
+  }> | null;
+  pageType: "about" | "contact" | "faq" | "other" | "privacy" | "terms" | null;
+  isPublished: boolean | null;
+  seo: {
+    meta_title: string | null;
+    meta_description: string | null;
+    keywords: string | null;
+    open_graph_image: {
+      asset: {
+        _id: string;
+        url: string | null;
+        metadata: {
+          dimensions: {
+            width: number | null;
+            height: number | null;
+          } | null;
+        } | null;
+      } | null;
+      alt: string | null;
+    } | null;
+    indexable: boolean | null;
+  } | null;
+} | null;
+// Variable: getPagesByTypeQuery
+// Query: *[_type == "page" && pageType == $pageType && isPublished == true] | order(title asc) {    _id,    title,    description,    slug,    pageType,    seo {      meta_title,      meta_description,      keywords,      open_graph_image {        asset-> {          _id,          url,          metadata {            dimensions {              width,              height            }          }        },        alt      },      indexable    }  }
+export type GetPagesByTypeQueryResult = Array<{
+  _id: string;
+  title: string | null;
+  description: string | null;
+  slug: Slug | null;
+  pageType: "about" | "contact" | "faq" | "other" | "privacy" | "terms" | null;
+  seo: {
+    meta_title: string | null;
+    meta_description: string | null;
+    keywords: string | null;
+    open_graph_image: {
+      asset: {
+        _id: string;
+        url: string | null;
+        metadata: {
+          dimensions: {
+            width: number | null;
+            height: number | null;
+          } | null;
+        } | null;
+      } | null;
+      alt: string | null;
+    } | null;
+    indexable: boolean | null;
+  } | null;
+}>;
+// Variable: getAllPageSlugsQuery
+// Query: *[_type == "page" && isPublished == true] {    slug  }
+export type GetAllPageSlugsQueryResult = Array<{
+  slug: Slug | null;
+}>;
+
+// Query TypeMap
+import "@sanity/client";
+declare module "@sanity/client" {
+  interface SanityQueries {
+    "\n  *[_type == \"blog\" && isPublished == true] | order(publishedAt desc) {\n    _id,\n    title,\n    description,\n    slug,\n    featureImage {\n      \"url\": asset->url,\n      \"width\": asset->metadata.dimensions.width,\n      \"height\": asset->metadata.dimensions.height,\n      \"alt\": alt\n    },\n    category->{\n      _id,\n      name,\n      slug\n    },\n    publishedAt,\n    seo {\n      meta_title,\n      meta_description,\n      keywords,\n      open_graph_image {\n        asset-> {\n          _id,\n          url,\n          metadata {\n            dimensions {\n              width,\n              height\n            }\n          }\n        },\n        alt\n      },\n      indexable\n    }\n  }\n": GetAllBlogsQueryResult;
+    "\n  *[_type == \"blog\" && slug.current == $slug][0] {\n    _id,\n    title,\n    description,\n    slug,\n    featureImage {\n      \"url\": asset->url,\n      \"width\": asset->metadata.dimensions.width,\n      \"height\": asset->metadata.dimensions.height,\n      \"alt\": alt\n    },\n    category->{\n      _id,\n      name,\n      slug\n    },\n    content,\n    \"headings\": content[style in [\"h1\", \"h2\", \"h3\", \"h4\", \"h5\", \"h6\"]],\n    publishedAt,\n    isPublished,\n    seo {\n      meta_title,\n      meta_description,\n      keywords,\n      open_graph_image {\n        asset-> {\n          _id,\n          url,\n          metadata {\n            dimensions {\n              width,\n              height\n            }\n          }\n        },\n        alt\n      },\n      indexable\n    }\n  }\n": GetBlogBySlugQueryResult;
+    "\n  *[_type == \"blog\" && isPublished == true] | order(publishedAt desc)[0...$limit] {\n    _id,\n    title,\n    description,\n    slug,\n    featureImage {\n      asset-> {\n        _id,\n        url,\n        metadata {\n          dimensions {\n            width,\n            height\n          }\n        }\n      },\n      alt\n    },\n    category->{\n      _id,\n      name,\n      slug\n    },\n    publishedAt\n  }\n": GetRecentBlogsQueryResult;
+    "\n  *[_type == \"blog\" && isPublished == true] {\n    slug\n  }\n": GetAllBlogSlugsQueryResult;
+    "\n  *[_type == \"category\"] | order(name asc) {\n    _id,\n    name,\n    description,\n    slug,\n    seo {\n      meta_title,\n      meta_description,\n      keywords,\n      open_graph_image {\n        asset->{\n          _id,\n          url,\n          metadata{dimensions{width,height}}\n        },\n        alt\n      },\n      indexable\n    }\n  }\n": GetAllCategoriesQueryResult;
+    "\n  *[_type == \"category\" && slug.current == $slug][0] {\n    _id,\n    name,\n    description,\n    slug,\n    seo {\n      meta_title,\n      meta_description,\n      keywords,\n      open_graph_image {\n        asset->{\n          _id,\n          url,\n          metadata{dimensions{width,height}}\n        },\n        alt\n      },\n      indexable\n    }\n  }\n": GetCategoryBySlugQueryResult;
+    "\n  *[_type == \"category\"] {\n    slug\n  }\n": GetAllCategorySlugsQueryResult;
+    "\n  *[_type == \"blog\" && category->slug.current == $categorySlug && isPublished == true] | order(publishedAt desc) {\n    _id,\n    title,\n    description,\n    slug,\n    featureImage {\n      \"url\": asset->url,\n      \"width\": asset->metadata.dimensions.width,\n      \"height\": asset->metadata.dimensions.height,\n      \"alt\": alt\n    },\n    category->{\n      _id,\n      name,\n      slug\n    },\n    publishedAt,\n    seo\n  }\n": GetBlogsByCategoryQueryResult;
+    "\n  *[_type == \"config\"][0] {\n    _id,\n    site_name,\n    seo {\n      meta_title,\n      meta_description,\n      favicon {\n        asset-> {\n          _id,\n          url,\n          metadata {\n            dimensions {\n              width,\n              height\n            }\n          }\n        },\n        alt\n      },\n      open_graph_image {\n        asset-> {\n          _id,\n          url,\n          metadata {\n            dimensions {\n              width,\n              height\n            }\n          }\n        },\n        alt\n      },\n      base_path,\n      sitemap_url,\n      indexable,\n      google_tag,\n      scripts\n    },\n    header {\n      logo {\n        image {\n          asset-> {\n            _id,\n            url,\n            metadata {\n              dimensions {\n                width,\n                height\n              }\n            }\n          },\n          alt\n        },\n        url,\n        text\n      },\n      menu[] {\n        text,\n        url,\n        is_external\n      },\n      cta_button {\n        text,\n        url,\n        is_external\n      }\n    },\n    footer {\n      footer_text,\n      menu[] {\n        text,\n        url,\n        is_external\n      },\n      social_links[] {\n        text,\n        url,\n        is_external\n      }\n    }\n  }\n": GetConfigQueryResult;
+    "\n  *[_type == \"home\"][0] {\n    _id,\n    title,\n    seo {\n      meta_title,\n      meta_description,\n      keywords,\n      open_graph_image {\n        asset-> {\n          _id,\n          url,\n          metadata {\n            dimensions {\n              width,\n              height\n            }\n          }\n        },\n        alt\n      },\n      indexable\n    }\n  }\n": GetHomeQueryResult;
+    "\n  *[_type == \"page\" && isPublished == true] | order(pageType asc, title asc) {\n    _id,\n    title,\n    description,\n    slug,\n    pageType,\n    seo {\n      meta_title,\n      meta_description,\n      keywords,\n      open_graph_image {\n        asset-> {\n          _id,\n          url,\n          metadata {\n            dimensions {\n              width,\n              height\n            }\n          }\n        },\n        alt\n      },\n      indexable\n    }\n  }\n": GetAllPagesQueryResult;
+    "\n  *[_type == \"page\" && slug.current == $slug][0] {\n    _id,\n    title,\n    description,\n    slug,\n    content,\n    pageType,\n    isPublished,\n    seo {\n      meta_title,\n      meta_description,\n      keywords,\n      open_graph_image {\n        asset-> {\n          _id,\n          url,\n          metadata {\n            dimensions {\n              width,\n              height\n            }\n          }\n        },\n        alt\n      },\n      indexable\n    }\n  }\n": GetPageBySlugQueryResult;
+    "\n  *[_type == \"page\" && pageType == $pageType && isPublished == true] | order(title asc) {\n    _id,\n    title,\n    description,\n    slug,\n    pageType,\n    seo {\n      meta_title,\n      meta_description,\n      keywords,\n      open_graph_image {\n        asset-> {\n          _id,\n          url,\n          metadata {\n            dimensions {\n              width,\n              height\n            }\n          }\n        },\n        alt\n      },\n      indexable\n    }\n  }\n": GetPagesByTypeQueryResult;
+    "\n  *[_type == \"page\" && isPublished == true] {\n    slug\n  }\n": GetAllPageSlugsQueryResult;
+  }
+}

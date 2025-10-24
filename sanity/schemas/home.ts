@@ -30,5 +30,12 @@ export default defineType({
             type: 'seo',
             description: 'Search engine optimization settings for the homepage',
         }),
+        defineField({
+            name: 'contentBlocks',
+            title: 'Content Blocks',
+            type: 'array',
+            description: 'Add multiple content blocks to build your homepage',
+            of: [{ type: 'homeContentBlock' }],
+        }),
     ],
 }) 

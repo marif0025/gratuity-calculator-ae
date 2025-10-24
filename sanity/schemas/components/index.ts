@@ -4,6 +4,7 @@ import seo from './seo'
 import tableBlock from './table'
 import faq from './faq'
 import alert from './alert'
+import homeContentBlock from './home-content-block'
 import * as commonFields from './common-fields'
 
-export { image, blockContent, seo, tableBlock, faq, alert, commonFields }
+export { image, blockContent, seo, tableBlock, faq, alert, homeContentBlock, commonFields }
