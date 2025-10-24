@@ -1,5 +1,4 @@
 import { defineType, defineField } from 'sanity'
-import { titleField, richTextField, imageField } from './components/common-fields'
 
 export default defineType({
     name: 'blog',

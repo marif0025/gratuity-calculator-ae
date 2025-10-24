@@ -1,4 +1,5 @@
 import { TypedObject } from "sanity"
+import type { HomeContentBlock } from "../../sanity.types"
 
 // Common types used across multiple schemas
 export interface SanityImage {
@@ -39,10 +40,27 @@ export interface SanitySEO {
 
 
 // Home page types
+export interface HomeContent {
+    title: string
+    description?: string
+    blocks?: HomeContentBlock[]
+}
+
+export interface HomeFaqs {
+    title: string
+    description?: string
+    faqs?: Array<{
+        question: string
+        answer: TypedObject | TypedObject[];
+    }>
+}
+
 export interface HomeData {
     _id: string
     title?: string // Optional (has initialValue)
     seo?: SanitySEO // Optional
+    content?: HomeContent // Optional home content section
+    faqs?: HomeFaqs // Optional FAQs section
 }
 
 // Config types

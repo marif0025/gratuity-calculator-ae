@@ -1,7 +1,7 @@
 import { groq } from 'next-sanity'
 
 export const getHomeQuery = groq`
-  *[_type == "home"][0] {
+  *[_type == "home" && _id == "home"] {
     _id,
     title,
     seo {
@@ -23,10 +23,22 @@ export const getHomeQuery = groq`
       },
       indexable
     },
-    contentBlocks[] {
+    content {
       title,
-      icon,
-      content
+      description,
+      blocks[] {
+        title,
+        icon,
+        content
+      }
+    },
+    faqs {
+      title,
+      description,
+      faqs[] {
+        question,
+        answer
+      }
     }
-  }
+  }[0]
 `

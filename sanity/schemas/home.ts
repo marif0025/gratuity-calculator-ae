@@ -31,11 +31,16 @@ export default defineType({
             description: 'Search engine optimization settings for the homepage',
         }),
         defineField({
-            name: 'contentBlocks',
-            title: 'Content Blocks',
-            type: 'array',
-            description: 'Add multiple content blocks to build your homepage',
-            of: [{ type: 'homeContentBlock' }],
+            name: 'content',
+            title: 'Content',
+            type: 'homeContent',
+            description: 'Main content section for the homepage',
+        }),
+        defineField({
+            name: 'faqs',
+            title: 'FAQs',
+            type: 'homeFaqs',
+            description: 'Frequently asked questions section for the homepage',
         }),
     ],
 }) 
