@@ -28,12 +28,12 @@ export function DesktopNav() {
                     </Link>
                 ))}
 
-                <Button
+                {/* <Button
                     asChild
                     className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700"
                 >
                     <Link href="/#calculator">Calculate Now</Link>
-                </Button>
+                </Button> */}
             </nav>
 
             <MobileMenu navLinks={navLinks} />
