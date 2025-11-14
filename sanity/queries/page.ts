@@ -30,7 +30,7 @@ export const getAllPagesQuery = groq`
 `
 
 export const getPageBySlugQuery = groq`
-  *[_type == "page" && slug.current == $slug][0] {
+  *[_type == "page" && slug.current == $slug && isPublished == true][0] {
     _id,
     title,
     description,

@@ -1,0 +1,10 @@
+export { default as FooterTopSection } from "./footer-top-section"
+export { default as FooterFeatureCard } from "./footer-feature-card"
+export { default as FooterFeaturesGrid } from "./footer-features-grid"
+export { default as FooterAbout } from "./footer-about"
+export { default as FooterQuickLinks } from "./footer-quick-links"
+export { default as FooterCoverageAreas } from "./footer-coverage-areas"
+export { default as FooterCopyright } from "./footer-copyright"
+export { default as FooterLegalLinks } from "./footer-legal-links"
+export { default as FooterLegalDisclaimer } from "./footer-legal-disclaimer"
+
