@@ -68,6 +68,8 @@ export async function POST(req: NextRequest) {
       revalidatedTags.push(tag)
     }
 
+    console.log('Revalidated tags:', revalidatedTags)
+
     return NextResponse.json({
       revalidated: true,
       tags: revalidatedTags,
