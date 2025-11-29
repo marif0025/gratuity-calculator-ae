@@ -1,6 +1,6 @@
 'use server'
 
-import { client } from '../lib/client'
+import { cachedFetch } from '../lib/client'
 import { getHomeQuery } from '../queries/home'
 import type { GetHomeResponse } from '../lib/types'
 
@@ -10,7 +10,10 @@ import type { GetHomeResponse } from '../lib/types'
  */
 export async function getHome(): Promise<GetHomeResponse> {
     try {
-        const data = await client.fetch(getHomeQuery)
+        const data = await cachedFetch<GetHomeResponse>({
+            query: getHomeQuery,
+            tags: ['home'],
+        })
         return data
     } catch (error) {
         console.error('Error fetching home data:', error)

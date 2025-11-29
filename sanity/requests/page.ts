@@ -1,6 +1,6 @@
 'use server'
 
-import { client } from '../lib/client'
+import { cachedFetch } from '../lib/client'
 import {
     getAllPagesQuery,
     getPageBySlugQuery,
@@ -20,7 +20,10 @@ import type {
  */
 export async function getAllPages(): Promise<GetAllPagesResponse> {
     try {
-        const data = await client.fetch(getAllPagesQuery)
+        const data = await cachedFetch<GetAllPagesResponse>({
+            query: getAllPagesQuery,
+            tags: ['page'],
+        })
         return data || []
     } catch (error) {
         console.error('Error fetching all pages:', error)
@@ -35,7 +38,11 @@ export async function getAllPages(): Promise<GetAllPagesResponse> {
  */
 export async function getPageBySlug(slug: string): Promise<GetPageBySlugResponse> {
     try {
-        const data = await client.fetch(getPageBySlugQuery, { slug })
+        const data = await cachedFetch<GetPageBySlugResponse>({
+            query: getPageBySlugQuery,
+            params: { slug },
+            tags: ['page', `page-${slug}`],
+        })
         return data
     } catch (error) {
         console.error('Error fetching page by slug:', error)
@@ -50,7 +57,11 @@ export async function getPageBySlug(slug: string): Promise<GetPageBySlugResponse
  */
 export async function getPagesByType(pageType: string): Promise<GetPagesByTypeResponse> {
     try {
-        const data = await client.fetch(getPagesByTypeQuery, { pageType })
+        const data = await cachedFetch<GetPagesByTypeResponse>({
+            query: getPagesByTypeQuery,
+            params: { pageType },
+            tags: ['page'],
+        })
         return data || []
     } catch (error) {
         console.error('Error fetching pages by type:', error)
@@ -64,7 +75,10 @@ export async function getPagesByType(pageType: string): Promise<GetPagesByTypeRe
  */
 export async function getAllPageSlugs(): Promise<GetAllPageSlugsResponse> {
     try {
-        const data = await client.fetch(getAllPageSlugsQuery)
+        const data = await cachedFetch<GetAllPageSlugsResponse>({
+            query: getAllPageSlugsQuery,
+            tags: ['page'],
+        })
         return data || []
     } catch (error) {
         console.error('Error fetching page slugs:', error)

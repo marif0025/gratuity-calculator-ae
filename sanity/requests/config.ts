@@ -1,6 +1,6 @@
 'use server'
 
-import { client } from '../lib/client'
+import { cachedFetch } from '../lib/client'
 import { getConfigQuery } from '../queries/config'
 import type { GetConfigResponse } from '../lib/types'
 
@@ -10,7 +10,10 @@ import type { GetConfigResponse } from '../lib/types'
  */
 export async function getConfig(): Promise<GetConfigResponse> {
     try {
-        const data = await client.fetch(getConfigQuery)
+        const data = await cachedFetch<GetConfigResponse>({
+            query: getConfigQuery,
+            tags: ['config'],
+        })
         return data
     } catch (error) {
         console.error('Error fetching config data:', error)

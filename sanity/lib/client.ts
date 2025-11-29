@@ -9,3 +9,7 @@ export const client = createClient({
     apiVersion,
     useCdn: true,
 });
+
+// Re-export cached fetch utility
+export { cachedFetch } from './cache'
+export type { CachedFetchOptions } from './cache'

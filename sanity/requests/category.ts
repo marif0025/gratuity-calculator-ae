@@ -1,6 +1,6 @@
 'use server'
 
-import { client } from '../lib/client'
+import { cachedFetch } from '../lib/client'
 import {
     getAllCategoriesQuery,
     getCategoryBySlugQuery,
@@ -20,7 +20,10 @@ import type {
  */
 export async function getAllCategories(): Promise<GetAllCategoriesResponse> {
     try {
-        const data = await client.fetch(getAllCategoriesQuery)
+        const data = await cachedFetch<GetAllCategoriesResponse>({
+            query: getAllCategoriesQuery,
+            tags: ['category'],
+        })
         return data || []
     } catch (error) {
         console.error('Error fetching all categories:', error)
@@ -35,7 +38,11 @@ export async function getAllCategories(): Promise<GetAllCategoriesResponse> {
  */
 export async function getCategoryBySlug(slug: string): Promise<GetCategoryBySlugResponse> {
     try {
-        const data = await client.fetch(getCategoryBySlugQuery, { slug })
+        const data = await cachedFetch<GetCategoryBySlugResponse>({
+            query: getCategoryBySlugQuery,
+            params: { slug },
+            tags: ['category', `category-${slug}`],
+        })
         return data
     } catch (error) {
         console.error('Error fetching category by slug:', error)
@@ -49,7 +56,10 @@ export async function getCategoryBySlug(slug: string): Promise<GetCategoryBySlug
  */
 export async function getAllCategorySlugs(): Promise<GetAllCategorySlugsResponse> {
     try {
-        const data = await client.fetch(getAllCategorySlugsQuery)
+        const data = await cachedFetch<GetAllCategorySlugsResponse>({
+            query: getAllCategorySlugsQuery,
+            tags: ['category'],
+        })
         return data || []
     } catch (error) {
         console.error('Error fetching category slugs:', error)
@@ -64,7 +74,11 @@ export async function getAllCategorySlugs(): Promise<GetAllCategorySlugsResponse
  */
 export async function getBlogsByCategory(categorySlug: string): Promise<GetBlogsByCategoryResponse> {
     try {
-        const data = await client.fetch(getBlogsByCategoryQuery, { categorySlug })
+        const data = await cachedFetch<GetBlogsByCategoryResponse>({
+            query: getBlogsByCategoryQuery,
+            params: { categorySlug },
+            tags: ['category', 'blog'],
+        })
         return data || []
     } catch (error) {
         console.error('Error fetching blogs by category:', error)

@@ -1,6 +1,6 @@
 'use server'
 
-import { client } from '../lib/client'
+import { cachedFetch } from '../lib/client'
 import {
     getAllBlogsQuery,
     getBlogBySlugQuery,
@@ -20,7 +20,10 @@ import type {
  */
 export async function getAllBlogs(): Promise<GetAllBlogsResponse> {
     try {
-        const data = await client.fetch(getAllBlogsQuery)
+        const data = await cachedFetch<GetAllBlogsResponse>({
+            query: getAllBlogsQuery,
+            tags: ['blog'],
+        })
         return data || []
     } catch (error) {
         console.error('Error fetching all blogs:', error)
@@ -35,7 +38,11 @@ export async function getAllBlogs(): Promise<GetAllBlogsResponse> {
  */
 export async function getBlogBySlug(slug: string): Promise<GetBlogBySlugResponse> {
     try {
-        const data = await client.fetch(getBlogBySlugQuery, { slug })
+        const data = await cachedFetch<GetBlogBySlugResponse>({
+            query: getBlogBySlugQuery,
+            params: { slug },
+            tags: ['blog', `blog-${slug}`],
+        })
         return data
     } catch (error) {
         console.error('Error fetching blog by slug:', error)
@@ -50,7 +57,11 @@ export async function getBlogBySlug(slug: string): Promise<GetBlogBySlugResponse
  */
 export async function getRecentBlogs(limit: number = 3): Promise<GetRecentBlogsResponse> {
     try {
-        const data = await client.fetch(getRecentBlogsQuery, { limit })
+        const data = await cachedFetch<GetRecentBlogsResponse>({
+            query: getRecentBlogsQuery,
+            params: { limit },
+            tags: ['blog'],
+        })
         return data || []
     } catch (error) {
         console.error('Error fetching recent blogs:', error)
@@ -64,7 +75,10 @@ export async function getRecentBlogs(limit: number = 3): Promise<GetRecentBlogsR
  */
 export async function getAllBlogSlugs(): Promise<GetAllBlogSlugsResponse> {
     try {
-        const data = await client.fetch(getAllBlogSlugsQuery)
+        const data = await cachedFetch<GetAllBlogSlugsResponse>({
+            query: getAllBlogSlugsQuery,
+            tags: ['blog'],
+        })
         return data || []
     } catch (error) {
         console.error('Error fetching blog slugs:', error)
