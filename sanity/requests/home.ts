@@ -1,6 +1,6 @@
 'use server'
 
-import { cachedFetch } from '../lib/client'
+import { sanityFetch } from '../lib/client'
 import { getHomeQuery } from '../queries/home'
 import type { GetHomeResponse } from '../lib/types'
 
@@ -10,7 +10,7 @@ import type { GetHomeResponse } from '../lib/types'
  */
 export async function getHome(): Promise<GetHomeResponse> {
     try {
-        const data = await cachedFetch<GetHomeResponse>({
+        const data = await sanityFetch<typeof getHomeQuery>({
             query: getHomeQuery,
             tags: ['home'],
         })

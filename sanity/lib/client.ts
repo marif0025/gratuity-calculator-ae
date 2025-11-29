@@ -1,5 +1,4 @@
-
-import { createClient } from 'next-sanity'
+import { createClient, type QueryParams } from 'next-sanity'
 
 import { apiVersion, dataset, projectId } from '../env'
 
@@ -8,8 +7,24 @@ export const client = createClient({
     dataset,
     apiVersion,
     useCdn: true,
-});
+})
 
-// Re-export cached fetch utility
-export { cachedFetch } from './cache'
-export type { CachedFetchOptions } from './cache'
+export async function sanityFetch<const QueryString extends string>({
+    query,
+    params = {},
+    revalidate = 60,
+    tags = [],
+}: {
+    query: QueryString
+    params?: QueryParams
+    revalidate?: number | false
+    tags?: string[]
+}) {
+    return client.fetch(query, params, {
+        cache: 'force-cache',
+        next: {
+            revalidate: tags.length ? false : revalidate,
+            tags,
+        },
+    })
+}

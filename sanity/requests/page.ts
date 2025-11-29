@@ -1,6 +1,6 @@
 'use server'
 
-import { cachedFetch } from '../lib/client'
+import { sanityFetch } from '../lib/client'
 import {
     getAllPagesQuery,
     getPageBySlugQuery,
@@ -20,7 +20,7 @@ import type {
  */
 export async function getAllPages(): Promise<GetAllPagesResponse> {
     try {
-        const data = await cachedFetch<GetAllPagesResponse>({
+        const data = await sanityFetch<typeof getAllPagesQuery>({
             query: getAllPagesQuery,
             tags: ['page'],
         })
@@ -38,7 +38,7 @@ export async function getAllPages(): Promise<GetAllPagesResponse> {
  */
 export async function getPageBySlug(slug: string): Promise<GetPageBySlugResponse> {
     try {
-        const data = await cachedFetch<GetPageBySlugResponse>({
+        const data = await sanityFetch<typeof getPageBySlugQuery>({
             query: getPageBySlugQuery,
             params: { slug },
             tags: ['page', `page-${slug}`],
@@ -57,7 +57,7 @@ export async function getPageBySlug(slug: string): Promise<GetPageBySlugResponse
  */
 export async function getPagesByType(pageType: string): Promise<GetPagesByTypeResponse> {
     try {
-        const data = await cachedFetch<GetPagesByTypeResponse>({
+        const data = await sanityFetch<typeof getPagesByTypeQuery>({
             query: getPagesByTypeQuery,
             params: { pageType },
             tags: ['page'],
@@ -75,7 +75,7 @@ export async function getPagesByType(pageType: string): Promise<GetPagesByTypeRe
  */
 export async function getAllPageSlugs(): Promise<GetAllPageSlugsResponse> {
     try {
-        const data = await cachedFetch<GetAllPageSlugsResponse>({
+        const data = await sanityFetch<typeof getAllPageSlugsQuery>({
             query: getAllPageSlugsQuery,
             tags: ['page'],
         })

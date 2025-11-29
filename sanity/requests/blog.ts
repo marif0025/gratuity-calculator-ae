@@ -1,6 +1,6 @@
 'use server'
 
-import { cachedFetch } from '../lib/client'
+import { sanityFetch } from '../lib/client'
 import {
     getAllBlogsQuery,
     getBlogBySlugQuery,
@@ -20,7 +20,7 @@ import type {
  */
 export async function getAllBlogs(): Promise<GetAllBlogsResponse> {
     try {
-        const data = await cachedFetch<GetAllBlogsResponse>({
+        const data = await sanityFetch<typeof getAllBlogsQuery>({
             query: getAllBlogsQuery,
             tags: ['blog'],
         })
@@ -38,7 +38,7 @@ export async function getAllBlogs(): Promise<GetAllBlogsResponse> {
  */
 export async function getBlogBySlug(slug: string): Promise<GetBlogBySlugResponse> {
     try {
-        const data = await cachedFetch<GetBlogBySlugResponse>({
+        const data = await sanityFetch<typeof getBlogBySlugQuery>({
             query: getBlogBySlugQuery,
             params: { slug },
             tags: ['blog', `blog-${slug}`],
@@ -57,7 +57,7 @@ export async function getBlogBySlug(slug: string): Promise<GetBlogBySlugResponse
  */
 export async function getRecentBlogs(limit: number = 3): Promise<GetRecentBlogsResponse> {
     try {
-        const data = await cachedFetch<GetRecentBlogsResponse>({
+        const data = await sanityFetch<typeof getRecentBlogsQuery>({
             query: getRecentBlogsQuery,
             params: { limit },
             tags: ['blog'],
@@ -75,7 +75,7 @@ export async function getRecentBlogs(limit: number = 3): Promise<GetRecentBlogsR
  */
 export async function getAllBlogSlugs(): Promise<GetAllBlogSlugsResponse> {
     try {
-        const data = await cachedFetch<GetAllBlogSlugsResponse>({
+        const data = await sanityFetch<typeof getAllBlogSlugsQuery>({
             query: getAllBlogSlugsQuery,
             tags: ['blog'],
         })

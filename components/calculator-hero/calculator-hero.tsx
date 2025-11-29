@@ -148,7 +148,7 @@ export function CalculatorHero() {
                                 onValueChange={field.onChange}
                                 value={field.value}
                             >
-                                <SelectTrigger className="w-full min-h-12 border-white/60 bg-black/10 text-white data-[placeholder]:text-white/60 pl-4.5 cursor-pointer">
+                                <SelectTrigger aria-label="Select a contract type" className="w-full min-h-12 border-white/60 bg-black/10 text-white data-[placeholder]:text-white/60 pl-4.5 cursor-pointer">
                                     <SelectValue placeholder="Select a contract type" />
                                 </SelectTrigger>
                                 <SelectContent>
@@ -189,7 +189,7 @@ export function CalculatorHero() {
                                 onValueChange={field.onChange}
                                 value={field.value}
                             >
-                                <SelectTrigger className="w-full min-h-12 border-white/60 bg-black/10 text-white data-[placeholder]:text-white/60 pl-4.5 cursor-pointer">
+                                <SelectTrigger aria-label="Select a reason for leaving" className="w-full min-h-12 border-white/60 bg-black/10 text-white data-[placeholder]:text-white/60 pl-4.5 cursor-pointer">
                                     <SelectValue placeholder="Select a reason for leaving" />
                                 </SelectTrigger>
                                 <SelectContent>

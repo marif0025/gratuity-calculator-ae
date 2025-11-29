@@ -27,7 +27,9 @@ export function MobileMenu({ navLinks }: TProps) {
     return (
         <Drawer open={isMenuOpen} onOpenChange={setIsMenuOpen}>
             <DrawerTrigger asChild>
-                <Button className="md:hidden" variant="ghost" size="icon">
+                <Button
+                    aria-label="Open menu"
+                    className="md:hidden" variant="ghost" size="icon">
                     <Menu className="size-6" />
                 </Button>
             </DrawerTrigger>

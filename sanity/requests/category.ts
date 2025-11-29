@@ -1,6 +1,6 @@
 'use server'
 
-import { cachedFetch } from '../lib/client'
+import { sanityFetch } from '../lib/client'
 import {
     getAllCategoriesQuery,
     getCategoryBySlugQuery,
@@ -20,7 +20,7 @@ import type {
  */
 export async function getAllCategories(): Promise<GetAllCategoriesResponse> {
     try {
-        const data = await cachedFetch<GetAllCategoriesResponse>({
+        const data = await sanityFetch<typeof getAllCategoriesQuery>({
             query: getAllCategoriesQuery,
             tags: ['category'],
         })
@@ -38,7 +38,7 @@ export async function getAllCategories(): Promise<GetAllCategoriesResponse> {
  */
 export async function getCategoryBySlug(slug: string): Promise<GetCategoryBySlugResponse> {
     try {
-        const data = await cachedFetch<GetCategoryBySlugResponse>({
+        const data = await sanityFetch<typeof getCategoryBySlugQuery>({
             query: getCategoryBySlugQuery,
             params: { slug },
             tags: ['category', `category-${slug}`],
@@ -56,7 +56,7 @@ export async function getCategoryBySlug(slug: string): Promise<GetCategoryBySlug
  */
 export async function getAllCategorySlugs(): Promise<GetAllCategorySlugsResponse> {
     try {
-        const data = await cachedFetch<GetAllCategorySlugsResponse>({
+        const data = await sanityFetch<typeof getAllCategorySlugsQuery>({
             query: getAllCategorySlugsQuery,
             tags: ['category'],
         })
@@ -74,7 +74,7 @@ export async function getAllCategorySlugs(): Promise<GetAllCategorySlugsResponse
  */
 export async function getBlogsByCategory(categorySlug: string): Promise<GetBlogsByCategoryResponse> {
     try {
-        const data = await cachedFetch<GetBlogsByCategoryResponse>({
+        const data = await sanityFetch<typeof getBlogsByCategoryQuery>({
             query: getBlogsByCategoryQuery,
             params: { categorySlug },
             tags: ['category', 'blog'],
