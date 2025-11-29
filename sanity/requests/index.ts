@@ -36,6 +36,7 @@ export type {
     GetAllCategoriesResponse,
     GetCategoryBySlugResponse,
     GetAllCategorySlugsResponse,
+    GetBlogsByCategoryResponse,
     HomeData,
     ConfigData,
     BlogData,

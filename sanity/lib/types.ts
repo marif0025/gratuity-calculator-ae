@@ -128,6 +128,7 @@ export interface BlogPreview {
     featureImage?: TransformedSanityImage
     category: CategoryPreview // Required
     publishedAt?: string
+    seo?: SanitySEO
 }
 
 export interface BlogSlug {
@@ -154,6 +155,7 @@ export interface CategoryPreview {
     slug: {
         current: string
     }
+    seo?: SanitySEO
 }
 
 export interface CategorySlug {
@@ -180,6 +182,8 @@ export interface PagePreview {
     _id: string
     title: string
     description?: string
+    updatedAt?: string
+    createdAt?: string
     slug: {
         current: string
     }
@@ -255,3 +259,4 @@ export type GetAllPageSlugsResponse = PageSlug[]
 export type GetAllCategoriesResponse = CategoryPreview[]
 export type GetCategoryBySlugResponse = CategoryData | null
 export type GetAllCategorySlugsResponse = CategorySlug[]
+export type GetBlogsByCategoryResponse = BlogPreview[]

@@ -11,7 +11,7 @@ import type {
     GetAllCategoriesResponse,
     GetCategoryBySlugResponse,
     GetAllCategorySlugsResponse,
-    GetAllBlogsResponse
+    GetBlogsByCategoryResponse
 } from '../lib/types'
 
 /**
@@ -62,7 +62,7 @@ export async function getAllCategorySlugs(): Promise<GetAllCategorySlugsResponse
  * @param categorySlug - Category slug
  * @returns Array of blog previews in the category
  */
-export async function getBlogsByCategory(categorySlug: string): Promise<GetAllBlogsResponse> {
+export async function getBlogsByCategory(categorySlug: string): Promise<GetBlogsByCategoryResponse> {
     try {
         const data = await client.fetch(getBlogsByCategoryQuery, { categorySlug })
         return data || []

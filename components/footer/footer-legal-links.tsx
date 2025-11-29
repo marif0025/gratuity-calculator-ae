@@ -2,8 +2,7 @@ export default function FooterLegalLinks() {
   const links = [
     { href: "/privacy", label: "Privacy Policy" },
     { href: "/cookies", label: "Cookies" },
-    { href: "/terms", label: "Terms of Use" },
-    { href: "/contact", label: "Contact" },
+    // { href: "/contact", label: "Contact" },
     { href: "/disclaimer", label: "Legal Disclaimer" },
     { href: "/about-us", label: "About" },
   ]

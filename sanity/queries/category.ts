@@ -74,6 +74,24 @@ export const getBlogsByCategoryQuery = groq`
       slug
     },
     publishedAt,
-    seo
+    seo {
+      meta_title,
+      meta_description,
+      keywords,
+      open_graph_image {
+        asset-> {
+          _id,
+          url,
+          metadata {
+            dimensions {
+              width,
+              height
+            }
+          }
+        },
+        alt
+      },
+      indexable
+    }
   }
 `

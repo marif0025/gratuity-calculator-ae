@@ -7,6 +7,9 @@ export const getAllPagesQuery = groq`
     description,
     slug,
     pageType,
+    updatedAt,
+    createdAt,
+    isPublished,
     seo {
       meta_title,
       meta_description,
@@ -67,6 +70,8 @@ export const getPagesByTypeQuery = groq`
     description,
     slug,
     pageType,
+    updatedAt,
+    createdAt,
     seo {
       meta_title,
       meta_description,
