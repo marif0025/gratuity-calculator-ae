@@ -48,7 +48,7 @@ export async function cachedFetch<QueryResponse>(
       return client.fetch<QueryResponse>(query, params)
     },
     [cacheKey, ...tags],
-    { tags, revalidate }
+    { tags }
   )
 
   return cachedFetchFn()
