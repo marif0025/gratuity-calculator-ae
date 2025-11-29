@@ -2,8 +2,9 @@ import { AppProvider } from "@/state/app";
 import { getConfig } from "@/sanity/requests";
 import { Header } from "@/components/header";
 import Footer from "@/components/footer";
+import { Metadata } from "next";
 
-export async function generateMetadata() {
+export async function generateMetadata(): Promise<Metadata> {
     const config = await getConfig();
     const seo = config?.seo;
     const title = seo?.meta_title ?? "Gratuity Calculator";
@@ -38,6 +39,9 @@ export async function generateMetadata() {
             images: openGraphImage,
         },
         metadataBase: new URL(basePath),
+        verification: {
+            google: seo?.google_tag,
+        }
     };
 }
 
