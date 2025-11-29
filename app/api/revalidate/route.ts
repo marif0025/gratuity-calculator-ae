@@ -35,7 +35,7 @@ export async function POST(req: NextRequest) {
     }
 
     const documentType = body._type
-    const tagsToRevalidate = new Set<string>([documentType])
+    const tagsToRevalidate = new Set<string>([documentType, 'config', 'blog'])
 
     // Add specific document tags based on type and slug
     if (body.slug?.current) {

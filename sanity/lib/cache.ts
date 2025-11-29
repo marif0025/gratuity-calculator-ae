@@ -39,18 +39,6 @@ export async function cachedFetch<QueryResponse>(
 ): Promise<QueryResponse> {
   const { query, params = {}, tags = [], revalidate = false } = options
 
-  // If tags are provided, use tag-based revalidation (cache indefinitely)
-  // Otherwise, use time-based revalidation
-  const cacheOptions = tags.length > 0
-    ? {
-      tags,
-    }
-    : revalidate === false
-      ? {}
-      : {
-        revalidate,
-      }
-
   // Create a cache key based on query and params
   const cacheKey = JSON.stringify({ query, params })
 
@@ -59,8 +47,8 @@ export async function cachedFetch<QueryResponse>(
     async () => {
       return client.fetch<QueryResponse>(query, params)
     },
-    [cacheKey],
-    cacheOptions
+    [cacheKey, ...tags],
+    { tags, revalidate }
   )
 
   return cachedFetchFn()
