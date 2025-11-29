@@ -7,6 +7,8 @@ export const getAllCategoriesQuery = groq`
     name,
     description,
     slug,
+    updatedAt,
+    createdAt,
     seo {
       meta_title,
       meta_description,
@@ -31,6 +33,8 @@ export const getCategoryBySlugQuery = groq`
     name,
     description,
     slug,
+    updatedAt,
+    createdAt,
     seo {
       meta_title,
       meta_description,

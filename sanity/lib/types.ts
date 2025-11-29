@@ -152,6 +152,8 @@ export interface CategoryPreview {
     _id: string
     name: string
     description?: string
+    updatedAt?: string
+    createdAt?: string
     slug: {
         current: string
     }
