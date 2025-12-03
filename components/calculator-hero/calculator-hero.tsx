@@ -2,10 +2,10 @@
 
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Label } from "../ui/label";
-import { Input } from "../ui/input";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
 import { DatePicker } from "../calculator/calculator-date-picker";
-import { Calendar } from "../ui/calendar";
+import { Calendar } from "@/components/ui/calendar";
 import {
     Select,
     SelectTrigger,
@@ -14,23 +14,50 @@ import {
     SelectGroup,
     SelectLabel,
     SelectItem,
-} from "../ui/select";
-import { Button } from "../ui/button";
-import { CalculatorIcon, FileText, X } from "lucide-react";
-import { differenceInYears } from "date-fns";
+} from "@/components/ui/select";
+import { Button } from "@/components/ui/button";
+import { CalculatorIcon } from "lucide-react";
+import { format } from "date-fns";
 import { useState } from "react";
 import { ICalculationResult } from "@/state/calculator";
 import { calculatorFormSchema, TCalculatorFormData } from "./schema";
 import { calculateGratuity } from "./calculate";
 
+const contractTypes = [
+    {
+        label: "Limited Contract",
+        value: "limited",
+    },
+    {
+        label: "Unlimited Contract",
+        value: "unlimited",
+    },
+]
+
+const reasonForLeaving = [
+    {
+        label: "Resignation",
+        value: "resignation",
+    },
+    {
+        label: "Termination by Employer",
+        value: "termination",
+    },
+    {
+        label: "Contract Completion",
+        value: "completion",
+    },
+]
+
 export function CalculatorHero() {
     const [result, setResult] = useState<ICalculationResult | null>(null);
+    const [openStartDate, setOpenStartDate] = useState(false);
+    const [openEndDate, setOpenEndDate] = useState(false);
 
     const {
         register,
         handleSubmit,
         control,
-        reset,
         formState: { errors },
     } = useForm<TCalculatorFormData>({
         resolver: zodResolver(calculatorFormSchema),
@@ -72,12 +99,14 @@ export function CalculatorHero() {
                             type="number"
                             placeholder="e.g., 5000"
                             {...register("salary", { valueAsNumber: true })}
-                            className="border border-white/60 focus:border-white focus:shadow-[0_0_0_1px_rgb(255,255,255)] px-6 bg-black/10"
+                            className="border border-white/60 focus:border-white focus:shadow-[0_0_0_1px_rgb(255,255,255)] pl-15 pr-6 bg-black/10 text-white/60! hover:text-white!"
                         />
-                        <span className="absolute right-4 top-1/2 transform -translate-y-1/2 font-medium">
+
+                        <span className="absolute left-4 top-1/2 transform -translate-y-1/2 font-medium">
                             AED
                         </span>
                     </div>
+
                     {errors.salary && (
                         <p className="text-sm text-red-400">
                             {typeof errors.salary === "string"
@@ -87,52 +116,96 @@ export function CalculatorHero() {
                     )}
                 </div>
 
-                <div className="space-y-2">
+                <div className="space-y-3">
                     <Label htmlFor="employmentPeriod" className="text-white">
                         Employment Period
                     </Label>
 
-                    <Controller
-                        name="employmentPeriod"
-                        control={control}
-                        render={({ field }) => {
-                            const duration =
-                                field.value &&
-                                differenceInYears(
-                                    field.value.to,
-                                    field.value.from
-                                );
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <div className="space-y-2">
+                            <Controller
+                                name="employmentPeriod.from"
+                                control={control}
+                                render={({ field }) => {
+                                    const label = field.value
+                                        ? format(field.value, "dd MMM yyyy")
+                                        : "Select start date";
 
-                            const label =
-                                field.value &&
-                                `${field.value.from.toLocaleDateString()} - ${field.value.to.toLocaleDateString()} (${duration} years)`;
+                                    return (
+                                        <DatePicker
+                                            label={label}
+                                            open={openStartDate}
+                                            setOpen={setOpenStartDate}
+                                        >
+                                            <Calendar
+                                                mode="single"
+                                                captionLayout="dropdown"
+                                                selected={field.value}
+                                                onSelect={(d) => {
+                                                    if (d) {
+                                                        field.onChange(d);
+                                                        setOpenStartDate(false);
+                                                    }
+                                                }}
+                                            />
+                                        </DatePicker>
+                                    );
+                                }}
+                            />
 
-                            return (
-                                <DatePicker label={label}>
-                                    <Calendar
-                                        mode="range"
-                                        captionLayout="dropdown"
-                                        selected={field.value}
-                                        onSelect={field.onChange}
-                                    />
-                                    {field.value && (
-                                        <p className="text-sm text-white">
-                                            {field.value.from.toLocaleDateString()}{" "}
-                                            -{" "}
-                                            {field.value.to.toLocaleDateString()}
-                                        </p>
-                                    )}
-                                </DatePicker>
-                            );
-                        }}
-                    />
-                    {errors.employmentPeriod && (
-                        <p className="text-sm text-red-400">
-                            {typeof errors.employmentPeriod === "string"
-                                ? errors.employmentPeriod
-                                : errors.employmentPeriod.message}
-                        </p>
-                    )}
+                            {errors.employmentPeriod?.from && (
+                                <p className="text-sm text-red-400">
+                                    {typeof errors.employmentPeriod.from === "string"
+                                        ? errors.employmentPeriod.from
+                                        : errors.employmentPeriod.from.message}
+                                </p>
+                            )}
+                        </div>
+
+                        <div className="space-y-2">
+                            <Controller
+                                name="employmentPeriod.to"
+                                control={control}
+                                render={({ field }) => {
+                                    const label = field.value
+                                        ? format(field.value, "dd MMM yyyy")
+                                        : "Select end date";
+
+                                    return (
+                                        <DatePicker
+                                            label={label}
+                                            open={openEndDate}
+                                            setOpen={setOpenEndDate}
+                                        >
+                                            <Calendar
+                                                mode="single"
+                                                captionLayout="dropdown"
+                                                selected={field.value}
+                                                onSelect={(d) => {
+                                                    if (d) {
+                                                        field.onChange(d);
+                                                        setOpenEndDate(false);
+                                                    }
+                                                }}
+                                            />
+                                        </DatePicker>
+                                    );
+                                }}
+                            />
+                            {errors.employmentPeriod?.to && (
+                                <p className="text-sm text-red-400">
+                                    {typeof errors.employmentPeriod.to === "string"
+                                        ? errors.employmentPeriod.to
+                                        : errors.employmentPeriod.to.message}
+                                </p>
+                            )}
+                            {errors.employmentPeriod && typeof errors.employmentPeriod === "object" && "message" in errors.employmentPeriod && (
+                                <p className="text-sm text-red-400">
+                                    {errors.employmentPeriod.message}
+                                </p>
+                            )}
+                        </div>
+                    </div>
                 </div>
 
                 <div className="space-y-2">
@@ -148,25 +221,30 @@ export function CalculatorHero() {
                                 onValueChange={field.onChange}
                                 value={field.value}
                             >
-                                <SelectTrigger aria-label="Select a contract type" className="w-full min-h-12 border-white/60 bg-black/10 text-white data-[placeholder]:text-white/60 pl-4.5 cursor-pointer">
-                                    <SelectValue placeholder="Select a contract type" />
+                                <SelectTrigger
+                                    aria-label="Select a contract type"
+                                    className="w-full min-h-12 border-white/60 bg-black/10 text-white data-placeholder:text-white/60! hover:data-placeholder:text-white! pl-4.5 cursor-pointer"
+                                >
+                                    <SelectValue className="text-white" placeholder="Select a contract type" />
                                 </SelectTrigger>
                                 <SelectContent>
                                     <SelectGroup>
                                         <SelectLabel>
                                             Contract Types
                                         </SelectLabel>
-                                        <SelectItem value="limited">
-                                            Limited Contract
-                                        </SelectItem>
-                                        <SelectItem value="unlimited">
-                                            Unlimited Contract
-                                        </SelectItem>
+                                        {
+                                            contractTypes.map((item) => (
+                                                <SelectItem key={item.value} value={item.value}>
+                                                    {item.label}
+                                                </SelectItem>
+                                            ))
+                                        }
                                     </SelectGroup>
                                 </SelectContent>
                             </Select>
                         )}
                     />
+
                     {errors.contractType && (
                         <p className="text-sm text-red-400">
                             {typeof errors.contractType === "string"
@@ -189,7 +267,10 @@ export function CalculatorHero() {
                                 onValueChange={field.onChange}
                                 value={field.value}
                             >
-                                <SelectTrigger aria-label="Select a reason for leaving" className="w-full min-h-12 border-white/60 bg-black/10 text-white data-[placeholder]:text-white/60 pl-4.5 cursor-pointer">
+                                <SelectTrigger
+                                    aria-label="Select a reason for leaving"
+                                    className="w-full min-h-12 border-white/60 bg-black/10 text-white data-placeholder:text-white/60! hover:data-placeholder:text-white! pl-4.5 cursor-pointer"
+                                >
                                     <SelectValue placeholder="Select a reason for leaving" />
                                 </SelectTrigger>
                                 <SelectContent>
@@ -197,20 +278,19 @@ export function CalculatorHero() {
                                         <SelectLabel>
                                             Reason for Leaving
                                         </SelectLabel>
-                                        <SelectItem value="resignation">
-                                            Resignation
-                                        </SelectItem>
-                                        <SelectItem value="termination">
-                                            Termination by Employer
-                                        </SelectItem>
-                                        <SelectItem value="completion">
-                                            Contract Completion
-                                        </SelectItem>
+                                        {
+                                            reasonForLeaving.map((item) => (
+                                                <SelectItem key={item.value} value={item.value}>
+                                                    {item.label}
+                                                </SelectItem>
+                                            ))
+                                        }
                                     </SelectGroup>
                                 </SelectContent>
                             </Select>
                         )}
                     />
+
                     {errors.reasonForLeaving && (
                         <p className="text-sm text-red-400">
                             {typeof errors.reasonForLeaving === "string"
@@ -233,13 +313,12 @@ export function CalculatorHero() {
     );
 }
 
-function CalculatorResult({
-    result,
-    reset,
-}: {
+interface ICalculatorResultProps {
     result: ICalculationResult;
-    reset?: () => void;
-}) {
+    reset: () => void;
+}
+
+function CalculatorResult({ result, reset, }: ICalculatorResultProps) {
     return (
         <div>
             <h2 className="text-2xl font-bold text-white mb-4">

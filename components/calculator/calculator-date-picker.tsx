@@ -32,7 +32,7 @@ export function DatePicker({
                     {...props}
                     variant="outline"
                     className={cn(
-                        "data-[empty=true]:text-white/60 text-white/60 w-full justify-start text-left font-normal cursor-pointer min-h-12 !pl-4.5 bg-black/10 hover:text-white hover:bg-transparent",
+                        "data-[empty=true]:text-white/60 text-white/60 w-full justify-start text-left font-normal cursor-pointer min-h-12 pl-4.5! bg-black/10 hover:text-white hover:bg-transparent",
                         {
                             "text-white": label,
                         }
