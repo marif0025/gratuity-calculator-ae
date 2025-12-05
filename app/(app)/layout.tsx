@@ -3,6 +3,8 @@ import { getConfig } from "@/sanity/requests";
 import { Header } from "@/components/header";
 import Footer from "@/components/footer";
 import { Metadata } from "next";
+import { Fragment } from "react/jsx-runtime";
+import Script from "next/script";
 
 export async function generateMetadata(): Promise<Metadata> {
     const config = await getConfig();
@@ -51,6 +53,7 @@ export default async function AppLayout({
     children: React.ReactNode;
 }>) {
     const config = await getConfig();
+    const scripts = config?.seo?.scripts?.map(s => s);
 
     return (
         <AppProvider config={config}>
@@ -59,6 +62,34 @@ export default async function AppLayout({
                 {children}
                 <Footer />
             </main>
+
+            {
+                config?.seo?.indexable &&
+                config?.seo?.google_tag_manager_id &&
+                <GoogleTagManager googleTagManagerId={config.seo.google_tag_manager_id} />
+            }
+
+            {config?.seo?.indexable && scripts && scripts.length > 0 ? scripts.map((script) => (
+                <div key={script} dangerouslySetInnerHTML={{ __html: script }} />
+            )) : null}
         </AppProvider>
     );
+}
+
+function GoogleTagManager(
+    { googleTagManagerId }: { googleTagManagerId: string }
+) {
+    return (
+        <Fragment>
+            <Script async src={`https://www.googletagmanager.com/gtag/js?id=${googleTagManagerId}`} />
+            <Script>
+                {`
+                         window.dataLayer = window.dataLayer || [];
+                        function gtag(){dataLayer.push(arguments);}
+                        gtag('js', new Date());
+                        gtag('config', '${googleTagManagerId}');
+                    `}
+            </Script>
+        </Fragment>
+    )
 }

@@ -58,9 +58,16 @@ export default defineType({
 
         defineField({
             name: 'google_tag',
+            title: 'Google Search Console Verification',
+            type: 'string',
+            description: 'Enter the Google Search Console Verification (e.g., XXXXXXXX) for analytics and tracking.',
+        }),
+
+        defineField({
+            name: 'google_tag_manager_id',
             title: 'Google Tag Manager ID',
             type: 'string',
-            description: 'Enter the Google Tag Manager ID (e.g., GTM-XXXXX) for analytics and tracking.',
+            description: 'Enter the Google Tag Manager ID (e.g., GTM-XXXXX) for analytics and tracking. If not provided, the Google Search Console Verification will be used.',
         }),
 
         defineField({

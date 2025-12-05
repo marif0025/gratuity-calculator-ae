@@ -73,6 +73,7 @@ export interface ConfigSEO {
     sitemap_url?: string
     indexable?: boolean
     google_tag?: string
+    google_tag_manager_id?: string
     scripts?: string[]
 }
 

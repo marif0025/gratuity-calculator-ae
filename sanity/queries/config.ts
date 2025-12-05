@@ -37,6 +37,7 @@ export const getConfigQuery = groq`
       sitemap_url,
       indexable,
       google_tag,
+      google_tag_manager_id,
       scripts
     },
     header {
