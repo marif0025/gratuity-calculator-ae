@@ -13,12 +13,12 @@ export default function Hero() {
     return (
         <section
             id="hero"
-            className="relative overflow-hidden bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 py-10"
+            className="relative overflow-hidden bg-linear-to-br from-blue-600 via-blue-700 to-indigo-800  py-10"
         >
             <BackgroundPattern />
             <FloatingElements />
 
-            <div className="relative container mx-auto px-4 lg:py-27">
+            <div className="relative container mx-auto px-4 pt-14 lg:py-27">
                 <div className="grid lg:grid-cols-[1fr_460px] gap-12 lg:gap-24 items-center">
                     <div className="text-white">
                         <TrustBadge />
