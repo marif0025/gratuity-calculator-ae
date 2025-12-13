@@ -74,7 +74,7 @@ const Table = React.forwardRef<HTMLTableElement, TableProps>(
                                             "font-semibold text-left",
                                             compact ? "p-2!" : "p-3!",
                                             bordered &&
-                                                "border-r border-border last:border-r-0"
+                                            "border-r border-border last:border-r-0"
                                         )}
                                     >
                                         {cellText}
@@ -92,7 +92,7 @@ const Table = React.forwardRef<HTMLTableElement, TableProps>(
                             className={cn(
                                 striped && rowIndex % 2 === 0 && "bg-muted/30",
                                 bordered &&
-                                    "border-b border-border last:border-b-0"
+                                "border-b border-border last:border-b-0"
                             )}
                         >
                             {row.cells?.map((cell, cellIndex) => {
@@ -108,7 +108,7 @@ const Table = React.forwardRef<HTMLTableElement, TableProps>(
                                         className={cn(
                                             compact ? "p-2!" : "p-3!",
                                             bordered &&
-                                                "border-r border-border last:border-r-0"
+                                            "border-r border-border last:border-r-0"
                                         )}
                                     >
                                         {cellText}
@@ -122,7 +122,7 @@ const Table = React.forwardRef<HTMLTableElement, TableProps>(
         );
 
         return (
-            <div className="w-full overflow-x-auto">
+            <div className="w-full overflow-x-auto my-6">
                 {title && (
                     <h3 className="text-lg font-semibold mb-3">{title}</h3>
                 )}

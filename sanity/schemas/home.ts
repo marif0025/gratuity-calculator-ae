@@ -25,6 +25,12 @@ export default defineType({
             initialValue: 'Home Page',
         }),
         defineField({
+            name: 'hero',
+            title: 'Hero',
+            type: 'homeHero',
+            description: 'Hero section for the homepage',
+        }),
+        defineField({
             name: 'seo',
             title: 'SEO',
             type: 'seo',

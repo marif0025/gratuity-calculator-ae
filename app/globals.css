@@ -42,6 +42,19 @@
     --radius-md: calc(var(--radius) - 2px);
     --radius-lg: var(--radius);
     --radius-xl: calc(var(--radius) + 4px);
+
+    --color-info: var(--info);
+    --color-info-foreground: var(--info-foreground);
+    --color-info-muted: var(--info-muted);
+    --color-warning: var(--warning);
+    --color-warning-foreground: var(--warning-foreground);
+    --color-warning-muted: var(--warning-muted);
+    --color-error: var(--error);
+    --color-error-foreground: var(--error-foreground);
+    --color-error-muted: var(--error-muted);
+    --color-success: var(--success);
+    --color-success-foreground: var(--success-foreground);
+    --color-success-muted: var(--success-muted);
 }
 
 :root {
@@ -77,6 +90,27 @@
     --sidebar-accent-foreground: oklch(0.205 0 0);
     --sidebar-border: oklch(0.922 0 0);
     --sidebar-ring: oklch(0.708 0 0);
+
+    /* Added alert color tokens for all four variants */
+  /* Info - Calm blue tones */
+  --info: oklch(0.55 0.15 240);
+  --info-foreground: oklch(0.25 0.12 240);
+  --info-muted: oklch(0.45 0.08 240);
+
+  /* Warning - Warm amber/yellow tones */
+  --warning: oklch(0.75 0.15 70);
+  --warning-foreground: oklch(0.35 0.12 65);
+  --warning-muted: oklch(0.5 0.1 68);
+
+  /* Error - Bold red tones */
+  --error: oklch(0.62 0.24 25);
+  --error-foreground: oklch(0.35 0.2 25);
+  --error-muted: oklch(0.48 0.15 25);
+
+  /* Success/Tip - Positive green tones */
+  --success: oklch(0.65 0.18 145);
+  --success-foreground: oklch(0.3 0.15 145);
+  --success-muted: oklch(0.48 0.12 145);
 }
 
 .dark {
@@ -111,6 +145,27 @@
     --sidebar-accent-foreground: oklch(0.985 0 0);
     --sidebar-border: oklch(1 0 0 / 10%);
     --sidebar-ring: oklch(0.556 0 0);
+
+    /* Dark mode alert color tokens */
+  /* Info - Brighter blue for dark mode */
+  --info: oklch(0.65 0.18 240);
+  --info-foreground: oklch(0.85 0.12 240);
+  --info-muted: oklch(0.7 0.1 240);
+
+  /* Warning - Brighter amber for dark mode */
+  --warning: oklch(0.78 0.16 70);
+  --warning-foreground: oklch(0.9 0.12 68);
+  --warning-muted: oklch(0.75 0.1 70);
+
+  /* Error - Brighter red for dark mode */
+  --error: oklch(0.68 0.24 25);
+  --error-foreground: oklch(0.88 0.18 25);
+  --error-muted: oklch(0.72 0.15 25);
+
+  /* Success - Brighter green for dark mode */
+  --success: oklch(0.7 0.18 145);
+  --success-foreground: oklch(0.88 0.14 145);
+  --success-muted: oklch(0.75 0.12 145);
 }
 
 @layer base {

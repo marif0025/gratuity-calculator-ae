@@ -32,7 +32,7 @@ export default async function Home() {
     return (
         <>
             <Hero />
-            <Suspense fallback={<div>Home content loading...</div>}>
+            <Suspense fallback={<div></div>}>
                 <HomeContent />
             </Suspense>
         </>
