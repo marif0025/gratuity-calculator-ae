@@ -1,9 +1,11 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getBlogBySlug, BlogData } from "@/sanity/requests";
+import { getBlogBySlug, BlogData, getConfig } from "@/sanity/requests";
 import { BlogPostScreen } from "@/screens/blog/post/screen";
 import { buildPageMeta } from "@/lib/seo/meta";
 import { renderJsonLd } from "@/lib/seo/jsonld";
+import { JsonLd } from "@/components/seo/json-ld";
+import type { WithContext, Article, BreadcrumbList } from "schema-dts";
 
 export const dynamic = "force-dynamic";
 
@@ -62,46 +64,55 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     );
 }
 
-function BlogPostJsonLd({ blog }: { blog: BlogData }) {
+async function BlogPostJsonLd({ blog }: { blog: BlogData }) {
+    const config = await getConfig();
+    const baseUrl = config?.seo?.base_path || process.env.SITE_URL || 'https://www.gratuityuaecalculator.ae';
+    const siteName = config?.site_name || 'Gratuity Calculator';
+
     const slug = blog.slug.current;
-    const url = `${process.env.SITE_URL}/blog/${slug}/`;
+    const url = `${baseUrl}/blog/${slug}/`;
     const description =
         blog.seo?.meta_description ||
         blog.description ||
         `Read our article about ${blog.title}`;
     const title = blog.seo?.meta_title ?? blog.title;
 
-    return (
-        <script
-            type="application/ld+json"
-            dangerouslySetInnerHTML={{
-                __html: renderJsonLd.article({
-                    headline: title,
-                    description,
-                    datePublished: blog.publishedAt,
-                    dateModified: blog.publishedAt,
-                    author: {
-                        "@type": "Organization",
-                        name: "Gratuity Calculator",
-                    },
-                    publisher: {
-                        "@type": "Organization",
-                        name: "Gratuity Calculator",
-                    },
-                    mainEntityOfPage: {
-                        "@type": "WebPage",
-                        "@id": url,
-                    },
-                    image: blog.featureImage
-                        ? {
-                              "@type": "ImageObject",
-                              url: blog.featureImage.url,
-                              width: blog.featureImage.width,
-                              height: blog.featureImage.height,
-                          }
-                        : undefined,
-                }),
-            }}
-        />
-    );
+    const schemas: Array<WithContext<Article> | WithContext<BreadcrumbList>> = [];
+
+    // Article schema
+    schemas.push(JSON.parse(renderJsonLd.article({
+        headline: title,
+        description,
+        datePublished: blog.publishedAt,
+        dateModified: blog.publishedAt,
+        author: {
+            "@type": "Organization",
+            name: siteName,
+        },
+        publisher: {
+            "@type": "Organization",
+            name: siteName,
+        },
+        mainEntityOfPage: {
+            "@type": "WebPage",
+            "@id": url,
+        },
+        image: blog.featureImage
+            ? {
+                "@type": "ImageObject",
+                url: blog.featureImage.url,
+                width: blog.featureImage.width,
+                height: blog.featureImage.height,
+            }
+            : undefined,
+    })) as WithContext<Article>);
+
+    // BreadcrumbList schema
+    schemas.push(JSON.parse(renderJsonLd.breadcrumbList([
+        { name: "Home", url: baseUrl },
+        { name: "Blog", url: `${baseUrl}/blog` },
+        { name: title, url: url },
+    ])) as WithContext<BreadcrumbList>);
+
+    return <JsonLd data={schemas} id="blog-post-schemas" />;
 }

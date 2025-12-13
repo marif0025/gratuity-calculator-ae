@@ -5,6 +5,9 @@ import Footer from "@/components/footer";
 import { Metadata } from "next";
 import { Fragment } from "react/jsx-runtime";
 import Script from "next/script";
+import { JsonLd } from "@/components/seo/json-ld";
+import { renderJsonLd } from "@/lib/seo/jsonld";
+import type { WithContext, Organization, WebSite } from "schema-dts";
 
 export async function generateMetadata(): Promise<Metadata> {
     const config = await getConfig();
@@ -55,8 +58,28 @@ export default async function AppLayout({
     const config = await getConfig();
     const scripts = config?.seo?.scripts?.map(s => s);
 
+    // Generate global schemas (Organization + WebSite)
+    const baseUrl = config?.seo?.base_path || process.env.SITE_URL || 'https://www.gratuityuaecalculator.ae';
+    const siteName = config?.site_name || 'Gratuity Calculator';
+
+    const organizationSchema = JSON.parse(renderJsonLd.organization({
+        name: siteName,
+        url: baseUrl,
+        logo: config?.header?.logo?.image?.asset?.url ? {
+            url: config.header.logo.image.asset.url,
+            width: config.header.logo.image.asset.metadata?.dimensions?.width,
+            height: config.header.logo.image.asset.metadata?.dimensions?.height,
+        } : undefined,
+    })) as WithContext<Organization>;
+
+    const websiteSchema = JSON.parse(renderJsonLd.website({
+        name: siteName,
+        url: baseUrl,
+    })) as WithContext<WebSite>;
+
     return (
         <AppProvider config={config}>
+            <JsonLd data={[organizationSchema, websiteSchema]} id="global-schemas" />
             <main className="min-h-screen">
                 <Header />
                 {children}
