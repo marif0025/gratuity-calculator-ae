@@ -1,6 +1,6 @@
 "use client";
 
-import { HTMLAttributes, useState } from "react";
+import { HTMLAttributes, useState, useEffect } from "react";
 import Link from "next/link";
 import { TypedObject } from "sanity";
 import { ChevronDown, ChevronUp, List } from "lucide-react";
@@ -103,11 +103,11 @@ function RenderToc({
                         <a
                             href={`#${el.slug}`}
                             className={cn(
-                                "group relative flex items-start gap-2 px-3 py-2 text-sm transition-colors",
+                                "group relative flex items-start gap-2 px-4 py-2.5 text-sm transition-colors",
                                 "hover:text-accent-foreground",
                                 "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
                                 level >= 3 && "text-muted-foreground", {
-                                "bg-accent text-accent-foreground font-medium": hasActiveChild || (isActive && level === 1),
+                                "bg-primary/10 text-primary font-medium": hasActiveChild || (isActive && level === 1),
                                 "font-medium": isActive,
                             }
                             )}
@@ -137,11 +137,23 @@ function TableOfContentsComponent({
     className,
     activeSection,
 }: TableOfContentsProps) {
-    const [isCollapsed, setIsCollapsed] = useState(false);
+    const [isCollapsed, setIsCollapsed] = useState(() =>
+        typeof window !== 'undefined' && window.innerWidth < 1024
+    );
 
     if (!headings || headings.length === 0) return null;
 
     const nestedHeadings = nestHeadings(headings);
+
+    useEffect(() => {
+        const handleResize = () => {
+            const isMobile = window.innerWidth < 1024;
+            setIsCollapsed(isMobile);
+        };
+
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     return (
         <section

@@ -5,7 +5,8 @@ export {
     getAllBlogs,
     getBlogBySlug,
     getRecentBlogs,
-    getAllBlogSlugs
+    getAllBlogSlugs,
+    getSimilarBlogs
 } from './blog'
 export {
     getAllPages,

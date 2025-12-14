@@ -70,7 +70,7 @@ export default async function Page({ params }: PageProps) {
   return (
     <>
       <PageJsonLd page={page} slug={slug} />
-      <div className="container !max-w-screen-lg mx-auto px-4 py-24">
+      <div className="container max-w-5xl! mx-auto px-4 py-24">
         <Breadcrumbs
           items={[
             { name: "Home", href: "/" },

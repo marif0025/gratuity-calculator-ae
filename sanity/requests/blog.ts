@@ -5,7 +5,8 @@ import {
     getAllBlogsQuery,
     getBlogBySlugQuery,
     getRecentBlogsQuery,
-    getAllBlogSlugsQuery
+    getAllBlogSlugsQuery,
+    getSimilarBlogsQuery
 } from '../queries/blog'
 import type {
     GetAllBlogsResponse,
@@ -82,6 +83,25 @@ export async function getAllBlogSlugs(): Promise<GetAllBlogSlugsResponse> {
         return data || []
     } catch (error) {
         console.error('Error fetching blog slugs:', error)
+        return []
+    }
+}
+
+/**
+ * Server action to fetch similar blog posts (excluding current post)
+ * @param excludeSlug - The slug of the current blog post to exclude
+ * @returns Promise<GetRecentBlogsResponse> - Array of similar blog previews (max 6)
+ */
+export async function getSimilarBlogs(excludeSlug: string): Promise<GetRecentBlogsResponse> {
+    try {
+        const data = await sanityFetch<typeof getSimilarBlogsQuery>({
+            query: getSimilarBlogsQuery,
+            params: { excludeSlug },
+            tags: ['blog'],
+        })
+        return data || []
+    } catch (error) {
+        console.error('Error fetching similar blogs:', error)
         return []
     }
 }

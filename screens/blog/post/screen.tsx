@@ -2,8 +2,6 @@ import { format } from "date-fns";
 import Image from "next/image";
 import { BlogData } from "@/sanity/lib/types";
 import { Breadcrumbs } from "@/components/ui/breadcrumbs";
-import { BlogPostContent } from "./content";
-import { TableOfContents } from "./table-of-contents";
 import { BlogContentWrap } from "./blog-content-wrap";
 
 interface BlogPostScreenProps {

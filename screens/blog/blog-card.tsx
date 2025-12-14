@@ -65,12 +65,12 @@ function FeaturedCard({
                     />
                 </div>
                 <CardHeader className="pt-6">
-                    <CardTitle className="text-xl group-hover:text-primary transition-colors">
+                    <CardTitle className="text-xl group-hover:text-primary transition-colors line-clamp-2">
                         {title}
                     </CardTitle>
                 </CardHeader>
                 <CardContent>
-                    <CardDescription className="text-gray-600 text-base">
+                    <CardDescription className="text-gray-600 text-base line-clamp-3">
                         {description}
                     </CardDescription>
                 </CardContent>

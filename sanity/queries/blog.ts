@@ -109,3 +109,24 @@ export const getAllBlogSlugsQuery = groq`
     slug
   }
 `
+
+export const getSimilarBlogsQuery = groq`
+  *[_type == "blog" && isPublished == true && slug.current != $excludeSlug] | order(publishedAt desc)[0...6] {
+    _id,
+    title,
+    description,
+    slug,
+    featureImage {
+      "url": asset->url,
+      "width": asset->metadata.dimensions.width,
+      "height": asset->metadata.dimensions.height,
+      "alt": alt
+    },
+    category->{
+      _id,
+      name,
+      slug
+    },
+    publishedAt
+  }
+`

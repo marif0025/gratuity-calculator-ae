@@ -13,7 +13,7 @@ export default function Hero() {
     return (
         <section
             id="hero"
-            className="relative overflow-hidden bg-linear-to-br from-blue-600 via-blue-700 to-indigo-800  py-10"
+            className="relative overflow-hidden bg-linear-to-br from-blue-800 via-[#2a3455] to-[#4e4a71]  py-10"
         >
             <BackgroundPattern />
             <FloatingElements />

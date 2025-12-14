@@ -6,6 +6,8 @@ import { buildPageMeta } from "@/lib/seo/meta";
 import { renderJsonLd } from "@/lib/seo/jsonld";
 import { JsonLd } from "@/components/seo/json-ld";
 import type { WithContext, Article, BreadcrumbList } from "schema-dts";
+import { Suspense } from "react";
+import { SimilarPosts } from "@/screens/blog/post/similar-posts";
 
 interface BlogPostPageProps {
     params: Promise<{ slug: string }>;
@@ -57,7 +59,13 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     return (
         <>
             <BlogPostJsonLd blog={blog} />
-            <BlogPostScreen blog={blog} />
+
+            <div className="container max-w-7xl! mx-auto px-4 py-24">
+                <BlogPostScreen blog={blog} />
+                <Suspense fallback={<div></div>}>
+                    <SimilarPosts currentSlug={blog.slug.current} />
+                </Suspense>
+            </div>
         </>
     );
 }
