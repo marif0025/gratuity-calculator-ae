@@ -14,7 +14,7 @@ export function BlogPostScreen({ blog }: BlogPostScreenProps) {
         : null;
 
     return (
-        <div className="container max-w-7xl! mx-auto px-4 py-24">
+        <>
             <Breadcrumbs
                 items={[
                     { name: "Blog", href: "/blog" },
@@ -30,8 +30,8 @@ export function BlogPostScreen({ blog }: BlogPostScreenProps) {
                 ]}
             />
 
-            <article>
-                <header className="grid gap-6 mb-8">
+            <article className="space-y-20">
+                <header className="grid gap-6">
                     <div className="flex flex-col gap-1">
                         <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-6 leading-tight">
                             {blog.title}
@@ -71,6 +71,6 @@ export function BlogPostScreen({ blog }: BlogPostScreenProps) {
 
                 <BlogContentWrap blog={blog} />
             </article>
-        </div>
+        </>
     );
 }
