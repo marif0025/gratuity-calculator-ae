@@ -13,7 +13,7 @@ export function BlogContentWrap({ blog }: IProps) {
   const activeSection = useActiveHeading(blog.headings);
 
   return (
-    <div className="grid lg:grid-cols-[360px_1fr] gap-6 lg:gap-10">
+    <div className="grid lg:grid-cols-[360px_1fr] xl:grid-cols-[400px_1fr] gap-6 lg:gap-10">
       <aside className="sticky top-20 h-fit">
         <TableOfContents
           headings={blog.headings}

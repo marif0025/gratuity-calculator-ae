@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { TypedObject } from "sanity";
-import { createSlug } from "@/lib/utils/slugify";
+import { getHeadingId } from "@/lib/utils/heading-ids";
 
 type PortableTextChild = {
     _key?: string;
@@ -34,13 +34,7 @@ export function useActiveHeading(
             .map((block) => {
                 if (!block.style || !block.children) return null;
 
-                const text =
-                    block.children
-                        .map((child) => child.text || "")
-                        .join(" ")
-                        .trim() || "Untitled";
-
-                return createSlug(text);
+                return getHeadingId(block);
             })
             .filter(Boolean) as string[];
     }, [headings]);

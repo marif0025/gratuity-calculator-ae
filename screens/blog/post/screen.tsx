@@ -16,7 +16,7 @@ export function BlogPostScreen({ blog }: BlogPostScreenProps) {
         : null;
 
     return (
-        <div className="container max-w-6xl! mx-auto px-4 py-24">
+        <div className="container max-w-7xl! mx-auto px-4 py-24">
             <Breadcrumbs
                 items={[
                     { name: "Blog", href: "/blog" },
