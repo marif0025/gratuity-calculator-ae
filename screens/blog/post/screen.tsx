@@ -4,6 +4,7 @@ import { BlogData } from "@/sanity/lib/types";
 import { Breadcrumbs } from "@/components/ui/breadcrumbs";
 import { BlogPostContent } from "./content";
 import { TableOfContents } from "./table-of-contents";
+import { BlogContentWrap } from "./blog-content-wrap";
 
 interface BlogPostScreenProps {
     blog: BlogData;
@@ -15,7 +16,7 @@ export function BlogPostScreen({ blog }: BlogPostScreenProps) {
         : null;
 
     return (
-        <div className="container !max-w-screen-lg mx-auto px-4 py-24">
+        <div className="container max-w-6xl! mx-auto px-4 py-24">
             <Breadcrumbs
                 items={[
                     { name: "Blog", href: "/blog" },
@@ -70,13 +71,7 @@ export function BlogPostScreen({ blog }: BlogPostScreenProps) {
                     )}
                 </header>
 
-                <div className="grid lg:grid-cols-[360px_1fr] gap-6">
-                    <aside className="lg:sticky top-20 h-fit">
-                        <TableOfContents headings={blog.headings} />
-                    </aside>
-
-                    <BlogPostContent content={blog.content} />
-                </div>
+                <BlogContentWrap blog={blog} />
             </article>
         </div>
     );

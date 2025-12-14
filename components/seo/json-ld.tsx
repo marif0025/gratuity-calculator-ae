@@ -12,7 +12,7 @@ export function JsonLd({ data, id }: JsonLdProps) {
     <>
       {jsonLd.map((item, index) => (
         <script
-          key={id || `jsonld-${index}`}
+          key={id + '-' + index || `jsonld-${index}`}
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify(item, null, 0)

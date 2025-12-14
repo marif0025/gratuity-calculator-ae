@@ -2,12 +2,13 @@
 
 import { TypedObject } from "sanity";
 import Link from "next/link";
-import { BookOpen } from "lucide-react";
+import { BookOpen, ChevronDown, ChevronUp, List } from "lucide-react";
 import { HTMLAttributes, useState } from "react";
 
 import { createSlug } from "@/lib/utils/slugify";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 type TreeNode = {
     text: string;
@@ -18,6 +19,7 @@ type TreeNode = {
 interface TableOfContentsProps extends HTMLAttributes<HTMLDivElement> {
     headings?: TypedObject[];
     title?: string;
+    activeSection?: string | null;
 }
 
 export function nestHeadings(blocks: TypedObject[]): TreeNode[] {
@@ -60,37 +62,72 @@ export function nestHeadings(blocks: TypedObject[]): TreeNode[] {
     return treeNodes;
 }
 
+type TRenderToc = React.HTMLAttributes<HTMLUListElement> & {
+    elements: TreeNode[];
+    level?: number;
+    activeSection?: string | null;
+}
+
 function RenderToc({
     elements,
     level = 1,
-}: {
-    elements: TreeNode[];
-    level?: number;
-}) {
+    activeSection,
+    className,
+    ...props
+}: TRenderToc) {
+    // Helper to check if any descendant is active
+    const hasActiveDescendant = (node: TreeNode): boolean => {
+        if (node.slug === activeSection) return true;
+        if (node.children) {
+            return node.children.some((child) => hasActiveDescendant(child));
+        }
+        return false;
+    };
+
     return (
         <ul
-            className={`space-y-2 text-sm font-semibold ${
-                level > 1
-                    ? "ml-4 list-disc space-y-1 font-normal"
-                    : "space-y-3.5 border-l pl-4"
-            }`}
+            role="list"
+            {...props}
+            className={cn("text-sm space-y-1", className, {
+                "pl-2": level > 1,
+            })}
         >
-            {elements.map((el) => (
-                <li
-                    key={el.text}
-                    className={level > 1 ? "[&:first-child]:mt-2" : ""}
-                >
-                    <Link
-                        href={`#${el.slug}`}
-                        className="hover:underline hover:underline-offset-4 transition-colors"
-                    >
-                        {el.text}
-                    </Link>
-                    {el.children && (
-                        <RenderToc elements={el.children} level={level + 1} />
-                    )}
-                </li>
-            ))}
+            {elements.map((el) => {
+                const isActive = el.slug === activeSection;
+                const hasActiveChild = el.children?.some((child) =>
+                    hasActiveDescendant(child)
+                );
+                const shouldShowChildren = isActive || hasActiveChild;
+
+                return (
+                    <li key={el.text}>
+                        <a
+                            href={`#${el.slug}`}
+                            className={cn(
+                                "group relative flex items-start gap-2 px-3 py-2 text-sm transition-colors",
+                                "hover:text-accent-foreground",
+                                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+                                level >= 3 && "text-muted-foreground", {
+                                "bg-accent text-accent-foreground font-medium": hasActiveChild,
+                                "font-medium": isActive,
+                            }
+                            )}
+                            aria-current={isActive ? "location" : undefined}
+                        >
+                            <span className="leading-relaxed">{el.text}</span>
+                        </a>
+
+                        {el.children?.length ? (
+                            <RenderToc
+                                className={shouldShowChildren ? "" : "hidden"}
+                                elements={el.children}
+                                level={level + 1}
+                                activeSection={activeSection}
+                            />
+                        ) : null}
+                    </li>
+                );
+            })}
         </ul>
     );
 }
@@ -99,43 +136,58 @@ function TableOfContentsComponent({
     headings,
     title = "Table of Contents",
     className,
+    activeSection,
 }: TableOfContentsProps) {
-    if (!headings || headings.length === 0) {
-        return null;
-    }
+    const [isCollapsed, setIsCollapsed] = useState(false);
+
+    if (!headings || headings.length === 0) return null;
 
     const nestedHeadings = nestHeadings(headings);
 
     return (
-        <section className={cn("flex max-w-sm flex-col", className)}>
-            <h3 className="z-0 hidden lg:block mb-4 pb-1.5 font-bold md:sticky md:top-0">
-                {title}
-            </h3>
-            <nav className="flex gap-4 max-h-[calc(100vh-20rem)] overflow-y-auto">
-                <RenderToc elements={nestedHeadings} />
-            </nav>
+        <section
+            className={cn("rounded-lg border bg-card text-card-foreground shadow-sm", className)}
+            aria-label={title}
+        >
+            <div
+                role="button"
+                tabIndex={0}
+                onClick={() => setIsCollapsed(prev => !prev)}
+                className="flex items-center justify-between border-b px-4 py-4 cursor-pointer hover:bg-accent rounded-t-lg"
+            >
+                <div className="flex items-center gap-2">
+                    <List className="size-4 text-muted-foreground" aria-hidden="true" />
+                    <h2 className="text-sm font-semibold">{title}</h2>
+                </div>
+
+                {isCollapsed ?
+                    <ChevronDown className="size-4" /> :
+                    <ChevronUp className="size-4" />
+                }
+            </div>
+
+            {
+                !isCollapsed && (
+                    <ScrollArea
+                        className="px-4 py-3 overflow-y-auto"
+                        style={{ maxHeight: "calc(100vh - 12rem)" }}
+                    >
+                        <RenderToc elements={nestedHeadings} activeSection={activeSection} />
+                    </ScrollArea>
+                )
+            }
         </section>
     );
 }
 
-export function TableOfContents({ headings }: TableOfContentsProps) {
-    const [showToc, setShowToc] = useState(false);
+export function TableOfContents({
+    headings,
+    activeSection,
+}: TableOfContentsProps) {
     return (
-        <>
-            <Button
-                className="lg:hidden"
-                onClick={() => setShowToc((prev) => !prev)}
-            >
-                <BookOpen className="w-4 h-4" />
-                <span>Table of Contents</span>
-            </Button>
-
-            <TableOfContentsComponent
-                headings={headings}
-                className={cn("hidden lg:block", {
-                    "block pt-8": showToc,
-                })}
-            />
-        </>
+        <TableOfContentsComponent
+            headings={headings}
+            activeSection={activeSection}
+        />
     );
 }
