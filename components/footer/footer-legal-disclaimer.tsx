@@ -1,6 +1,6 @@
 export default function FooterLegalDisclaimer() {
   return (
-    <div className="mt-8 p-4 bg-gray-800 rounded-lg">
+    <div className="p-4 bg-gray-800 rounded-lg">
       <h5 className="font-semibold text-yellow-400 mb-2 text-sm">Important Legal Disclaimer</h5>
       <p className="text-xs text-gray-400 leading-relaxed">
         This calculator provides estimates based on UAE Labour Law 2025 and MOHRE guidelines. Results are for

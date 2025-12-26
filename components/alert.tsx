@@ -1,4 +1,4 @@
-import { Info, AlertTriangle, XCircle, Lightbulb } from "lucide-react"
+import { Info, AlertTriangle, XCircle, Lightbulb, SigmaSquare } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { AlertData } from "@/sanity/requests"
 import { PortableTextComponent } from "./portable-text"
@@ -38,9 +38,16 @@ const variantConfig = {
     titleClass: "text-success-foreground",
     descriptionClass: "text-success-muted",
   },
+  formula: {
+    icon: SigmaSquare,
+    containerClass: "bg-primary/10 border-primary/20",
+    iconClass: "text-primary",
+    titleClass: "text-primary-foreground",
+    descriptionClass: "text-primary-muted",
+  },
 }
 
-function resolveVariant(type: "info" | "warning" | "error" | "tip") {
+function resolveVariant(type: "info" | "warning" | "error" | "tip" | "formula") {
   return variantConfig[type]
 }
 

@@ -19,6 +19,7 @@ export default defineType({
           { title: 'Warning', value: 'warning' },
           { title: 'Error', value: 'error' },
           { title: 'Tip', value: 'tip' },
+          { title: 'Formula', value: 'formula' },
         ],
         layout: 'radio',
       },
@@ -67,7 +68,7 @@ export default defineType({
 
       return {
         title: `${typeLabel}: ${displayTitle}`,
-        subtitle: contentPreview.length > 50 ? `${contentPreview.substring(0, 50)}...` : contentPreview,
+        // subtitle: contentPreview.length > 50 ? `${contentPreview.substring(0, 50)}...` : contentPreview,
       }
     },
   },

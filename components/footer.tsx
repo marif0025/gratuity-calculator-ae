@@ -13,7 +13,7 @@ export default function Footer() {
   return (
     <footer className="bg-gray-900 text-white">
       {/* Main Footer Content */}
-      <div className="py-16">
+      <div className="pt-16 pb-12">
         <div className="container mx-auto px-4">
           <div className="max-w-6xl mx-auto">
             <FooterTopSection />
@@ -29,16 +29,21 @@ export default function Footer() {
         </div>
       </div>
 
+      <div className="container mx-auto px-4 mb-8 md:mb-12">
+        <div className="max-w-6xl mx-auto">
+          <FooterLegalDisclaimer />
+        </div>
+      </div>
+
       {/* Bottom Footer */}
       <div className="border-t border-gray-800 py-8">
         <div className="container mx-auto px-4">
           <div className="max-w-6xl mx-auto">
+
             <div className="flex flex-col md:flex-row justify-between items-center gap-4">
               <FooterCopyright />
               <FooterLegalLinks />
             </div>
-
-            <FooterLegalDisclaimer />
           </div>
         </div>
       </div>
