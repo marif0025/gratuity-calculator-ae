@@ -70,13 +70,40 @@ export const getConfigQuery = groq`
       }
     },
     footer {
-      footer_text,
-      menu[] {
-        text,
-        url,
-        is_external
+      top_section,
+      features[] {
+        svg_icon,
+        bgColor,
+        title,
+        description
       },
-      social_links[] {
+      about,
+      quick_links {
+        title,
+        items[] {
+          text,
+          url,
+          is_external
+        }
+      },
+      coverage_areas {
+        title,
+        areas[] {
+          svg_icon,
+          text
+        }
+      },
+      legal_disclaimer {
+        type,
+        title,
+        content,
+        dismissible
+      },
+      copyright {
+        copyright_text,
+        disclaimer_text
+      },
+      legal_links[] {
         text,
         url,
         is_external

@@ -1,13 +1,22 @@
-export default function FooterTopSection() {
+import { PortableTextComponent } from "@/components/portable-text"
+import { cn } from "@/lib/utils"
+import type { TypedObject } from "sanity"
+
+interface FooterTopSectionProps {
+  content: TypedObject | TypedObject[]
+}
+
+export default function FooterTopSection({ content }: FooterTopSectionProps) {
   return (
     <div className="text-center mb-12">
-      <h2 className="text-2xl md:text-3xl font-bold mb-4">Know Your Rights, Get What You Deserve</h2>
-      <p className="text-gray-300 max-w-3xl mx-auto">
-        Understanding your end-of-service gratuity is not just about numbers — it's about knowing your legal
-        rights as an employee in the UAE. Whether you're a professional working in Dubai, a domestic worker in
-        Abu Dhabi, or an employee in any free zone like JAFZA or DMCC, your gratuity is a financial benefit
-        you've earned with your hard work.
-      </p>
+      <div
+        className={cn(
+          "prose prose-invert max-w-3xl mx-auto",
+          "prose-h2:text-2xl prose-h2:md:text-3xl prose-h2:font-bold prose-h2:mb-4"
+        )}
+      >
+        <PortableTextComponent content={content} />
+      </div>
     </div>
   )
 }

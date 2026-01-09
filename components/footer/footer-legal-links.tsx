@@ -1,17 +1,25 @@
-export default function FooterLegalLinks() {
-  const links = [
-    { href: "/privacy", label: "Privacy Policy" },
-    { href: "/cookies", label: "Cookies" },
-    // { href: "/contact", label: "Contact" },
-    { href: "/disclaimer", label: "Legal Disclaimer" },
-    { href: "/about-us", label: "About" },
-  ]
+import type { SanityLink } from "@/sanity/lib/types"
+
+interface FooterLegalLinksProps {
+  legalLinks: SanityLink[]
+}
+
+export default function FooterLegalLinks({ legalLinks }: FooterLegalLinksProps) {
+  if (!legalLinks || legalLinks.length === 0) {
+    return null
+  }
 
   return (
     <div className="flex flex-wrap justify-center gap-6 text-xs text-gray-500">
-      {links.map((link) => (
-        <a key={link.href} href={link.href} className="hover:text-white transition-colors">
-          {link.label}
+      {legalLinks.map((link, index) => (
+        <a
+          key={index}
+          href={link.url || "#"}
+          className="hover:text-white transition-colors"
+          target={link.is_external ? "_blank" : undefined}
+          rel={link.is_external ? "noopener noreferrer" : undefined}
+        >
+          {link.text}
         </a>
       ))}
     </div>

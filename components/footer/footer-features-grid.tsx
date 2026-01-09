@@ -1,38 +1,25 @@
-import { Shield, Clock, Calculator, Users } from "lucide-react"
 import FooterFeatureCard from "./footer-feature-card"
+import type { FooterFeature } from "@/sanity/lib/types"
 
-export default function FooterFeaturesGrid() {
-  const features = [
-    {
-      icon: Calculator,
-      bgColor: "bg-blue-600",
-      title: "Instant Calculation",
-      description: "Get results in seconds",
-    },
-    {
-      icon: Shield,
-      bgColor: "bg-green-600",
-      title: "MOHRE Compliant",
-      description: "100% law-aligned",
-    },
-    {
-      icon: Clock,
-      bgColor: "bg-purple-600",
-      title: "All Contract Types",
-      description: "Limited & unlimited",
-    },
-    {
-      icon: Users,
-      bgColor: "bg-orange-600",
-      title: "All Employee Types",
-      description: "Including domestic workers",
-    },
-  ]
+interface FooterFeaturesGridProps {
+  features: FooterFeature[]
+}
+
+export default function FooterFeaturesGrid({ features }: FooterFeaturesGridProps) {
+  if (!features || features.length === 0) {
+    return null
+  }
 
   return (
     <div className="grid md:grid-cols-4 gap-6 mb-12">
       {features.map((feature, index) => (
-        <FooterFeatureCard key={index} {...feature} />
+        <FooterFeatureCard
+          key={index}
+          svgIcon={feature.svg_icon}
+          bgColor={feature.bgColor}
+          title={feature.title}
+          description={feature.description}
+        />
       ))}
     </div>
   )

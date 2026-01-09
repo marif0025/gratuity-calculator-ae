@@ -89,10 +89,44 @@ export interface ConfigHeader {
     cta_button?: SanityLink
 }
 
+// Footer types
+export interface FooterFeature {
+    svg_icon?: string
+    bgColor?: string
+    title: string
+    description: string
+}
+
+export interface FooterCoverageArea {
+    svg_icon?: string
+    text: string
+}
+
+export interface AlertComponent {
+    type: 'info' | 'warning' | 'error' | 'tip' | 'formula'
+    title?: string
+    content: TypedObject | TypedObject[]
+    dismissible?: boolean
+}
+
 export interface ConfigFooter {
-    footer_text?: string
-    menu?: SanityLink[]
-    social_links?: SanityLink[]
+    top_section?: TypedObject | TypedObject[]
+    features?: FooterFeature[]
+    about?: TypedObject | TypedObject[]
+    quick_links?: {
+        title?: string
+        items?: SanityLink[]
+    }
+    coverage_areas?: {
+        title?: string
+        areas?: FooterCoverageArea[]
+    }
+    legal_disclaimer?: AlertComponent
+    copyright?: {
+        copyright_text?: string
+        disclaimer_text?: string
+    }
+    legal_links?: SanityLink[]
 }
 
 export interface ConfigData {
