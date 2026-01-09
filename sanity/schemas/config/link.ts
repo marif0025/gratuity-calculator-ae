@@ -15,7 +15,7 @@ export default defineType({
         defineField({
             name: 'url',
             title: 'URL',
-            type: 'url',
+            type: 'string',
             description: 'The destination URL for this link',
         }),
         defineField({
