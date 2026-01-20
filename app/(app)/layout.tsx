@@ -107,6 +107,12 @@ export default async function AppLayout({
             {config?.seo?.indexable && scripts && scripts.length > 0 ? scripts.map((script) => (
                 <div key={script} dangerouslySetInnerHTML={{ __html: script }} />
             )) : null}
+            <script
+                async
+                defer
+                src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9109061590646279"
+                crossOrigin="anonymous"
+            />
         </AppProvider>
     );
 }

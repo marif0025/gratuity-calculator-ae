@@ -40,7 +40,7 @@ function useHeaderState(): HeaderState {
             }
         }
 
-        window.addEventListener("scroll", handleScroll, { passive: true });
+        window.addEventListener("scroll", handleScroll);
         // Run on mount in case user reloads mid-scroll
         handleScroll();
 
