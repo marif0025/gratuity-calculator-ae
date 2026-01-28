@@ -1,5 +1,6 @@
 "use client";
 
+import { Calculator } from "@/components/calculator-hero";
 import BackgroundPattern from "./background-pattern";
 import FloatingElements from "./floating-elements";
 import TrustBadge from "./trust-badge";
@@ -7,7 +8,6 @@ import HeroHeadline from "./hero-headline";
 import ValuePropositions from "./value-propositions";
 import TrustIndicators from "./trust-indicators";
 import BottomWave from "./bottom-wave";
-import { CalculatorHero } from "../calculator-hero/calculator-hero";
 
 export default function Hero() {
     return (
@@ -42,10 +42,4 @@ export default function Hero() {
     );
 }
 
-function Calculator() {
-    return (
-        <div id="calculator" className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
-            <CalculatorHero />
-        </div>
-    );
-}
+
