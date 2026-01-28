@@ -19,6 +19,11 @@ const nextConfig: NextConfig = {
             permanent: true,
         },
         {
+            source: `/blog/uae-common-gratuity-mistakes/`,
+            destination: '/blog/common-gratuity-mistakes/',
+            permanent: true,
+        },
+        {
             source: '/blog/free-zone-gratuity-rules-uae-2025/',
             destination: '/blog/uae-free-zone-gratuity-rules/',
             permanent: true,
