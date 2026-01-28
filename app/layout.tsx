@@ -1,5 +1,6 @@
 import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
+import "@/styles/global.css";
+import { cn } from "@/lib/utils";
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -18,9 +19,7 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en" className="scroll-smooth">
-            <body
-                className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-            >
+            <body className={cn("antialiased", geistSans.variable, geistMono.variable)}>
                 {children}
             </body>
         </html>

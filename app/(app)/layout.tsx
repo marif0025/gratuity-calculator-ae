@@ -38,9 +38,8 @@ export default async function AppLayout({
                 <GoogleTagManager googleTagManagerId={config.seo.google_tag_manager_id} />
             }
 
-            <script
-                async
-                defer
+            <Script
+                strategy="afterInteractive"
                 src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9109061590646279"
                 crossOrigin="anonymous"
             />
