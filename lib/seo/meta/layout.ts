@@ -26,7 +26,7 @@ export function buildLayoutMeta(config: GetConfigResponse) {
   const baseMeta = buildPageMeta({
     title,
     description,
-    path: basePath,
+    path: "/",
     images,
     allowIndex: indexable,
   });
