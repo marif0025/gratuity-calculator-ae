@@ -1,0 +1,39 @@
+{
+    "_id": "home",
+    "_type": "home",
+    "hero": {
+        "headlineTitle": "Calculate Your UAE",
+        "headlineHighlightedText": "Gratuity Benefits",
+        "headlineSubtitle": "in 30 Seconds",
+        "headlineDescription": "Get instant, accurate end-of-service calculations for all UAE emirates.",
+        "headlineTagline": "Know your rights, claim what you've earned.",
+        "trustBadgeText": "MOHRE-Certified • 100% Free • Instant Results",
+        "valuePropositions": [
+            {
+                "_key": "vp-1",
+                "title": "Instant Results",
+                "subtitle": "No waiting, no paperwork"
+            },
+            {
+                "_key": "vp-2",
+                "title": "100% Accurate",
+                "subtitle": "UAE Labour Law 2025"
+            },
+            {
+                "_key": "vp-3",
+                "title": "All Employee Types",
+                "subtitle": "Private, domestic, free zone"
+            },
+            {
+                "_key": "vp-4",
+                "title": "All Emirates",
+                "subtitle": "Dubai, Abu Dhabi & more"
+            }
+        ],
+        "trustIndicators": [
+            { "_key": "ti-1", "text": "Used by 50,000+ employees" },
+            { "_key": "ti-2", "text": "MOHRE guidelines compliant" },
+            { "_key": "ti-3", "text": "No registration required" }
+        ]
+    }
+}

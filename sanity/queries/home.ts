@@ -39,6 +39,21 @@ export const getHomeQuery = groq`
         question,
         answer
       }
+    },
+    hero {
+      headlineTitle,
+      headlineSubtitle,
+      headlineDescription,
+      headlineHighlightedText,
+      headlineTagline,
+      trustBadgeText,
+      valuePropositions[] {
+        title,
+        subtitle
+      },
+      trustIndicators[] {
+        text
+      }
     }
   }[0]
 `

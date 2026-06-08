@@ -1,6 +1,7 @@
 "use client";
 
 import { Calculator } from "@/components/calculator-hero";
+import type { HomeHero } from "@/sanity/lib/types";
 import BackgroundPattern from "./background-pattern";
 import FloatingElements from "./floating-elements";
 import TrustBadge from "./trust-badge";
@@ -8,8 +9,15 @@ import HeroHeadline from "./hero-headline";
 import ValuePropositions from "./value-propositions";
 import TrustIndicators from "./trust-indicators";
 import BottomWave from "./bottom-wave";
+import { DEFAULT_HERO } from "./defaults";
 
-export default function Hero() {
+interface HeroProps {
+    content?: HomeHero;
+}
+
+export default function Hero({ content }: HeroProps) {
+    const hero = content ?? DEFAULT_HERO;
+
     return (
         <section
             id="hero"
@@ -21,16 +29,25 @@ export default function Hero() {
             <div className="relative container mx-auto px-4 pt-14 lg:py-27">
                 <div className="grid lg:grid-cols-[1fr_460px] gap-12 lg:gap-24 items-center">
                     <div className="text-white">
-                        <TrustBadge />
+                        <TrustBadge text={hero.trustBadgeText} />
                         <HeroHeadline
-                            title="Calculate Your UAE"
-                            subtitle="in 30 Seconds"
-                            description="Get instant, accurate end-of-service calculations for all UAE emirates."
-                            highlightedText="Gratuity Benefits"
+                            title={hero.headlineTitle}
+                            subtitle={hero.headlineSubtitle}
+                            description={hero.headlineDescription}
+                            highlightedText={hero.headlineHighlightedText}
+                            tagline={hero.headlineTagline}
                         />
-                        <ValuePropositions />
-                        {/* <CTAButtons /> */}
-                        <TrustIndicators />
+                        {hero.valuePropositions && (
+                            <ValuePropositions
+                                items={hero.valuePropositions}
+                            />
+                        )}
+                        <TrustIndicators
+                            items={
+                                hero.trustIndicators ??
+                                DEFAULT_HERO.trustIndicators!
+                            }
+                        />
                     </div>
 
                     <Calculator />
@@ -41,5 +58,3 @@ export default function Hero() {
         </section>
     );
 }
-
-

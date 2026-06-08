@@ -55,10 +55,22 @@ export interface HomeFaqs {
     }>
 }
 
+export interface HomeHero {
+    headlineTitle: string
+    headlineSubtitle: string
+    headlineDescription: string
+    headlineHighlightedText: string
+    headlineTagline?: string
+    trustBadgeText: string
+    valuePropositions?: Array<{ title: string; subtitle: string }>
+    trustIndicators?: Array<{ text: string }>
+}
+
 export interface HomeData {
     _id: string
     title?: string // Optional (has initialValue)
     seo?: SanitySEO // Optional
+    hero?: HomeHero // Optional hero section
     content?: HomeContent // Optional home content section
     faqs?: HomeFaqs // Optional FAQs section
 }

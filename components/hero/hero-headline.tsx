@@ -3,6 +3,7 @@ interface HeroHeadlineProps {
     subtitle: string;
     description: string;
     highlightedText: string;
+    tagline?: string;
 }
 
 export default function HeroHeadline({
@@ -10,6 +11,7 @@ export default function HeroHeadline({
     subtitle,
     description,
     highlightedText,
+    tagline,
 }: HeroHeadlineProps) {
     return (
         <div className="space-y-4 mb-6 lg:mb-8">
@@ -23,9 +25,9 @@ export default function HeroHeadline({
 
             <p className="text-xl lg:text-2xl text-blue-100 leading-relaxed max-w-2xl">
                 {description}
-                <span className="font-semibold text-white">
-                    Know your rights, claim what you&apos;ve earned.
-                </span>
+                {tagline && (
+                    <span className="font-semibold text-white">{tagline}</span>
+                )}
             </p>
         </div>
     );

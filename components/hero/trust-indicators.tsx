@@ -1,19 +1,17 @@
 import { CheckCircle } from "lucide-react";
 
-interface TrustIndicator {
+interface TrustIndicatorItem {
     text: string;
 }
 
-const trustIndicators: TrustIndicator[] = [
-    { text: "Used by 50,000+ employees" },
-    { text: "MOHRE guidelines compliant" },
-    { text: "No registration required" },
-];
+interface TrustIndicatorsProps {
+    items: TrustIndicatorItem[];
+}
 
-export default function TrustIndicators() {
+export default function TrustIndicators({ items }: TrustIndicatorsProps) {
     return (
         <div className="flex flex-wrap items-center gap-6 pt-4 mt-6 lg:mt-8">
-            {trustIndicators.map((indicator, index) => (
+            {items.map((indicator, index) => (
                 <div
                     key={index}
                     className="flex items-center gap-2 text-blue-200"

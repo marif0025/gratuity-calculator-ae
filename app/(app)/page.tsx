@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import { Suspense, cache } from "react";
 import { getHome, getConfig } from "@/sanity/requests";
+import type { HomeData } from "@/sanity/lib/types";
 import { HomeContentSkeleton } from "@/screens/home/skeletons";
 import {
     buildHomeSchemas, resolveBaseUrl, resolvePageDescription, resolvePageTitle
@@ -36,14 +37,16 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function Home() {
+    const home = await getCachedHome();
+
     return (
         <>
             <Suspense fallback={null}>
                 <HomePageJsonLd />
             </Suspense>
-            <Hero />
+            <Hero content={home?.hero} />
             <Suspense fallback={<HomeContentSkeleton />}>
-                <HomeContent />
+                <HomeContent home={home} />
             </Suspense>
         </>
     );
@@ -57,9 +60,7 @@ async function HomePageJsonLd() {
     return <JsonLd data={schemas} id="homepage-schemas" />;
 }
 
-async function HomeContent() {
-    const home = await getCachedHome();
-
+async function HomeContent({ home }: { home: HomeData | null }) {
     return (
         <>
             {home?.content && <ArticleSection content={home.content} />}
