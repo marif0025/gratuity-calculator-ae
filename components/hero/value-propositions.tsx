@@ -1,5 +1,4 @@
-import { Building, Calculator, Users, Zap } from "lucide-react";
-import { resolveLucideIcon } from "@/lib/lucide-icon";
+import { LucideIcon } from "@/components/lucide-icon";
 import { cn } from "@/lib/utils";
 
 interface ValuePropositionItem {
@@ -12,8 +11,6 @@ interface ValuePropositionsProps {
     items: ValuePropositionItem[];
 }
 
-const DEFAULT_ICONS = [Zap, Calculator, Users, Building] as const;
-
 const BG_COLORS = [
     "bg-green-500",
     "bg-blue-500",
@@ -25,9 +22,6 @@ export default function ValuePropositions({ items }: ValuePropositionsProps) {
     return (
         <div className="grid sm:grid-cols-2 gap-4 mb-5 lg:mb-8">
             {items.map((prop, index) => {
-                const fallbackIcon =
-                    DEFAULT_ICONS[index % DEFAULT_ICONS.length];
-                const Icon = resolveLucideIcon(prop.icon, fallbackIcon);
                 const bgColor = BG_COLORS[index % BG_COLORS.length];
 
                 return (
@@ -36,7 +30,10 @@ export default function ValuePropositions({ items }: ValuePropositionsProps) {
                         className="flex items-start gap-3 bg-white/10 backdrop-blur-sm rounded-lg px-4 py-3 border border-white/20"
                     >
                         <span className={cn(bgColor, "rounded-full p-1.5 mt-1")}>
-                            <Icon className="size-4 text-white" />
+                            <LucideIcon
+                                name={prop.icon}
+                                className="size-4 text-white"
+                            />
                         </span>
 
                         <div>

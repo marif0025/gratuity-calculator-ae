@@ -1,6 +1,12 @@
 import { defineType, defineField, defineArrayMember } from 'sanity'
 import { Home } from 'lucide-react'
 
+import {
+  createLucideIconMedia,
+  lucideIconSubtitle,
+} from '@/sanity/components/lucide-icon-preview'
+import { lucideIconField } from '@/sanity/schemas/fields/lucide-icon-field'
+
 function stripHtml(html: string): string {
   return html.replace(/<[^>]*>/g, '').trim()
 }
@@ -34,12 +40,7 @@ export default defineType({
       description: 'Badge displayed at the top of the hero section',
       type: 'object',
       fields: [
-        defineField({
-          name: 'icon',
-          title: 'Icon',
-          description: 'Lucide icon name (e.g. Shield)',
-          type: 'string',
-        }),
+        lucideIconField(),
         defineField({
           name: 'text',
           title: 'Text',
@@ -60,12 +61,7 @@ export default defineType({
           type: 'object',
           name: 'valueProposition',
           fields: [
-            defineField({
-              name: 'icon',
-              title: 'Icon',
-              description: 'Lucide icon name (e.g. Zap, Calculator, Users, Building)',
-              type: 'string',
-            }),
+            lucideIconField(),
             defineField({
               name: 'title',
               title: 'Title',
@@ -90,7 +86,10 @@ export default defineType({
             prepare({ title, subtitle, icon }) {
               return {
                 title: title || 'Untitled',
-                subtitle: [icon, subtitle].filter(Boolean).join(' · '),
+                subtitle: [lucideIconSubtitle(icon), subtitle]
+                  .filter(Boolean)
+                  .join(' · '),
+                media: createLucideIconMedia(icon),
               }
             },
           },
@@ -108,12 +107,7 @@ export default defineType({
           type: 'object',
           name: 'trustIndicator',
           fields: [
-            defineField({
-              name: 'icon',
-              title: 'Icon',
-              description: 'Lucide icon name (e.g. CheckCircle)',
-              type: 'string',
-            }),
+            lucideIconField(),
             defineField({
               name: 'text',
               title: 'Text',
@@ -130,7 +124,8 @@ export default defineType({
             prepare({ text, icon }) {
               return {
                 title: text || 'Untitled',
-                subtitle: icon ? `Icon: ${icon}` : undefined,
+                subtitle: lucideIconSubtitle(icon),
+                media: createLucideIconMedia(icon),
               }
             },
           },

@@ -1,4 +1,4 @@
-"use client";
+
 
 import { Calculator } from "@/components/calculator-hero";
 import type { HomeData, HomeHero } from "@/sanity/lib/types";
