@@ -1,6 +1,10 @@
 import { defineType, defineField, defineArrayMember } from 'sanity'
 import { Home } from 'lucide-react'
 
+function stripHtml(html: string): string {
+  return html.replace(/<[^>]*>/g, '').trim()
+}
+
 export default defineType({
   name: 'homeHero',
   title: 'Home Hero',
@@ -9,45 +13,41 @@ export default defineType({
   icon: Home,
   fields: [
     defineField({
-      name: 'headlineTitle',
-      title: 'Headline Title',
-      description: 'The main title text that appears at the top of the hero section',
-      type: 'string',
+      name: 'title',
+      title: 'Title',
+      description: 'Main headline HTML. Use <strong> for gradient-highlighted text, e.g. Calculate Your UAE <strong>Gratuity Benefits</strong> in 30 Seconds',
+      type: 'text',
+      rows: 2,
       validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: 'headlineSubtitle',
-      title: 'Headline Subtitle',
-      description: 'The subtitle text that appears below the main title',
-      type: 'string',
-      validation: (Rule) => Rule.required(),
-    }),
-    defineField({
-      name: 'headlineDescription',
-      title: 'Headline Description',
-      description: 'The main description text that appears below the headline',
+      name: 'description',
+      title: 'Description',
+      description: 'Description HTML below the headline. Use <strong> for emphasized tagline text at the end.',
       type: 'text',
       rows: 3,
       validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: 'headlineHighlightedText',
-      title: 'Highlighted Text',
-      description: 'The text that appears with a gradient highlight effect in the headline',
-      type: 'string',
-      validation: (Rule) => Rule.required(),
-    }),
-    defineField({
-      name: 'headlineTagline',
-      title: 'Headline Tagline',
-      description: 'Additional tagline text that appears after the description',
-      type: 'string',
-    }),
-    defineField({
-      name: 'trustBadgeText',
-      title: 'Trust Badge Text',
-      description: 'The text displayed in the trust badge at the top of the hero section',
-      type: 'string',
+      name: 'trustBadge',
+      title: 'Trust Badge',
+      description: 'Badge displayed at the top of the hero section',
+      type: 'object',
+      fields: [
+        defineField({
+          name: 'icon',
+          title: 'Icon',
+          description: 'Lucide icon name (e.g. Shield)',
+          type: 'string',
+        }),
+        defineField({
+          name: 'text',
+          title: 'Text',
+          description: 'Badge label text',
+          type: 'string',
+          validation: (Rule) => Rule.required(),
+        }),
+      ],
       validation: (Rule) => Rule.required(),
     }),
     defineField({
@@ -60,6 +60,12 @@ export default defineType({
           type: 'object',
           name: 'valueProposition',
           fields: [
+            defineField({
+              name: 'icon',
+              title: 'Icon',
+              description: 'Lucide icon name (e.g. Zap, Calculator, Users, Building)',
+              type: 'string',
+            }),
             defineField({
               name: 'title',
               title: 'Title',
@@ -79,11 +85,12 @@ export default defineType({
             select: {
               title: 'title',
               subtitle: 'subtitle',
+              icon: 'icon',
             },
-            prepare({ title, subtitle }) {
+            prepare({ title, subtitle, icon }) {
               return {
                 title: title || 'Untitled',
-                subtitle: subtitle || '',
+                subtitle: [icon, subtitle].filter(Boolean).join(' · '),
               }
             },
           },
@@ -94,13 +101,19 @@ export default defineType({
     defineField({
       name: 'trustIndicators',
       title: 'Trust Indicators',
-      description: 'List of trust indicator texts displayed at the bottom of the hero section',
+      description: 'List of trust indicator items displayed at the bottom of the hero section',
       type: 'array',
       of: [
         defineArrayMember({
           type: 'object',
           name: 'trustIndicator',
           fields: [
+            defineField({
+              name: 'icon',
+              title: 'Icon',
+              description: 'Lucide icon name (e.g. CheckCircle)',
+              type: 'string',
+            }),
             defineField({
               name: 'text',
               title: 'Text',
@@ -112,10 +125,12 @@ export default defineType({
           preview: {
             select: {
               text: 'text',
+              icon: 'icon',
             },
-            prepare({ text }) {
+            prepare({ text, icon }) {
               return {
                 title: text || 'Untitled',
+                subtitle: icon ? `Icon: ${icon}` : undefined,
               }
             },
           },
@@ -123,16 +138,21 @@ export default defineType({
       ],
       validation: (Rule) => Rule.min(1).error('At least one trust indicator is required'),
     }),
+    defineField({
+      name: 'calculator',
+      title: 'Calculator',
+      description: 'Title and description for the calculator card in the hero section',
+      type: 'heroCalculator',
+      validation: (Rule) => Rule.required(),
+    }),
   ],
   preview: {
     select: {
-      title: 'headlineTitle',
-      subtitle: 'headlineSubtitle',
+      title: 'title',
     },
-    prepare({ title, subtitle }) {
+    prepare({ title }) {
       return {
-        title: title || 'Untitled Hero',
-        subtitle: subtitle || '',
+        title: title ? stripHtml(title) : 'Untitled Hero',
       }
     },
   },

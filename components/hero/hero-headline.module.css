@@ -1,0 +1,35 @@
+.title {
+    font-size: 2.25rem;
+    font-weight: 700;
+    line-height: 1.25;
+}
+
+.title strong {
+    background: linear-gradient(to right, #fde047, #fdba74);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    display: block;
+}
+
+.description {
+    font-size: 1.25rem;
+    line-height: 1.625;
+    color: rgb(219 234 254);
+    max-width: 42rem;
+}
+
+.description strong {
+    font-weight: 600;
+    color: white;
+}
+
+@media (min-width: 1024px) {
+    .title {
+        font-size: 3rem;
+    }
+
+    .description {
+        font-size: 1.5rem;
+    }
+}

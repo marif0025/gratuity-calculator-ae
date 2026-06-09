@@ -41,17 +41,23 @@ export const getHomeQuery = groq`
       }
     },
     hero {
-      headlineTitle,
-      headlineSubtitle,
-      headlineDescription,
-      headlineHighlightedText,
-      headlineTagline,
-      trustBadgeText,
+      title,
+      description,
+      trustBadge {
+        icon,
+        text
+      },
+      calculator {
+        title,
+        description
+      },
       valuePropositions[] {
+        icon,
         title,
         subtitle
       },
       trustIndicators[] {
+        icon,
         text
       }
     }

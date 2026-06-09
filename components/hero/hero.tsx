@@ -1,7 +1,7 @@
 "use client";
 
 import { Calculator } from "@/components/calculator-hero";
-import type { HomeHero } from "@/sanity/lib/types";
+import type { HomeData, HomeHero } from "@/sanity/lib/types";
 import BackgroundPattern from "./background-pattern";
 import FloatingElements from "./floating-elements";
 import TrustBadge from "./trust-badge";
@@ -12,11 +12,12 @@ import BottomWave from "./bottom-wave";
 import { DEFAULT_HERO } from "./defaults";
 
 interface HeroProps {
-    content?: HomeHero;
+    content?: Promise<HomeData | null>;
 }
 
-export default function Hero({ content }: HeroProps) {
-    const hero = content ?? DEFAULT_HERO;
+export default async function Hero({ content }: HeroProps) {
+    const homeData = await content;
+    const hero = homeData?.hero ?? DEFAULT_HERO;
 
     return (
         <section
@@ -29,13 +30,13 @@ export default function Hero({ content }: HeroProps) {
             <div className="relative container mx-auto px-4 pt-14 lg:py-27">
                 <div className="grid lg:grid-cols-[1fr_460px] gap-12 lg:gap-24 items-center">
                     <div className="text-white">
-                        <TrustBadge text={hero.trustBadgeText} />
+                        <TrustBadge
+                            icon={hero.trustBadge.icon}
+                            text={hero.trustBadge.text}
+                        />
                         <HeroHeadline
-                            title={hero.headlineTitle}
-                            subtitle={hero.headlineSubtitle}
-                            description={hero.headlineDescription}
-                            highlightedText={hero.headlineHighlightedText}
-                            tagline={hero.headlineTagline}
+                            title={hero.title}
+                            description={hero.description}
                         />
                         {hero.valuePropositions && (
                             <ValuePropositions
@@ -50,7 +51,7 @@ export default function Hero({ content }: HeroProps) {
                         />
                     </div>
 
-                    <Calculator />
+                    <Calculator calculator={hero.calculator ?? DEFAULT_HERO.calculator} />
                 </div>
             </div>
 

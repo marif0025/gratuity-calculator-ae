@@ -76,14 +76,6 @@ export function CalculatorHero() {
 
     return (
         <>
-            <h2 className="text-2xl font-bold text-white mb-4">
-                Calculate Your Gratuity
-            </h2>
-            <p className="text-gray-200 mb-4">
-                Enter your employment details below to get an instant, accurate
-                calculation of your end-of-service benefits.
-            </p>
-
             <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
                 <div className="space-y-2">
                     <Label

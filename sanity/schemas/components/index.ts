@@ -8,8 +8,9 @@ import homeContentBlock from './home-content-block'
 import homeContent from './home-content'
 import homeFaqs from './home-faqs'
 import homeHero from './hero'
+import heroCalculator from './hero-calculator'
 import footerFeature from './footer-feature'
 import footerCoverageArea from './footer-coverage-area'
 import * as commonFields from './common-fields'
 
-export { image, blockContent, seo, tableBlock, faq, alert, homeContentBlock, homeContent, homeFaqs, commonFields, homeHero, footerFeature, footerCoverageArea }
+export { image, blockContent, seo, tableBlock, faq, alert, homeContentBlock, homeContent, homeFaqs, commonFields, homeHero, heroCalculator, footerFeature, footerCoverageArea }

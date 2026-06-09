@@ -37,15 +37,15 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function Home() {
-    const home = await getCachedHome();
+    const home = getCachedHome();
 
     return (
         <>
             <Suspense fallback={null}>
                 <HomePageJsonLd />
             </Suspense>
-            <Hero content={home?.hero} />
             <Suspense fallback={<HomeContentSkeleton />}>
+                <Hero content={home} />
                 <HomeContent home={home} />
             </Suspense>
         </>
@@ -60,11 +60,17 @@ async function HomePageJsonLd() {
     return <JsonLd data={schemas} id="homepage-schemas" />;
 }
 
-async function HomeContent({ home }: { home: HomeData | null }) {
+interface HomeContentProps {
+    home: Promise<HomeData | null>;
+}
+
+async function HomeContent({ home }: HomeContentProps) {
+    const homeData = await home;
+
     return (
         <>
-            {home?.content && <ArticleSection content={home.content} />}
-            {home?.faqs && <FAQ content={home.faqs} />}
+            {homeData?.content && <ArticleSection content={homeData.content} />}
+            {homeData?.faqs && <FAQ content={homeData.faqs} />}
         </>
     );
 }

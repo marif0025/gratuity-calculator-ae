@@ -55,15 +55,18 @@ export interface HomeFaqs {
     }>
 }
 
+export interface HomeHeroCalculator {
+    title: string
+    description: string
+}
+
 export interface HomeHero {
-    headlineTitle: string
-    headlineSubtitle: string
-    headlineDescription: string
-    headlineHighlightedText: string
-    headlineTagline?: string
-    trustBadgeText: string
-    valuePropositions?: Array<{ title: string; subtitle: string }>
-    trustIndicators?: Array<{ text: string }>
+    title: string
+    description: string
+    trustBadge: { icon?: string; text: string }
+    calculator: HomeHeroCalculator
+    valuePropositions?: Array<{ icon?: string; title: string; subtitle: string }>
+    trustIndicators?: Array<{ icon?: string; text: string }>
 }
 
 export interface HomeData {
