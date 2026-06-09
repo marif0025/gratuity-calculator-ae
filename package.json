@@ -22,6 +22,7 @@
         "@sanity/client": "^7.12.0",
         "@sanity/image-url": "^1.1.0",
         "@sanity/table": "^1.1.4",
+        "@sanity/ui": "^2.16.4",
         "@sanity/vision": "^3.95.0",
         "class-variance-authority": "^0.7.1",
         "clsx": "^2.1.1",

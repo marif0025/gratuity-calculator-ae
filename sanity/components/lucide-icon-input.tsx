@@ -1,6 +1,7 @@
 "use client";
 
-import { TextInput, type StringInputProps } from "sanity";
+import { Card, Flex, Stack, Text, TextInput } from "@sanity/ui";
+import { type StringInputProps } from "sanity";
 
 import { isLucideIconName, LucideIcon } from "@/components/lucide-icon";
 
@@ -11,36 +12,43 @@ function previewMessage(icon?: string) {
 }
 
 export function LucideIconInput(props: StringInputProps) {
-    const icon = props.value || undefined;
+    const { elementProps, validationError, value } = props;
+    const icon = value || undefined;
     const resolved = isLucideIconName(icon);
 
     return (
-        <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-            <TextInput {...props} />
+        <Stack space={3}>
+            <TextInput
+                {...elementProps}
+                value={value || ""}
+                customValidity={validationError}
+                fontSize={1}
+                padding={2}
+                radius={2}
+            />
 
-            <div
-                style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 12,
-                    padding: 12,
-                    borderRadius: 4,
-                    border: `1px solid ${resolved ? "#e5e7eb" : "#fcd34d"}`,
-                    backgroundColor: resolved ? "#f9fafb" : "#fffbeb",
-                }}
+            <Card
+                tone={resolved ? "default" : "caution"}
+                border
+                padding={3}
+                radius={2}
             >
-                <LucideIcon name={icon} size={24} />
-                <span style={{ fontSize: 13 }}>{previewMessage(icon)}</span>
-            </div>
+                <Flex align="center" gap={3}>
+                    <LucideIcon name={icon} size={24} />
+                    <Text size={1}>{previewMessage(icon)}</Text>
+                </Flex>
+            </Card>
 
-            <a
+            <Text
+                size={1}
+                as="a"
                 href="https://lucide.dev/icons"
                 target="_blank"
                 rel="noopener noreferrer"
-                style={{ fontSize: 13, color: "#2563eb" }}
+                accent
             >
                 Browse icons on lucide.dev
-            </a>
-        </div>
+            </Text>
+        </Stack>
     );
 }
