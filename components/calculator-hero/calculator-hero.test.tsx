@@ -54,9 +54,19 @@ describe("CalculatorHero", () => {
         expect(
             screen.getByLabelText(/Last Monthly Basic Salary/i)
         ).toBeInTheDocument();
-        expect(screen.getByText(/Employment Start Date/i)).toBeInTheDocument();
-        expect(screen.getByText(/^Last Working Date$/i)).toBeInTheDocument();
+        expect(
+            screen.getByText(/Only your monthly basic salary should be entered/i)
+        ).toBeInTheDocument();
+        expect(screen.getByPlaceholderText("e.g., 5000")).toBeInTheDocument();
+        expect(screen.getByText(/Employment Period/i)).toBeInTheDocument();
+        expect(screen.getByText(/^Start Date$/i)).toBeInTheDocument();
+        expect(screen.getByText(/^Last working date$/i)).toBeInTheDocument();
+        expect(screen.getByText("Select start date")).toBeInTheDocument();
+        expect(screen.getByText("Select date")).toBeInTheDocument();
         expect(screen.getByLabelText(/Unpaid Leave Days/i)).toBeInTheDocument();
+        expect(
+            screen.getByRole("button", { name: /Calculate My Gratuity/i })
+        ).toBeInTheDocument();
     });
 
     it("does not render legacy contract or resignation fields", () => {

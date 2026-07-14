@@ -36,35 +36,30 @@ export function Calculator({ calculator }: CalculatorProps) {
 function Skeleton() {
   return (
     <div className="space-y-6">
-      {/* Salary field skeleton */}
+      {/* Last Monthly Basic Salary */}
       <div className="space-y-2">
-        <div className="h-5 w-48 bg-white/20 rounded mb-2 animate-pulse" />
+        <div className="h-5 w-56 bg-white/20 rounded animate-pulse" />
+        <div className="h-10 w-full bg-white/10 rounded animate-pulse" />
         <div className="h-12 w-full bg-white/10 border border-white/20 rounded animate-pulse" />
       </div>
 
-      {/* Employment Period skeleton */}
+      {/* Employment Period */}
       <div className="space-y-3">
-        <div className="h-5 w-40 bg-white/20 rounded mb-3 animate-pulse" />
+        <div className="h-5 w-40 bg-white/20 rounded animate-pulse" />
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           <div className="h-12 w-full bg-white/10 border border-white/20 rounded animate-pulse" />
           <div className="h-12 w-full bg-white/10 border border-white/20 rounded animate-pulse" />
         </div>
       </div>
 
-      {/* Contract Type skeleton */}
+      {/* Unpaid Leave Days */}
       <div className="space-y-2">
-        <div className="h-5 w-32 bg-white/20 rounded mb-2 animate-pulse" />
+        <div className="h-5 w-40 bg-white/20 rounded animate-pulse" />
         <div className="h-12 w-full bg-white/10 border border-white/20 rounded animate-pulse" />
       </div>
 
-      {/* Reason for Leaving skeleton */}
-      <div className="space-y-2">
-        <div className="h-5 w-40 bg-white/20 rounded mb-2 animate-pulse" />
-        <div className="h-12 w-full bg-white/10 border border-white/20 rounded animate-pulse" />
-      </div>
-
-      {/* Button skeleton */}
+      {/* Calculate My Gratuity */}
       <div className="h-12 w-full bg-white/20 rounded-lg mt-3 animate-pulse" />
     </div>
-  )
+  );
 }

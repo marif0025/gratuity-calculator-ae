@@ -55,6 +55,10 @@ export function CalculatorHero() {
                         Last Monthly Basic Salary
                     </Label>
 
+                    <p className="text-sm text-white/70">
+                        Only your monthly basic salary should be entered. Allowances such as housing, transport, bonuses, overtime, and commissions are not included in the gratuity calculation.
+                    </p>
+
                     <div className="relative text-white/60 has-[input:focus]:text-white">
                         <Input
                             id="lastMonthlyBasicSalary"
