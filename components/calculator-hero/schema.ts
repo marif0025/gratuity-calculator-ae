@@ -1,47 +1,52 @@
 import { z } from "zod";
+import { getGrossCalendarDays } from "./servicePeriod";
 
-export const calculatorFormSchema = z.object({
-    salary: z
-        .number({
-            message: "Please enter a valid number",
-        })
-        .min(1, "Basic salary must be at least 1 AED"),
-    employmentPeriod: z
-        .object({
-            from: z.date({
-                message: "Please select a valid start date",
-            }),
-            to: z.date({
-                message: "Please select a valid end date",
-            }),
-        })
-        .refine((data) => data.from < data.to, {
-            message: "Start date must be before end date",
-            path: ["to"],
-        })
-        .refine((data) => data.to <= new Date(), {
-            message: "End date cannot be in the future",
-            path: ["to"],
-        })
-        .refine(
-            (data) => {
-                const diffTime = Math.abs(
-                    data.to.getTime() - data.from.getTime()
-                );
-                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-                return diffDays >= 365; // At least 1 year
-            },
-            {
-                message: "Employment period must be at least 1 year",
+export const calculatorFormSchema = z
+    .object({
+        lastMonthlyBasicSalary: z
+            .number({
+                required_error: "Please enter a valid number",
+                invalid_type_error: "Please enter a valid number",
+            })
+            .finite("Please enter a valid number")
+            .positive("Basic salary must be greater than zero"),
+        employmentPeriod: z
+            .object({
+                from: z.date({
+                    required_error: "Please select a valid start date",
+                    invalid_type_error: "Please select a valid start date",
+                }),
+                to: z.date({
+                    required_error: "Please select a valid last working date",
+                    invalid_type_error: "Please select a valid last working date",
+                }),
+            })
+            .refine((data) => data.from < data.to, {
+                message: "Start date must be before last working date",
                 path: ["to"],
-            }
-        ),
-    contractType: z.enum(["limited", "unlimited"], {
-        message: "Please select a contract type",
-    }),
-    reasonForLeaving: z.enum(["resignation", "termination", "completion"], {
-        message: "Please select a reason for leaving",
-    }),
-});
+            }),
+        unpaidLeaveDays: z
+            .number({
+                required_error: "Please enter a valid number",
+                invalid_type_error: "Please enter a valid number",
+            })
+            .int("Unpaid leave must be a whole number of days")
+            .min(0, "Unpaid leave cannot be negative"),
+    })
+    .superRefine((data, ctx) => {
+        const grossDays = getGrossCalendarDays(
+            data.employmentPeriod.from,
+            data.employmentPeriod.to
+        );
+
+        if (data.unpaidLeaveDays > grossDays) {
+            ctx.addIssue({
+                code: z.ZodIssueCode.custom,
+                message:
+                    "Unpaid leave cannot exceed total calendar service days",
+                path: ["unpaidLeaveDays"],
+            });
+        }
+    });
 
 export type TCalculatorFormData = z.infer<typeof calculatorFormSchema>;

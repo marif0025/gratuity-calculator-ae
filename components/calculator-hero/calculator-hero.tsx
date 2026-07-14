@@ -4,50 +4,16 @@ import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { DatePicker } from "../calculator/calculator-date-picker";
+import { DatePicker } from "./date-picker";
 import { Calendar } from "@/components/ui/calendar";
-import {
-    Select,
-    SelectTrigger,
-    SelectValue,
-    SelectContent,
-    SelectGroup,
-    SelectLabel,
-    SelectItem,
-} from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { CalculatorIcon } from "lucide-react";
 import { format } from "date-fns";
 import { useState } from "react";
-import { ICalculationResult } from "@/state/calculator";
 import { calculatorFormSchema, TCalculatorFormData } from "./schema";
-import { calculateGratuity } from "./calculate";
-
-const contractTypes = [
-    {
-        label: "Limited Contract",
-        value: "limited",
-    },
-    {
-        label: "Unlimited Contract",
-        value: "unlimited",
-    },
-]
-
-const reasonForLeaving = [
-    {
-        label: "Resignation",
-        value: "resignation",
-    },
-    {
-        label: "Termination by Employer",
-        value: "termination",
-    },
-    {
-        label: "Contract Completion",
-        value: "completion",
-    },
-]
+import { calculateGratuity } from "./calculateGratuity";
+import { CalculatorResult } from "./calculator-result";
+import type { ICalculationResult } from "./types";
 
 export function CalculatorHero() {
     const [result, setResult] = useState<ICalculationResult | null>(null);
@@ -61,36 +27,43 @@ export function CalculatorHero() {
         formState: { errors },
     } = useForm<TCalculatorFormData>({
         resolver: zodResolver(calculatorFormSchema),
+        defaultValues: {
+            unpaidLeaveDays: 0,
+        },
     });
 
     const onSubmit = (data: TCalculatorFormData) => {
-        const result = calculateGratuity(data);
-        setResult(result);
+        setResult(calculateGratuity(data));
     };
 
     const resetResult = () => {
         setResult(null);
     };
 
-    if (result) return <CalculatorResult result={result} reset={resetResult} />;
+    if (result) {
+        return <CalculatorResult result={result} reset={resetResult} />;
+    }
 
     return (
         <>
             <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
                 <div className="space-y-2">
                     <Label
-                        htmlFor="salary"
+                        htmlFor="lastMonthlyBasicSalary"
                         className="text-base font-medium text-white flex items-center gap-2"
                     >
-                        Basic Monthly Salary (AED)
+                        Last Monthly Basic Salary
                     </Label>
 
                     <div className="relative text-white/60 has-[input:focus]:text-white">
                         <Input
-                            id="salary"
+                            id="lastMonthlyBasicSalary"
                             type="number"
+                            step="0.01"
                             placeholder="e.g., 5000"
-                            {...register("salary", { valueAsNumber: true })}
+                            {...register("lastMonthlyBasicSalary", {
+                                valueAsNumber: true,
+                            })}
                             className="border border-white/60 focus:border-white focus:shadow-[0_0_0_1px_rgb(255,255,255)] pl-15 pr-6 bg-black/10 text-white/60! hover:text-white!"
                         />
 
@@ -99,22 +72,19 @@ export function CalculatorHero() {
                         </span>
                     </div>
 
-                    {errors.salary && (
+                    {errors.lastMonthlyBasicSalary && (
                         <p className="text-sm text-red-400">
-                            {typeof errors.salary === "string"
-                                ? errors.salary
-                                : errors.salary.message}
+                            {errors.lastMonthlyBasicSalary.message}
                         </p>
                     )}
                 </div>
 
                 <div className="space-y-3">
-                    <Label htmlFor="employmentPeriod" className="text-white">
-                        Employment Period
-                    </Label>
+                    <Label className="text-white">Employment Period</Label>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                         <div className="space-y-2">
+                            <Label className="text-sm text-white/80">Start Date</Label>
                             <Controller
                                 name="employmentPeriod.from"
                                 control={control}
@@ -147,21 +117,20 @@ export function CalculatorHero() {
 
                             {errors.employmentPeriod?.from && (
                                 <p className="text-sm text-red-400">
-                                    {typeof errors.employmentPeriod.from === "string"
-                                        ? errors.employmentPeriod.from
-                                        : errors.employmentPeriod.from.message}
+                                    {errors.employmentPeriod.from.message}
                                 </p>
                             )}
                         </div>
 
                         <div className="space-y-2">
+                            <Label className="text-sm text-white/80">Last working date</Label>
                             <Controller
                                 name="employmentPeriod.to"
                                 control={control}
                                 render={({ field }) => {
                                     const label = field.value
                                         ? format(field.value, "dd MMM yyyy")
-                                        : "Select end date";
+                                        : "Select date";
 
                                     return (
                                         <DatePicker
@@ -186,113 +155,47 @@ export function CalculatorHero() {
                             />
                             {errors.employmentPeriod?.to && (
                                 <p className="text-sm text-red-400">
-                                    {typeof errors.employmentPeriod.to === "string"
-                                        ? errors.employmentPeriod.to
-                                        : errors.employmentPeriod.to.message}
+                                    {errors.employmentPeriod.to.message}
                                 </p>
                             )}
-                            {errors.employmentPeriod && typeof errors.employmentPeriod === "object" && "message" in errors.employmentPeriod && (
-                                <p className="text-sm text-red-400">
-                                    {errors.employmentPeriod.message}
-                                </p>
-                            )}
+                            {errors.employmentPeriod &&
+                                typeof errors.employmentPeriod === "object" &&
+                                "message" in errors.employmentPeriod && (
+                                    <p className="text-sm text-red-400">
+                                        {errors.employmentPeriod.message}
+                                    </p>
+                                )}
                         </div>
                     </div>
                 </div>
 
                 <div className="space-y-2">
-                    <Label htmlFor="contractType" className="text-white">
-                        Contract Type
+                    <Label
+                        htmlFor="unpaidLeaveDays"
+                        className="text-base font-medium text-white"
+                    >
+                        Unpaid Leave Days
                     </Label>
-
-                    <Controller
-                        name="contractType"
-                        control={control}
-                        render={({ field }) => (
-                            <Select
-                                onValueChange={field.onChange}
-                                value={field.value}
-                            >
-                                <SelectTrigger
-                                    aria-label="Select a contract type"
-                                    className="w-full min-h-12 border-white/60 bg-black/10 text-white data-placeholder:text-white/60! hover:data-placeholder:text-white! pl-4.5 cursor-pointer"
-                                >
-                                    <SelectValue className="text-white" placeholder="Select a contract type" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    <SelectGroup>
-                                        <SelectLabel>
-                                            Contract Types
-                                        </SelectLabel>
-                                        {
-                                            contractTypes.map((item) => (
-                                                <SelectItem key={item.value} value={item.value}>
-                                                    {item.label}
-                                                </SelectItem>
-                                            ))
-                                        }
-                                    </SelectGroup>
-                                </SelectContent>
-                            </Select>
-                        )}
+                    <Input
+                        id="unpaidLeaveDays"
+                        type="number"
+                        step="1"
+                        min={0}
+                        placeholder="0"
+                        {...register("unpaidLeaveDays", {
+                            valueAsNumber: true,
+                        })}
+                        className="border border-white/60 focus:border-white focus:shadow-[0_0_0_1px_rgb(255,255,255)] bg-black/10 text-white/60! hover:text-white!"
                     />
-
-                    {errors.contractType && (
+                    {errors.unpaidLeaveDays && (
                         <p className="text-sm text-red-400">
-                            {typeof errors.contractType === "string"
-                                ? errors.contractType
-                                : errors.contractType.message}
-                        </p>
-                    )}
-                </div>
-
-                <div className="space-y-2">
-                    <Label htmlFor="reasonForLeaving" className="text-white">
-                        Reason for Leaving
-                    </Label>
-
-                    <Controller
-                        name="reasonForLeaving"
-                        control={control}
-                        render={({ field }) => (
-                            <Select
-                                onValueChange={field.onChange}
-                                value={field.value}
-                            >
-                                <SelectTrigger
-                                    aria-label="Select a reason for leaving"
-                                    className="w-full min-h-12 border-white/60 bg-black/10 text-white data-placeholder:text-white/60! hover:data-placeholder:text-white! pl-4.5 cursor-pointer"
-                                >
-                                    <SelectValue placeholder="Select a reason for leaving" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    <SelectGroup>
-                                        <SelectLabel>
-                                            Reason for Leaving
-                                        </SelectLabel>
-                                        {
-                                            reasonForLeaving.map((item) => (
-                                                <SelectItem key={item.value} value={item.value}>
-                                                    {item.label}
-                                                </SelectItem>
-                                            ))
-                                        }
-                                    </SelectGroup>
-                                </SelectContent>
-                            </Select>
-                        )}
-                    />
-
-                    {errors.reasonForLeaving && (
-                        <p className="text-sm text-red-400">
-                            {typeof errors.reasonForLeaving === "string"
-                                ? errors.reasonForLeaving
-                                : errors.reasonForLeaving.message}
+                            {errors.unpaidLeaveDays.message}
                         </p>
                     )}
                 </div>
 
                 <Button
+                    type="submit"
                     variant="primary"
                     size="lg"
                     className="w-full min-h-12 mt-3"
@@ -302,91 +205,5 @@ export function CalculatorHero() {
                 </Button>
             </form>
         </>
-    );
-}
-
-interface ICalculatorResultProps {
-    result: ICalculationResult;
-    reset: () => void;
-}
-
-function CalculatorResult({ result, reset, }: ICalculatorResultProps) {
-    return (
-        <div>
-            <h2 className="text-2xl font-bold text-white mb-4">
-                Calculation Result
-            </h2>
-            <p className="text-white mb-4">
-                Your end-of-service gratuity calculation
-            </p>
-
-            <div className="space-y-4">
-                <div className="relative border border-white/20 bg-black/10 backdrop-blur-sm rounded-xl p-4 flex flex-col items-center">
-                    <strong className="text-4xl font-bold text-yellow-400 mb-3">
-                        AED {result.totalGratuity.toLocaleString()}
-                    </strong>
-                    <small className="text-lg text-white font-medium">
-                        Total Gratuity Amount
-                    </small>
-                </div>
-                <div className="flex justify-between items-center py-4 px-6 border border-white/20 bg-black/10 backdrop-blur-sm rounded-xl">
-                    <span className="text-white font-semibold">
-                        Service Period:
-                    </span>
-                    <span className="font-bold text-white text-lg">
-                        {result.totalServiceYears} years,{" "}
-                        {result.totalServiceMonths} months
-                    </span>
-                </div>
-
-                <div className="space-y-4 my-6">
-                    <h4 className="font-bold text-white text-lg mb-4 flex items-center gap-2">
-                        <CalculatorIcon className="size-4" />
-                        Calculation Breakdown
-                    </h4>
-
-                    <ul className="space-y-2 pl-2">
-                        {result.breakdown.map((item, index) => (
-                            <li
-                                key={index}
-                                className="list-decimal list-inside text-white"
-                            >
-                                {item}
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-
-                {/* <div className="relative p-6 border rounded-2xl overflow-hidden">
-                    <div className="flex items-start gap-3">
-                        <div className=" rounded-xl p-2 mt-1">
-                            <FileText className="h-5 w-5 text-white" />
-                        </div>
-                        <div>
-                            <p className="font-semibold text-white mb-2">
-                                Important Disclaimer
-                            </p>
-                            <p className="text-white leading-relaxed">
-                                This calculation is based on UAE Labour Law 2025
-                                and MOHRE guidelines. Results are estimates for
-                                informational purposes only. Consult with HR or
-                                legal advisor for specific cases and final
-                                confirmation.
-                            </p>
-                        </div>
-                    </div>
-                </div> */}
-
-                <Button
-                    onClick={reset}
-                    variant="primary"
-                    size="lg"
-                    className="w-full min-h-12"
-                >
-                    <CalculatorIcon className="h-6 w-6" />
-                    Calculate Again
-                </Button>
-            </div>
-        </div>
     );
 }

@@ -39,7 +39,7 @@ export function DatePicker({
                     )}
                 >
                     <CalendarIcon />
-                    <span>{label ?? "Employment Period"}</span>
+                    <span>{label ?? "Select date"}</span>
                 </Button>
             </PopoverTrigger>
             <PopoverContent className="w-full p-0">{children}</PopoverContent>

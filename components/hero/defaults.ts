@@ -26,8 +26,8 @@ export const DEFAULT_HERO: HomeHero = {
         },
         {
             icon: "Users",
-            title: "All Employee Types",
-            subtitle: "Private, domestic, free zone",
+            title: "UAE Private Sector",
+            subtitle: "Federal labour law employees",
         },
         {
             icon: "Building",
