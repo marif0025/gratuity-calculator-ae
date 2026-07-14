@@ -38,6 +38,7 @@ const mockResult: ICalculationResult = {
         {
             type: "firstFiveYears",
             serviceYears: 1,
+            servicePeriod: { years: 1, months: 0, days: 0 },
             dailySalary: 5000 / 30,
             amount: 3500,
         },

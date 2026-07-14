@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { calculateGratuity } from "./calculateGratuity";
+import { renderBreakdownLines } from "./breakdown";
 import { roundCurrency } from "./currency";
 import { calculatorFormSchema } from "./schema";
 import {
@@ -162,6 +163,10 @@ describe("calculateGratuity", () => {
 
             expect(result.totalGratuity).toBe(expected);
             expect(result.totalGratuity).toBeCloseTo(3509.59, 2);
+
+            const breakdownText = renderBreakdownLines(result.breakdown).join("\n");
+            expect(breakdownText).toContain("1 year and 1 day");
+            expect(breakdownText).not.toMatch(/\d+\.\d{4,}/);
         });
 
         it("test 13: five years and one additional day", () => {
@@ -189,10 +194,11 @@ describe("calculateGratuity", () => {
 
             expect(result.totalGratuity).toBe(expected);
             expect(result.totalGratuity).toBeCloseTo(17513.7, 2);
-        });
-    });
 
-    describe("unpaid leave", () => {
+            const breakdownText = renderBreakdownLines(result.breakdown).join("\n");
+            expect(breakdownText).toContain("× 30 days × 1 day");
+            expect(breakdownText).not.toMatch(/\d+\.\d{4,}/);
+        });
         it("test 14: one unpaid day removes eligibility", () => {
             const result = calculateGratuity(
                 form({

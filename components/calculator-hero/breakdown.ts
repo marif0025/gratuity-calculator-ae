@@ -1,22 +1,39 @@
 import { formatAED, roundCurrency } from "./currency";
 import { formatServicePeriod } from "./servicePeriod";
-import type { BreakdownItem } from "./types";
+import type { BreakdownItem, ServicePeriodDisplay } from "./types";
 
-function formatFirstFiveLabel(serviceYears: number): string {
-    if (serviceYears === 1) {
-        return "First 1 Year";
-    }
-    if (serviceYears === 5) {
-        return "First 5 Years";
-    }
-    return `First ${serviceYears} Years`;
+function titleCaseServicePeriod(period: string): string {
+    return period.replace(/\b\w/g, (char) => char.toUpperCase());
 }
 
-function formatAfterFiveLabel(serviceYears: number): string {
-    if (serviceYears === 1) {
+export function formatTierServiceForFormula(
+    period: ServicePeriodDisplay,
+    fallbackYears?: number
+): string {
+    const { years, months, days } = period;
+    if (years === 0 && months === 0 && days === 0 && fallbackYears) {
+        return `${fallbackYears.toFixed(2)} years`;
+    }
+    return formatServicePeriod(years, months, days);
+}
+
+function formatFirstFiveLabel(period: ServicePeriodDisplay): string {
+    const periodText = formatTierServiceForFormula(period);
+    if (period.years === 5 && period.months === 0 && period.days === 0) {
+        return "First 5 Years";
+    }
+    if (period.years === 1 && period.months === 0 && period.days === 0) {
+        return "First 1 Year";
+    }
+    return `First ${titleCaseServicePeriod(periodText)}`;
+}
+
+function formatAfterFiveLabel(period: ServicePeriodDisplay): string {
+    const periodText = formatTierServiceForFormula(period);
+    if (period.years === 1 && period.months === 0 && period.days === 0) {
         return "After 5 Years";
     }
-    return `After 5 Years (${serviceYears} years)`;
+    return `After 5 Years (${periodText})`;
 }
 
 export function breakdownItemToText(item: BreakdownItem): string {
@@ -36,10 +53,20 @@ export function breakdownItemToText(item: BreakdownItem): string {
             return `Last Monthly Basic Salary\n${formatAED(item.salary)}`;
         case "dailySalary":
             return `Daily Basic Salary\n${formatAED(item.salary)} ÷ 30 = ${formatAED(roundCurrency(item.dailySalary))}`;
-        case "firstFiveYears":
-            return `${formatFirstFiveLabel(item.serviceYears)}\n${formatAED(roundCurrency(item.dailySalary))} × 21 days × ${item.serviceYears}\n= ${formatAED(roundCurrency(item.amount))}`;
-        case "afterFiveYears":
-            return `${formatAfterFiveLabel(item.serviceYears)}\n${formatAED(roundCurrency(item.dailySalary))} × 30 days × ${item.serviceYears}\n= ${formatAED(roundCurrency(item.amount))}`;
+        case "firstFiveYears": {
+            const serviceText = formatTierServiceForFormula(
+                item.servicePeriod,
+                item.serviceYears
+            );
+            return `${formatFirstFiveLabel(item.servicePeriod)}\n${formatAED(roundCurrency(item.dailySalary))} × 21 days × ${serviceText}\n= ${formatAED(roundCurrency(item.amount))}`;
+        }
+        case "afterFiveYears": {
+            const serviceText = formatTierServiceForFormula(
+                item.servicePeriod,
+                item.serviceYears
+            );
+            return `${formatAfterFiveLabel(item.servicePeriod)}\n${formatAED(roundCurrency(item.dailySalary))} × 30 days × ${serviceText}\n= ${formatAED(roundCurrency(item.amount))}`;
+        }
         case "grossGratuity":
             return `Gross Gratuity\n${formatAED(roundCurrency(item.amount))}`;
         case "statutoryCap":

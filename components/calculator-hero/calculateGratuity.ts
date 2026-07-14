@@ -1,7 +1,35 @@
 import { roundCurrency } from "./currency";
 import { calculateServicePeriod } from "./servicePeriod";
-import type { BreakdownItem, ICalculationResult } from "./types";
+import type {
+    BreakdownItem,
+    ICalculationResult,
+    ServicePeriodDisplay,
+} from "./types";
 import type { TCalculatorFormData } from "./schema";
+
+function getFirstTierDisplayPeriod(
+    credited: ServicePeriodDisplay,
+    hasAfterTier: boolean
+): ServicePeriodDisplay {
+    if (hasAfterTier) {
+        return { years: 5, months: 0, days: 0 };
+    }
+    return credited;
+}
+
+function getAfterTierDisplayPeriod(
+    credited: ServicePeriodDisplay,
+    hasAfterTier: boolean
+): ServicePeriodDisplay {
+    if (!hasAfterTier) {
+        return { years: 0, months: 0, days: 0 };
+    }
+    return {
+        years: Math.max(0, credited.years - 5),
+        months: credited.months,
+        days: credited.days,
+    };
+}
 
 export function calculateGratuity(
     data: TCalculatorFormData
@@ -66,6 +94,12 @@ export function calculateGratuity(
 
     const firstFiveYears = Math.min(service.proportionalCreditedYears, 5);
     const yearsAfterFive = Math.max(service.proportionalCreditedYears - 5, 0);
+    const hasAfterTier = yearsAfterFive > 0;
+    const creditedPeriod: ServicePeriodDisplay = {
+        years: service.creditedServiceYears,
+        months: service.creditedServiceMonths,
+        days: service.creditedServiceDays,
+    };
 
     const firstFiveYearsAmount = dailyBasicSalary * 21 * firstFiveYears;
     const afterFiveYearsAmount = dailyBasicSalary * 30 * yearsAfterFive;
@@ -116,6 +150,7 @@ export function calculateGratuity(
         breakdown.push({
             type: "firstFiveYears",
             serviceYears: firstFiveYears,
+            servicePeriod: getFirstTierDisplayPeriod(creditedPeriod, hasAfterTier),
             dailySalary: dailyBasicSalary,
             amount: firstFiveYearsAmount,
         });
@@ -125,6 +160,7 @@ export function calculateGratuity(
         breakdown.push({
             type: "afterFiveYears",
             serviceYears: yearsAfterFive,
+            servicePeriod: getAfterTierDisplayPeriod(creditedPeriod, hasAfterTier),
             dailySalary: dailyBasicSalary,
             amount: afterFiveYearsAmount,
         });

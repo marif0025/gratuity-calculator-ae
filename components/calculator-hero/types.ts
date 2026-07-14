@@ -2,6 +2,12 @@ import type { TCalculatorFormData } from "./schema";
 
 export type { TCalculatorFormData };
 
+export interface ServicePeriodDisplay {
+    years: number;
+    months: number;
+    days: number;
+}
+
 export type BreakdownItem =
     | {
           type: "grossService";
@@ -32,12 +38,14 @@ export type BreakdownItem =
     | {
           type: "firstFiveYears";
           serviceYears: number;
+          servicePeriod: ServicePeriodDisplay;
           dailySalary: number;
           amount: number;
       }
     | {
           type: "afterFiveYears";
           serviceYears: number;
+          servicePeriod: ServicePeriodDisplay;
           dailySalary: number;
           amount: number;
       }
